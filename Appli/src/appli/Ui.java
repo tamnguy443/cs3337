@@ -75,14 +75,14 @@ public class Demo extends Application {
 		layout2.getChildren().addAll(label2, p);
 		layout2.setAlignment(Pos.CENTER);
 		
-
+		//FIXME
 		VBox layout5 = new VBox(20);
 		Label label5 = new Label("N/A");
 		Button t = new Button("N/A");
 		t.setOnAction(e-> window.setScene(scene6));
 		layout5.getChildren().addAll(label5, t);
 		layout5.setAlignment(Pos.CENTER);
-		
+		//FIXME
 		VBox layout3 = new VBox(20);
 		Label label3 = new Label("Question 1");
 		Button r = new Button(" ");
@@ -90,7 +90,7 @@ public class Demo extends Application {
 		layout3.getChildren().addAll(label3, r);
 		layout3.setPadding(new Insets(20,20,20,20));
 		layout3.setAlignment(Pos.CENTER);
-		
+		//FIXME
 		VBox layout4 = new VBox(20);
 		Label label4 = new Label("Question 2:");
 		Button u = new Button(" ");
