@@ -9,14 +9,10 @@ public class Profile extends BodyType{
 	private double bMI;
 	private BodyType bodyType;
 	
-	
-
-	public Profile(String bType, String name, int weightPounds, int heightInches) {
+	public Profile(String bType, String name, int weightPounds, int heightInches, int heigthFeet) {
 		super(bType);
-		/*
-		 * 
-		 */
-		this.setBMI();
+		this.name = name;
+		this.setBMI(weightPounds, heightInches, heigthFeet);
 	}
 
 	public String getName() {
@@ -58,21 +54,20 @@ public class Profile extends BodyType{
 	public void setBodyType(BodyType bodyType) {
 		this.bodyType = bodyType;
 	}
-	/*
-	 * age
+	/*age
 	 *bmi-The formula is BMI = kg/m2 where kg is a person's weight in kilograms 
 	 *and m2 is their height in metres squared.
-	 *
-	 *
-	 * 
 	 */
-	private void setBMI() {
-		this.bMI = (0.453592/this.weightPounds) / Math.pow(((0.3048/this.heightFeet) + (0.0254/this.heightInches)),2);
+	private void setBMI(int pounds, int feet, int inches) {
+		this.bMI = (0.453592/pounds) / Math.pow(((0.3048/feet) + (0.0254/inches)),2);
 
 	}
 
+	public static void main(String[] args) {
+		
 
-
+	}
+	
 
 
 
