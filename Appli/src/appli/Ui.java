@@ -12,7 +12,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
-public class Demo extends Application {
+public class Ui extends Application {
 	Stage window;
 	Scene scene1, scene2, scene3, scene4, scene5, scene6;
 
