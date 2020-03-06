@@ -38,6 +38,7 @@ public class Demo extends Application {
 		}
 			);
 		introLayout.setPadding(new Insets(10,10,10,10));
+		introLayout.setStyle("-fx-background-color: DAE6F3;");
 		introLayout.getChildren().addAll(introLabel,nameInput,i);
 		introLayout.setAlignment(Pos.CENTER);
 		
@@ -82,13 +83,14 @@ public class Demo extends Application {
 		
 		//Setting the next and back buttons on the bottom
 		AnchorPane q1Btn = new AnchorPane();
-        HBox hbox = new HBox(10, backButton, nextButton);
+        HBox hbox = new HBox(5, backButton, nextButton);
         q1Btn.getChildren().addAll(hbox);
         AnchorPane.setRightAnchor(hbox, 10d);
         AnchorPane.setBottomAnchor(hbox, 10d);
 		
 		//Create the pane for first question
 		BorderPane q1Layout = new BorderPane();
+		q1Layout.setStyle("-fx-background-color: DAE6F3;");
 		q1Layout.setTop(q1Display);
 		q1Layout.setCenter(displayHW);
 		q1Layout.setBottom(q1Btn);
@@ -97,7 +99,7 @@ public class Demo extends Application {
 		
 		//Scene 3: Second question of Btype quiz
 		HBox q2Display = new HBox(20);
-		Label q2Label = new Label("	Body type question 2:\n How often do you exercise? ");
+		Label q2Label = new Label("	Body type question 2:\nHow many times per week do you exercise? ");
 		q2Display.setAlignment(Pos.TOP_CENTER);
 		q2Display.getChildren().addAll(q2Label);
 		
@@ -105,24 +107,38 @@ public class Demo extends Application {
 		//When user clicks on the option (s)he will be directed to the next scene
 		//This scene will only have the back button at the bottom
 		FlowPane q2Choices = new FlowPane();
-	    q2Choices.setPadding(new Insets(6, 0, 6, 0));
-	    q2Choices.setVgap(4);
-	    q2Choices.setHgap(4);
-	    q2Choices.setPrefWrapLength(170); // preferred width allows for two columns
-	    q2Choices.setStyle("-fx-background-color: DAE6F3;");
+	    	q2Choices.setPadding(new Insets(6, 0, 6, 0));
+	    	q2Choices.setVgap(4);
+	    	q2Choices.setHgap(4);
+	    	q2Choices.setPrefWrapLength(170); // preferred width allows for two columns
+	    	q2Choices.setStyle("-fx-background-color: DAE6F3;");
+	    	Button ch1 = new Button("1-2");
+	    	ch1.setAlignment(Pos.CENTER);
+	    	ch1.setOnAction(e -> window.setScene(scene4));;
+	    	Button ch2 = new Button("3-4");
+	    	ch2.setAlignment(Pos.CENTER);
+	    	ch2.setOnAction(e -> window.setScene(scene4));;
+	    	Button ch3 = new Button("5-6");
+	    	ch3.setAlignment(Pos.CENTER);
+	    	ch3.setOnAction(e -> window.setScene(scene4));;
+	    	Button ch4 = new Button("Everyday");
+	    	ch4.setAlignment(Pos.CENTER);
+	    	ch4.setOnAction(e -> window.setScene(scene4));;
+	    	q2Choices.getChildren().addAll(ch1, ch2, ch3, ch4);
 	    
-	    
-	    AnchorPane q2Btn = new AnchorPane();
-	    Button backBtn = new Button("<--");
+	    //Setting the back button position to bottom of the scene
+	    	AnchorPane q2Btn = new AnchorPane();
+	    	Button backBtn = new Button("<--");
 		backBtn.setAlignment(Pos.BASELINE_LEFT);
-		backBtn.setOnAction(e -> window.setScene(scene1));;
+		backBtn.setOnAction(e -> window.setScene(scene2));;
         HBox q2Box = new HBox(10, backBtn);
-        q1Btn.getChildren().addAll(q2Box);
+        q2Btn.getChildren().addAll(q2Box);
         AnchorPane.setRightAnchor(q2Box, 10d);
         AnchorPane.setBottomAnchor(q2Box, 10d);
 		
 		//Creates the pane for scene 3
 		BorderPane q2Layout = new BorderPane();
+		q2Layout.setStyle("-fx-background-color: DAE6F3;");
 		q2Layout.setTop(q2Display);
 		q2Layout.setCenter(q2Choices);
 		q2Layout.setBottom(q2Btn);
