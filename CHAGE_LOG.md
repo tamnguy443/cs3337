@@ -8,4 +8,6 @@ Feb-19th Healthy Helper started. Profile class was created with data fields of p
 
 Feb-25th First two scenes of the UI were implemented. Body type quiz was started. Body type quiz is used to gather the user's data. This quiz will consist of 4 question that will determine the user's workout routine, body mass index(BMI), height and weight, and their body type goal which could be to cut, shred, or simply maintain. 
 
+Mar-4th food class was added, with data fields for macro nutrients inorder for an array list of food to be made in future class
+
 Mar-5th UI was updated to now have 3 scenes starting with the introduction(which is a simple login to get the user's name), scene 2 where the user is asked to input their height and weight, and scene 3 where the user is asked how frequent they exercise. 
