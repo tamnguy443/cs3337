@@ -97,9 +97,9 @@ public class Demo extends Application {
 		q1Layout.setPadding(new Insets(10,10,10,10));
 		
 		
-		//Scene 3: Second question of Btype quiz
+		//Scene 3: Second question of BType quiz
 		HBox q2Display = new HBox(20);
-		Label q2Label = new Label("	Body type question 2:\nHow many times per week do you exercise? ");
+		Label q2Label = new Label("	Body type question 2:\n How many times per week do you exercise? ");
 		q2Display.setAlignment(Pos.TOP_CENTER);
 		q2Display.getChildren().addAll(q2Label);
 		
@@ -107,30 +107,30 @@ public class Demo extends Application {
 		//When user clicks on the option (s)he will be directed to the next scene
 		//This scene will only have the back button at the bottom
 		FlowPane q2Choices = new FlowPane();
-	    	q2Choices.setPadding(new Insets(6, 0, 6, 0));
-	    	q2Choices.setVgap(4);
-	    	q2Choices.setHgap(4);
-	    	q2Choices.setPrefWrapLength(170); // preferred width allows for two columns
-	    	q2Choices.setStyle("-fx-background-color: DAE6F3;");
-	    	Button ch1 = new Button("1-2");
-	    	ch1.setAlignment(Pos.CENTER);
-	    	ch1.setOnAction(e -> window.setScene(scene4));;
-	    	Button ch2 = new Button("3-4");
-	    	ch2.setAlignment(Pos.CENTER);
-	    	ch2.setOnAction(e -> window.setScene(scene4));;
-	    	Button ch3 = new Button("5-6");
-	    	ch3.setAlignment(Pos.CENTER);
-	    	ch3.setOnAction(e -> window.setScene(scene4));;
-	    	Button ch4 = new Button("Everyday");
-	    	ch4.setAlignment(Pos.CENTER);
-	    	ch4.setOnAction(e -> window.setScene(scene4));;
-	    	q2Choices.getChildren().addAll(ch1, ch2, ch3, ch4);
+	    q2Choices.setPadding(new Insets(8, 0, 8, 0));
+	    q2Choices.setVgap(8);
+	    q2Choices.setHgap(8);
+	    //q2Choices.setPrefWrapLength(170); // preferred width allows for two columns
+	    q2Choices.setStyle("-fx-background-color: DAE6F3;");
+	    Button q2ch1 = new Button("1-2");
+	    q2ch1.setAlignment(Pos.CENTER);
+	    q2ch1.setOnAction(e -> window.setScene(scene4));;
+	    Button q2ch2 = new Button("3-4");
+	    q2ch2.setAlignment(Pos.CENTER);
+	    q2ch2.setOnAction(e -> window.setScene(scene4));;
+	    Button q2ch3 = new Button("5-6");
+	    q2ch3.setAlignment(Pos.CENTER);
+	    q2ch3.setOnAction(e -> window.setScene(scene4));;
+	    Button q2ch4 = new Button("Everyday");
+	    q2ch4.setAlignment(Pos.CENTER);
+	    q2ch4.setOnAction(e -> window.setScene(scene4));;
+	    q2Choices.getChildren().addAll(q2ch1, q2ch2, q2ch3, q2ch4);
 	    
 	    //Setting the back button position to bottom of the scene
-	    	AnchorPane q2Btn = new AnchorPane();
-	    	Button backBtn = new Button("<--");
+	    AnchorPane q2Btn = new AnchorPane();
+	    Button backBtn = new Button("<--");
 		backBtn.setAlignment(Pos.BASELINE_LEFT);
-		backBtn.setOnAction(e -> window.setScene(scene2));;
+		backBtn.setOnAction(e -> window.setScene(scene2));
         HBox q2Box = new HBox(10, backBtn);
         q2Btn.getChildren().addAll(q2Box);
         AnchorPane.setRightAnchor(q2Box, 10d);
@@ -144,19 +144,48 @@ public class Demo extends Application {
 		q2Layout.setBottom(q2Btn);
 		q2Layout.setPadding(new Insets(10,10,10,10));
 		
-		
-	/*	HBox q3Display = new HBox(20);
+		//Scene 4: Displaying Question 3 of BType quiz
+		HBox q3Display = new HBox(20);
 		Label q3Label = new Label("	Body type question 2:\n What is your body type goal? ");
-		q2Display.setAlignment(Pos.TOP_CENTER);
-		Button c = new Button("<--");
-		c.setOnAction(e -> window.setScene(scene3));
-		q2Display.getChildren().addAll(question2Label);
-		*/
+		q3Display.setAlignment(Pos.TOP_CENTER);
+		Button q3NX = new Button("-->");
+		q3NX.setOnAction(e -> window.setScene(scene5));
+		Button q3BK = new Button("<--");
+		q3BK.setOnAction(e -> window.setScene(scene3));
+		q3Display.getChildren().addAll(q3Label);
+		
+		//Setting the next and back buttons to the bottom of the scene
+		AnchorPane q3Btn = new AnchorPane();
+        HBox q3Box = new HBox(5, q3BK, q3NX );
+        q3Btn.getChildren().addAll(q3Box);
+        AnchorPane.setRightAnchor(q3Box, 10d);
+        AnchorPane.setBottomAnchor(q3Box, 10d);
+        
+        //3 buttons to be used as the choices for the user on question 3
+        HBox q3Choices = new HBox(20);
+	    Button q3ch1 = new Button(" Shred ");
+	    q3ch1.setAlignment(Pos.BASELINE_CENTER);
+	    Button q3ch2 = new Button(" Bulk ");
+	    q3ch2.setAlignment(Pos.BASELINE_CENTER);
+	    Button q3ch3 = new Button(" Maintain ");
+	    q3ch3.setAlignment(Pos.BASELINE_CENTER);
+	    q3Choices.getChildren().addAll(q3ch1, q3ch2, q3ch3);
+
+	    //putting everything on Scene 4
+		BorderPane q3Layout = new BorderPane();
+		q3Layout.setStyle("-fx-background-color: DAE6F3;");
+		q3Layout.setTop(q3Display);
+		q3Layout.setCenter(q3Choices);
+		q3Layout.setBottom(q3Btn);
+		q3Layout.setPadding(new Insets(10,10,10,10));
+		
 		
 
 		scene1 = new Scene(introLayout,350,350);
 		scene2 = new Scene(q1Layout, 350, 350);
 		scene3 = new Scene(q2Layout, 350, 350);
+		scene4 = new Scene(q3Layout, 350, 350);
+		//scene5 = new Scene(q4Layout, 350, 350);
 
 		window.setTitle("Healthy Helper");
 		window.setScene(scene1);
