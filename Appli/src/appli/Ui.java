@@ -3,6 +3,7 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
@@ -30,7 +31,7 @@ public class Ui extends Application {
 		//Scene 1: Introduction, asks user for name 
 		VBox introLayout = new VBox(20);
 		Label introLabel = new Label("	Healthy Helper!\n" + "Please enter your name");
-		introLabel.setFont(Font.font ("Verdana", FontPosture.ITALIC, 20));
+		introLabel.setFont(Font.font ("Times New Roman", FontPosture.ITALIC, 20));
 		introLabel.setTextFill(Color.WHITE);
 		TextField nameInput = new TextField();
 		Button i = new Button("Continue!");
@@ -50,7 +51,7 @@ public class Ui extends Application {
 		//Scene 2: Used a label to displays first question
 		HBox q1Display = new HBox(20);
 		Label q1Label = new Label("	Body type question 1:\n 	Please Enter height and weight(lbs).");
-		q1Label.setFont(Font.font ("Verdana", FontPosture.ITALIC, 14));
+		q1Label.setFont(Font.font ("Times New Roman", FontPosture.ITALIC, 18));
 		q1Label.setTextFill(Color.WHITE);
 		q1Label.setAlignment(Pos.CENTER);
 		q1Display.getChildren().addAll(q1Label);
@@ -61,33 +62,39 @@ public class Ui extends Application {
 		 displayHW.setHgap(10);
 		 displayHW.setVgap(10);
 		 displayHW.setPadding(new Insets(25,25,25,25));
-		Label footLabel = new Label("Feet: ");
+		Label heightLabel = new Label("Height: ");
+		heightLabel.setAlignment(Pos.CENTER_LEFT);
+		Label footLabel = new Label(" Ft");
 		footLabel.setAlignment(Pos.CENTER_LEFT);
-		Label inchesLabel = new Label("Inches: ");
+		Label inchesLabel = new Label(" In");
 		inchesLabel.setAlignment(Pos.CENTER_LEFT);
 		Label weightLabel = new Label("Weight: ");
 		weightLabel.setAlignment(Pos.CENTER_LEFT);
+		Label poundLabel = new Label(" Lbs");
+		poundLabel.setAlignment(Pos.CENTER_LEFT);
 		
 		//Creates texteFields for inputs of H and W
 		TextField weightInput = new TextField();
-		 weightInput.setPrefWidth(80);
-		 weightInput.setMaxWidth(80);
+		 weightInput.setPrefWidth(50);
+		 weightInput.setMaxWidth(50);
 		weightInput.setAlignment(Pos.TOP_CENTER);
 		TextField heightInput = new TextField();
-		 heightInput.setPrefWidth(80);
-		 heightInput.setMaxWidth(80);
+		 heightInput.setPrefWidth(50);
+		 heightInput.setMaxWidth(50);
 		heightInput.setAlignment(Pos.TOP_CENTER);
 		TextField h2Input = new TextField();
-		 h2Input.setPrefWidth(80);
-		 h2Input.setMaxWidth(80);
+		 h2Input.setPrefWidth(50);
+		 h2Input.setMaxWidth(50);
 		 h2Input.setAlignment(Pos.TOP_CENTER);
 		 
-		 displayHW.add(footLabel,0,1);
+		 displayHW.add(heightLabel,0,1);
 		 displayHW.add(heightInput,1,1);
-		 displayHW.add(inchesLabel,2,1);
+		 displayHW.add(footLabel,2,1);
+		 displayHW.add(inchesLabel,4,1);
 		 displayHW.add(h2Input,3,1);
 		 displayHW.add(weightLabel,0,3);
 		 displayHW.add(weightInput,1,3);
+		 displayHW.add(poundLabel,2,3);
 
 		
 		//Back and next buttons
@@ -126,7 +133,7 @@ public class Ui extends Application {
 		//Scene 3: Second question of BType quiz
 		HBox q2Display = new HBox(20);
 		Label q2Label = new Label("	Body type question 2:\n How many times per week do you exercise? ");
-		q2Label.setFont(Font.font ("Verdana", FontPosture.ITALIC, 14));
+		q2Label.setFont(Font.font ("Times New Roman", FontPosture.ITALIC, 18));
 		q2Label.setTextFill(Color.WHITE);
 		q2Display.setAlignment(Pos.TOP_CENTER);
 		q2Display.getChildren().addAll(q2Label);
@@ -143,16 +150,16 @@ public class Ui extends Application {
 	    q2Choices.setStyle("-fx-background-color: #32cd32;");
 	    Button q2ch1 = new Button("1-2");
 	    q2ch1.setAlignment(Pos.CENTER);
-	    q2ch1.setOnAction(e -> window.setScene(scene4));;
+	    q2ch1.setOnAction(e -> window.setScene(scene4));
 	    Button q2ch2 = new Button("3-4");
 	    q2ch2.setAlignment(Pos.CENTER);
-	    q2ch2.setOnAction(e -> window.setScene(scene4));;
+	    q2ch2.setOnAction(e -> window.setScene(scene4));
 	    Button q2ch3 = new Button("5-6");
 	    q2ch3.setAlignment(Pos.CENTER);
-	    q2ch3.setOnAction(e -> window.setScene(scene4));;
+	    q2ch3.setOnAction(e -> window.setScene(scene4));
 	    Button q2ch4 = new Button("Everyday");
 	    q2ch4.setAlignment(Pos.CENTER);
-	    q2ch4.setOnAction(e -> window.setScene(scene4));;
+	    q2ch4.setOnAction(e -> window.setScene(scene4));
 	    q2Choices.add(q2ch1, 0, 1);
 	    q2Choices.add(q2ch2, 1, 1);
 	    q2Choices.add(q2ch3, 0, 2);
@@ -179,7 +186,7 @@ public class Ui extends Application {
 		//Scene 4: Displaying Question 3 of BType quiz
 		HBox q3Display = new HBox(20);
 		Label q3Label = new Label("	Body type question 3:\n What is your body type goal? ");
-		q3Label.setFont(Font.font ("Verdana", FontPosture.ITALIC, 14));
+		q3Label.setFont(Font.font ("Times New Roman", FontPosture.ITALIC, 18));
 		q3Label.setTextFill(Color.WHITE);
 		q3Display.setAlignment(Pos.TOP_CENTER);
 		/*Button q3NX = new Button("-->");
@@ -204,15 +211,17 @@ public class Ui extends Application {
         q3Choices.setPadding(new Insets(25,25,25,25));
 	    Button q3ch1 = new Button(" Shred ");
 	    q3ch1.setAlignment(Pos.BASELINE_CENTER);
+	    q3ch1.setOnAction(e -> window.setScene(scene5));
 	    Button q3ch2 = new Button(" Bulk ");
 	    q3ch2.setAlignment(Pos.BASELINE_CENTER);
+	    q3ch2.setOnAction(e -> window.setScene(scene5));
 	    Button q3ch3 = new Button(" Maintain ");
 	    q3ch3.setAlignment(Pos.BASELINE_CENTER);
+	    q3ch3.setOnAction(e -> window.setScene(scene5));
 	    q3Choices.add(q3ch1, 0, 1);
 	    q3Choices.add(q3ch2, 1, 1);
 	    q3Choices.add(q3ch3, 2, 1);
 	    
-
 	    //putting everything on Scene 4
 		BorderPane q3Layout = new BorderPane();
 		q3Layout.setStyle("-fx-background-color: #32cd32;");
@@ -222,15 +231,127 @@ public class Ui extends Application {
 		q3Layout.setPadding(new Insets(10,10,10,10));
 		
 		
+		//Making the actual startup screen for the app
+		VBox rgStartLayout = new VBox(20);
+		Label rgStartLabel = new Label("	Welcome to your profile!");
+		rgStartLabel.setFont(Font.font ("Times New Roman", FontPosture.ITALIC, 20));
+		rgStartLabel.setTextFill(Color.WHITE);
+		rgStartLayout.getChildren().addAll(rgStartLabel);
+		rgStartLayout.setAlignment(Pos.CENTER);
+		
+		//making options for the user to choose from in the actual app start
+		 GridPane startChoices = new GridPane();
+	        startChoices.setAlignment(Pos.CENTER);
+	        startChoices.setHgap(10);
+	        startChoices.setVgap(10);
+	        startChoices.setPadding(new Insets(25,25,25,25));
+	        Button startCh1 = new Button(" Menu ");
+		    startCh1.setAlignment(Pos.BASELINE_CENTER);
+		    startCh1.setOnAction(e -> window.setScene(scene6));
+		    Button startCh2 = new Button(" Workouts ");
+		    startCh2.setAlignment(Pos.BASELINE_CENTER);
+		    startCh2.setOnAction(e -> window.setScene(scene6));
+		    Button startCh3 = new Button(" Schedule ");
+		    startCh3.setAlignment(Pos.BASELINE_CENTER);
+		    startCh3.setOnAction(e -> window.setScene(scene6));
+		    Button startCh4 = new Button(" Update info ");
+		    startCh4.setAlignment(Pos.BASELINE_CENTER);
+		    startCh4.setOnAction(e -> window.setScene(scene2));
+		    startChoices.add(startCh1, 0, 1);
+		    startChoices.add(startCh2, 0, 2);
+		    startChoices.add(startCh3, 0, 3);
+		    startChoices.add(startCh4, 0, 4);
+			
+		//Used borderpane to place all choices user can use 
+		BorderPane appLayout = new BorderPane();
+		appLayout.setStyle("-fx-background-color: #32cd32;");
+		appLayout.setTop(rgStartLayout);
+		appLayout.setLeft(startChoices);
+		//appLayout.setBottom(q3Btn);
+		appLayout.setPadding(new Insets(10,10,10,10));
+		
+		
+		//New scene for when menu is clicked on
+		HBox menuHeadings = new HBox(40);
+		Label foodNameLabel = new Label("Food List: ");
+		foodNameLabel.setFont(Font.font ("Times New Roman", FontPosture.ITALIC, 20));
+		foodNameLabel.setAlignment(Pos.TOP_LEFT);
+		Label macroLabel = new Label("Macronutrients: ");
+		macroLabel.setFont(Font.font ("Times New Roman", FontPosture.ITALIC, 20));
+		macroLabel.setAlignment(Pos.TOP_RIGHT);
+		menuHeadings.getChildren().addAll(foodNameLabel, macroLabel);
+		menuHeadings.setAlignment(Pos.CENTER);
+		
+		
+		//layout ofr Food Choices
+		VBox foodChoices = new VBox(15);
+		CheckBox fdCh1 = new CheckBox("BBQ Chicken w/Quinoa Salad");
+        CheckBox fdCh2 = new CheckBox("Curry chicken w/Vegtables");
+        CheckBox fdCh3 = new CheckBox("Chicken fajitas");
+        CheckBox fdCh4 = new CheckBox("Teriyaki Chicken");
+        CheckBox fdCh5 = new CheckBox("Chicken Bruschetta Casserole");
+        CheckBox fdCh6 = new CheckBox("Chicken Tikka Masala");
+		Button addMeal = new Button("Add Meals!");
+		fdCh1.setFont(Font.font ("Times New Roman"));
+		fdCh2.setFont(Font.font ("Times New Roman"));
+		fdCh3.setFont(Font.font ("Times New Roman"));
+		fdCh4.setFont(Font.font ("Times New Roman"));
+		fdCh5.setFont(Font.font ("Times New Roman"));
+		fdCh6.setFont(Font.font ("Times New Roman"));
+        addMeal.setOnAction(e -> handleOptions(fdCh1, fdCh2, fdCh3, fdCh4, fdCh5, fdCh6));
+        foodChoices.setPadding(new Insets(20, 20, 20, 20));
+        foodChoices.getChildren().addAll(fdCh1, fdCh2, fdCh3, fdCh4, fdCh5, fdCh6, addMeal);
 
-		scene1 = new Scene(introLayout,350,350);
-		scene2 = new Scene(q1Layout, 350, 350);
-		scene3 = new Scene(q2Layout, 350, 350);
-		scene4 = new Scene(q3Layout, 350, 350);
-		//scene5 = new Scene(q4Layout, 350, 350);
+        
+		//Layout Pane for when Menu is clicked 
+		BorderPane menuLayout = new BorderPane();
+		menuLayout.setStyle("-fx-background-color: #32cd32;");
+		menuLayout.setTop(menuHeadings);
+		menuLayout.setLeft(foodChoices);
+		//appLayout.setBottom(q3Btn);
+		menuLayout.setPadding(new Insets(10,10,10,10));
+		
+		
+		
+		
+		
+		
+		
+		//All scenes used 
+		scene1 = new Scene(introLayout,400,350);
+		scene2 = new Scene(q1Layout, 400, 350);
+		scene3 = new Scene(q2Layout, 400, 350);
+		scene4 = new Scene(q3Layout, 400, 350);
+		scene5 = new Scene(appLayout, 350, 350);
+		scene6 = new Scene(menuLayout,400,350);
 
 		window.setTitle("Healthy Helper");
 		window.setScene(scene1);
 		window.show();
 	}
+	
+	 private void handleOptions(CheckBox fdCh1, CheckBox fdCh2, CheckBox fdCh3, CheckBox fdCh4, CheckBox fdCh5, CheckBox fdCh6){
+         String message = "Users meals chosen:\n";
+
+         if(fdCh1.isSelected())
+             message += "BBQ Chicken w/Quinoa Salad\n";
+
+         if(fdCh2.isSelected())
+             message += "Curry chicken w/Vegtables\n";
+         
+         if(fdCh3.isSelected())
+             message += "Chicken fajitas\n";
+
+         if(fdCh4.isSelected())
+             message += "Teriyaki Chicken\n";
+         
+         if(fdCh5.isSelected())
+             message += "Chicken Bruschetta Casserole\n";
+
+         if(fdCh6.isSelected())
+             message += "Chicken Tikka Masala";
+
+         System.out.println(message);
+     }
+	
 }
