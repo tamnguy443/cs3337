@@ -45,7 +45,7 @@ public class Ui extends Application {
 		Button i = new Button("Continue!");
 		i.setOnAction(e -> {
 			if (nameInput.getText().trim().isEmpty()) {
-				AlertBox.display("Missing input", "please go back");
+				AlertBox.display("Missing input", "Please enter name");
 			} else {
 				recordInfo(nameInput.getText());
 				window.setScene(scene2);
