@@ -2,7 +2,6 @@ package profile;
 
 public class BodyType {
 	private char bType;
-	protected ArrayList<FoodMenu> menyArr;
 
 	// bulk
 	// shredding
