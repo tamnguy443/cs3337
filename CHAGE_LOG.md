@@ -13,3 +13,7 @@ Mar-4th food class was added, with data fields for macro nutrients inorder for a
 Mar-5th UI was updated to now have 3 scenes starting with the introduction(which is a simple login to get the user's name), scene 2 where the user is asked to input their height and weight, and scene 3 where the user is asked how frequent they exercise. 
 
 Mar-8th the Schedule class was added for future implementation to display for the user eating routine, the info.txt text file was also added to keep track and record information form the user and write future info from the user.
+
+Mar-11th the UI was updated, the quiz format is fully complete for front end and the start of food menu and main menu was also created.
+
+Mar-12th The UI was updated again with working front and back end for the user's starter quiz to record their information.
