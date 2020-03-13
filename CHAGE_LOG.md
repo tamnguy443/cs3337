@@ -16,4 +16,4 @@ Mar-8th the Schedule class was added for future implementation to display for th
 
 Mar-11th the UI was updated, the quiz format is fully complete for front end and the start of food menu and main menu was also created.
 
-Mar-12th The UI was updated again with working front and back end for the user's starter quiz to record their information.
+Mar-12th The UI was updated again with working front and back end for the user's starter quiz to record their information. The foodList.txt File was also added for future information keeping of different types of food. The foodPics Folder was added to keep pictures of food.
