@@ -101,7 +101,7 @@ public class Profile extends BodyType {
 		this.name = in.nextLine();
 		this.weightPounds = Integer.parseInt(in.nextLine());
 		this.heightFeet = Integer.parseInt(in.nextLine());
-//		this.heightInches = Integer.parseInt(in.nextLine());
+		this.heightInches = Integer.parseInt(in.nextLine());
 		this.sched = new Schedule(in.nextLine());
 		this.bodyType = new BodyType(in.nextLine());
 	
