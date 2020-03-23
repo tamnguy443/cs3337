@@ -500,14 +500,14 @@ public class Ui extends Application {
         shpPieView.setFitHeight(80); 
         shpPieView.setFitWidth(80);  
         shpPieView.setPreserveRatio(true);
-        Image spagBol = new Image(new FileInputStream("C:\\Users\\kaigu\\Desktop\\foodPics\\spaghettiBol.jpg"));
+        Image spagBol = new Image(new FileInputStream("C:\\Users\\public\\Desktop\\foodPics\\spaghettiBol.jpg"));
         ImageView spagBolView = new ImageView(spagBol);
         spagBolView.setX(50); 
         spagBolView.setY(25); 
         spagBolView.setFitHeight(80); 
         spagBolView.setFitWidth(80);  
         spagBolView.setPreserveRatio(true);
-        Image calSurplus = new Image(new FileInputStream("C:\\Users\\kaigu\\Desktop\\foodPics\\caloric-surplus.jpg"));
+        Image calSurplus = new Image(new FileInputStream("C:\\Users\\public\\Desktop\\foodPics\\caloric-surplus.jpg"));
         ImageView calSurplusView = new ImageView(calSurplus);
         calSurplusView.setX(50); 
         calSurplusView.setY(25); 
