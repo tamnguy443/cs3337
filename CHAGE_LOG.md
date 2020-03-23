@@ -17,3 +17,5 @@ Mar-8th the Schedule class was added for future implementation to display for th
 Mar-11th the UI was updated, the quiz format is fully complete for front end and the start of food menu and main menu was also created.
 
 Mar-12th The UI was updated again with working front and back end for the user's starter quiz to record their information. The foodList.txt File was also added for future information keeping of different types of food. The foodPics Folder was added to keep pictures of food.
+
+Mar-22nd The Ui class was updated to have specific scenes for each of the body type options(shred,bulk,maintain). If the user chooses to shred he/she will be directed to a food selection scene where a list of food is displayed along with pictures displaying the food in order from top to bottom. Here the user has the option to choose which meals he/she wants to add to their diet. Once all the meals are added the user must click the "add meals" button and then he/she will be directed to the home screen of the actual app. This process goes the same for the other two options(bulk and maintain) however the food options will be different for each body type goal. 
