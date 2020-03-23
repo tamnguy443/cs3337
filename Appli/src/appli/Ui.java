@@ -2,18 +2,24 @@ package appli;
 
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Scanner;
 import javafx.application.Application;
 import javafx.geometry.Insets;
+import javafx.geometry.Orientation;
 import javafx.geometry.Pos;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.ScrollBar;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
@@ -239,20 +245,20 @@ public class Ui extends Application {
 		Button q3ch1 = new Button(" Shred ");
 		q3ch1.setAlignment(Pos.BASELINE_CENTER);
 		q3ch1.setOnAction(e -> {
-			window.setScene(scene5);
+			window.setScene(scene6);
 			recordInfo("s");
 		});
 		
 		Button q3ch2 = new Button(" Bulk ");
 		q3ch2.setAlignment(Pos.BASELINE_CENTER);
 		q3ch2.setOnAction(e -> {
-			window.setScene(scene5);
+			window.setScene(scene7);
 			recordInfo("b");
 		});
 		Button q3ch3 = new Button(" Maintain ");
 		q3ch3.setAlignment(Pos.BASELINE_CENTER);
 		q3ch3.setOnAction(e -> {
-			window.setScene(scene5);
+			window.setScene(scene6);
 			recordInfo("m");
 		});
 		q3Choices.add(q3ch1, 0, 1);
@@ -307,42 +313,280 @@ public class Ui extends Application {
 		appLayout.setPadding(new Insets(10, 10, 10, 10));
 
 		// New scene for when menu is clicked on
-		HBox menuHeadings = new HBox(40);
+		HBox shredMenuHeadings = new HBox(40);
 		Label foodNameLabel = new Label("Food List: ");
-		foodNameLabel.setFont(Font.font("Times New Roman", FontPosture.ITALIC, 20));
+		foodNameLabel.setFont(Font.font("Times New Roman", FontPosture.ITALIC, 40));
 		foodNameLabel.setAlignment(Pos.TOP_LEFT);
 		Label macroLabel = new Label("Macronutrients: ");
 		macroLabel.setFont(Font.font("Times New Roman", FontPosture.ITALIC, 20));
 		macroLabel.setAlignment(Pos.TOP_RIGHT);
-		menuHeadings.getChildren().addAll(foodNameLabel, macroLabel);
-		menuHeadings.setAlignment(Pos.CENTER);
+		shredMenuHeadings.getChildren().addAll(foodNameLabel);
+		shredMenuHeadings.setAlignment(Pos.CENTER);
+		
+		//pane to setup the choices for meals
+		GridPane shredMenuChoices = new GridPane();
+		shredMenuChoices.setAlignment(Pos.CENTER);
+		shredMenuChoices.setHgap(15);
+		shredMenuChoices.setVgap(15);
+		shredMenuChoices.setPadding(new Insets(25, 25, 25, 25));
+        Image bbqChk = new Image(new FileInputStream("C:\\Users\\public\\Desktop\\foodPics\\bbqChwQuinoa.jpg"));
+        ImageView bbqChkView = new ImageView(bbqChk);
+        bbqChkView.setX(50); 
+        bbqChkView.setY(25); 
+        bbqChkView.setFitHeight(80); 
+        bbqChkView.setFitWidth(80);  
+        bbqChkView.setPreserveRatio(true);  
+        Image brusChk = new Image(new FileInputStream("C:\\Users\\public\\Desktop\\foodPics\\bruscettaChicken.jpg"));
+        ImageView brusChkView = new ImageView(brusChk);
+        brusChkView.setX(50); 
+        brusChkView.setY(25); 
+        brusChkView.setFitHeight(80); 
+        brusChkView.setFitWidth(80);  
+        brusChkView.setPreserveRatio(true); 
+        Image chkFtas = new Image(new FileInputStream("C:\\Users\\public\\Desktop\\foodPics\\chickenFajitas.jpg"));
+        ImageView chkFtasView = new ImageView(chkFtas);
+        chkFtasView.setX(50); 
+        chkFtasView.setY(25); 
+        chkFtasView.setFitHeight(80); 
+        chkFtasView.setFitWidth(80);  
+        chkFtasView.setPreserveRatio(true); 
+        Image chkMas = new Image(new FileInputStream("C:\\Users\\public\\Desktop\\foodPics\\chikenTikkaMasala.jpg"));
+        ImageView chkMasView = new ImageView(chkMas);
+        chkMasView.setX(50); 
+        chkMasView.setY(25); 
+        chkMasView.setFitHeight(80); 
+        chkMasView.setFitWidth(80);  
+        chkMasView.setPreserveRatio(true); 
+        Image curryChk = new Image(new FileInputStream("C:\\Users\\public\\Desktop\\foodPics\\curryChicken.jpg"));
+        ImageView curryChkView = new ImageView(curryChk);
+        curryChkView.setX(50); 
+        curryChkView.setY(25); 
+        curryChkView.setFitHeight(80); 
+        curryChkView.setFitWidth(80);  
+        curryChkView.setPreserveRatio(true); 
+        Image tykChk = new Image(new FileInputStream("C:\\Users\\public\\Desktop\\foodPics\\teriyakiChicken.jpg"));
+        ImageView tykChkView = new ImageView(tykChk);
+        tykChkView.setX(50); 
+        tykChkView.setY(25); 
+        tykChkView.setFitHeight(80); 
+        tykChkView.setFitWidth(80);  
+        tykChkView.setPreserveRatio(true);
+        Image calDeficit = new Image(new FileInputStream("C:\\Users\\public\\Desktop\\foodPics\\calorie-deficit.jpg"));
+        ImageView calDeficitView = new ImageView(calDeficit);
+        calDeficitView.setX(50); 
+        calDeficitView.setY(25); 
+        calDeficitView.setFitHeight(300); 
+        calDeficitView.setFitWidth(300);  
+        calDeficitView.setPreserveRatio(true);
+       
+        shredMenuChoices.getChildren().addAll(bbqChkView, brusChkView, chkFtasView, chkMasView, curryChkView, tykChkView);
+        shredMenuChoices.setConstraints(bbqChkView, 0, 1);
+        shredMenuChoices.setConstraints(brusChkView, 0, 2);
+        shredMenuChoices.setConstraints(chkFtasView, 0, 3);
+        shredMenuChoices.setConstraints(chkMasView, 0, 4);
+        shredMenuChoices.setConstraints(curryChkView, 0, 5);
+        shredMenuChoices.setConstraints(tykChkView, 0, 6);
+        
 
-		// layout for Food Choices
-		VBox foodChoices = new VBox(15);
+	// layout for Shred Food Choices
+		GridPane shredFoodChoices = new GridPane();
+		shredFoodChoices.setAlignment(Pos.CENTER);
+		shredFoodChoices.setHgap(15);
+		shredFoodChoices.setVgap(15);
 		CheckBox fdCh1 = new CheckBox("BBQ Chicken w/Quinoa Salad");
 		CheckBox fdCh2 = new CheckBox("Curry chicken w/Vegtables");
 		CheckBox fdCh3 = new CheckBox("Chicken fajitas");
 		CheckBox fdCh4 = new CheckBox("Teriyaki Chicken");
-		CheckBox fdCh5 = new CheckBox("Chicken Bruschetta Casserole");
+		CheckBox fdCh5 = new CheckBox("Chicken Bruschetta");
 		CheckBox fdCh6 = new CheckBox("Chicken Tikka Masala");
-		Button addMeal = new Button("Add Meals!");
-		fdCh1.setFont(Font.font("Times New Roman"));
-		fdCh2.setFont(Font.font("Times New Roman"));
-		fdCh3.setFont(Font.font("Times New Roman"));
-		fdCh4.setFont(Font.font("Times New Roman"));
-		fdCh5.setFont(Font.font("Times New Roman"));
-		fdCh6.setFont(Font.font("Times New Roman"));
-		addMeal.setOnAction(e -> handleOptions(fdCh1, fdCh2, fdCh3, fdCh4, fdCh5, fdCh6));
-		foodChoices.setPadding(new Insets(20, 20, 20, 20));
-		foodChoices.getChildren().addAll(fdCh1, fdCh2, fdCh3, fdCh4, fdCh5, fdCh6, addMeal);
+		Button addMeal = new Button("Add Meals");
+		fdCh1.setFont(Font.font("Times New Roman", 15));
+		fdCh2.setFont(Font.font("Times New Roman", 15));
+		fdCh3.setFont(Font.font("Times New Roman", 15));
+		fdCh4.setFont(Font.font("Times New Roman", 15));
+		fdCh5.setFont(Font.font("Times New Roman", 15));
+		fdCh6.setFont(Font.font("Times New Roman", 15));
+		addMeal.setOnAction(e -> handleShredOptions(fdCh1, fdCh2, fdCh3, fdCh4, fdCh5, fdCh6));
+		addMeal.setOnAction(e -> window.setScene(scene5));
+		shredFoodChoices.setPadding(new Insets(20, 20, 20, 20));
+		shredFoodChoices.add(fdCh1,0,1);
+		shredFoodChoices.add(fdCh2,0,2);
+		shredFoodChoices.add(fdCh3,0,3);
+		shredFoodChoices.add(fdCh4,0,4);
+		shredFoodChoices.add(fdCh5,0,5);
+		shredFoodChoices.add(fdCh6,0,6);
+		shredFoodChoices.add(calDeficitView,0,8);
+		shredFoodChoices.add(addMeal,0,9);
+		
+		//FIXME
+		HBox scroll = new HBox(20);
+		ScrollBar s = new ScrollBar();  
+       	 	s.setMin(0);  
+        	s.setMax(20);  
+        	s.setValue(0);  
+        	s.setOrientation(Orientation.VERTICAL);
+        	s.setUnitIncrement(5);
+        	s.setBlockIncrement(10);
+        	s.setPrefSize(20, 20);
+        	scroll.getChildren().add(s);
 
 		// Layout Pane for when Menu is clicked
-		BorderPane menuLayout = new BorderPane();
-		menuLayout.setStyle("-fx-background-color: #32cd32;");
-		menuLayout.setTop(menuHeadings);
-		menuLayout.setLeft(foodChoices);
-		// appLayout.setBottom(q3Btn);
-		menuLayout.setPadding(new Insets(10, 10, 10, 10));
+		BorderPane shredMenuLayout = new BorderPane();
+		shredMenuLayout.setStyle("-fx-background-color: #32cd32;");
+		shredMenuLayout.setTop(shredMenuHeadings);
+		shredMenuLayout.setLeft(shredMenuChoices);
+		shredMenuLayout.setCenter(shredFoodChoices);
+		shredMenuLayout.setRight(scroll);
+		//menuLayout.setBottom(addMealBtn);
+		shredMenuLayout.setPadding(new Insets(10, 10, 10, 10));
+		
+		
+		HBox bulkMenuHeadings = new HBox(40);
+		Label blkLabel = new Label("Food List: ");
+		blkLabel.setFont(Font.font("Times New Roman", FontPosture.ITALIC, 40));
+		blkLabel.setAlignment(Pos.TOP_LEFT);
+		bulkMenuHeadings.getChildren().addAll(blkLabel);
+		bulkMenuHeadings.setAlignment(Pos.CENTER);
+		
+		//FIXME
+		HBox blkScroll = new HBox(20);
+		ScrollBar t = new ScrollBar();  
+        t.setMin(0);  
+        t.setMax(20);  
+        t.setValue(0);  
+        t.setOrientation(Orientation.VERTICAL);
+        t.setUnitIncrement(5);
+        t.setBlockIncrement(10);
+        t.setPrefSize(20, 20);
+        blkScroll.getChildren().add(t);
+		
+	GridPane bulkMenuChoices = new GridPane();
+	bulkMenuChoices.setAlignment(Pos.CENTER);
+	bulkMenuChoices.setHgap(15);
+	bulkMenuChoices.setVgap(15);
+	bulkMenuChoices.setPadding(new Insets(25, 25, 25, 25));
+	Image ptPancakes = new Image(new FileInputStream("C:\\Users\\public\\Desktop\\foodPics\\proteinPancakes.jpg"));
+        ImageView ptPancakesView = new ImageView(ptPancakes);
+        ptPancakesView.setX(50); 
+        ptPancakesView.setY(25); 
+        ptPancakesView.setFitHeight(80); 
+        ptPancakesView.setFitWidth(80);  
+        ptPancakesView.setPreserveRatio(true);
+        Image spPaella = new Image(new FileInputStream("C:\\Users\\public\\Desktop\\foodPics\\spanishPaella.jpg"));
+        ImageView spPaellaView = new ImageView(spPaella);
+        spPaellaView.setX(50); 
+        spPaellaView.setY(25); 
+        spPaellaView.setFitHeight(80); 
+        spPaellaView.setFitWidth(80);  
+        spPaellaView.setPreserveRatio(true);
+        Image stkPotatoes = new Image(new FileInputStream("C:\\Users\\public\\Desktop\\foodPics\\steakPotatoes.jpg"));
+        ImageView stkPotatoesView = new ImageView(stkPotatoes);
+        stkPotatoesView.setX(50); 
+        stkPotatoesView.setY(25); 
+        stkPotatoesView.setFitHeight(80); 
+        stkPotatoesView.setFitWidth(80);  
+        stkPotatoesView.setPreserveRatio(true);
+        Image chkPotatoes = new Image(new FileInputStream("C:\\Users\\public\\Desktop\\foodPics\\chknPotatoes.jpg"));
+        ImageView chkPotatoesView = new ImageView(chkPotatoes);
+        chkPotatoesView.setX(50); 
+        chkPotatoesView.setY(25); 
+        chkPotatoesView.setFitHeight(80); 
+        chkPotatoesView.setFitWidth(80);  
+        chkPotatoesView.setPreserveRatio(true);
+        Image shpPie = new Image(new FileInputStream("C:\\Users\\public\\Desktop\\foodPics\\shpPie.jpg"));
+        ImageView shpPieView = new ImageView(shpPie);
+        shpPieView.setX(50); 
+        shpPieView.setY(25); 
+        shpPieView.setFitHeight(80); 
+        shpPieView.setFitWidth(80);  
+        shpPieView.setPreserveRatio(true);
+        Image spagBol = new Image(new FileInputStream("C:\\Users\\kaigu\\Desktop\\foodPics\\spaghettiBol.jpg"));
+        ImageView spagBolView = new ImageView(spagBol);
+        spagBolView.setX(50); 
+        spagBolView.setY(25); 
+        spagBolView.setFitHeight(80); 
+        spagBolView.setFitWidth(80);  
+        spagBolView.setPreserveRatio(true);
+        Image calSurplus = new Image(new FileInputStream("C:\\Users\\kaigu\\Desktop\\foodPics\\caloric-surplus.jpg"));
+        ImageView calSurplusView = new ImageView(calSurplus);
+        calSurplusView.setX(50); 
+        calSurplusView.setY(25); 
+        calSurplusView.setFitHeight(300); 
+        calSurplusView.setFitWidth(300);  
+        calSurplusView.setPreserveRatio(true);
+        
+        
+        bulkMenuChoices.getChildren().addAll(ptPancakesView,spPaellaView,stkPotatoesView,chkPotatoesView,shpPieView,spagBolView);
+        bulkMenuChoices.setConstraints(ptPancakesView, 0, 1);
+        bulkMenuChoices.setConstraints(spPaellaView, 0, 2);
+        bulkMenuChoices.setConstraints(stkPotatoesView, 0, 3);
+        bulkMenuChoices.setConstraints(chkPotatoesView, 0, 4);
+        bulkMenuChoices.setConstraints(shpPieView, 0, 5);
+        bulkMenuChoices.setConstraints(spagBolView, 0, 6);
+        
+        
+        GridPane bulkFoodChoices = new GridPane();
+		bulkFoodChoices.setAlignment(Pos.CENTER);
+		bulkFoodChoices.setHgap(15);
+		bulkFoodChoices.setVgap(15);
+		CheckBox blkCh1 = new CheckBox("Protein Pancakes");
+		CheckBox blkCh2 = new CheckBox("Spanish Paella");
+		CheckBox blkCh3 = new CheckBox("Steak and Potatoes ");
+		CheckBox blkCh4 = new CheckBox("Chicken and Potatoes ");
+		CheckBox blkCh5 = new CheckBox("Shepherd's Pie ");
+		CheckBox blkCh6 = new CheckBox("Spaghetti Bolognese ");
+		Button addMealBtn = new Button("Add Meals");
+		blkCh1.setFont(Font.font("Times New Roman", 15));
+		blkCh2.setFont(Font.font("Times New Roman", 15));
+		blkCh3.setFont(Font.font("Times New Roman", 15));
+		blkCh4.setFont(Font.font("Times New Roman", 15));
+		blkCh5.setFont(Font.font("Times New Roman", 15));
+		blkCh6.setFont(Font.font("Times New Roman", 15));
+		addMealBtn.setOnAction(e -> handleBulkOptions(blkCh1, blkCh2, blkCh3, blkCh4, blkCh5, blkCh6));
+		addMealBtn.setOnAction(e -> window.setScene(scene5));
+		bulkFoodChoices.setPadding(new Insets(20, 20, 20, 20));
+		bulkFoodChoices.add(blkCh1,0,1);
+		bulkFoodChoices.add(blkCh2,0,2);
+		bulkFoodChoices.add(blkCh3,0,3);
+		bulkFoodChoices.add(blkCh4,0,4);
+		bulkFoodChoices.add(blkCh5,0,5);
+		bulkFoodChoices.add(blkCh6,0,6);
+		bulkFoodChoices.add(calSurplusView,0,8);
+		bulkFoodChoices.add(addMealBtn,0,12);
+		
+		
+		BorderPane bulkMenuLayout = new BorderPane();
+		bulkMenuLayout.setStyle("-fx-background-color: #32cd32;");
+		bulkMenuLayout.setTop(bulkMenuHeadings);
+		bulkMenuLayout.setLeft(bulkMenuChoices);
+		bulkMenuLayout.setCenter(bulkFoodChoices);
+		bulkMenuLayout.setRight(blkScroll);
+		bulkMenuLayout.setPadding(new Insets(10, 10, 10, 10));
+		
+		
+	/*	
+		HBox mtMenuHeadings = new HBox(40);
+		Label mtLabel = new Label("Food List: ");
+		mtLabel.setFont(Font.font("Times New Roman", FontPosture.ITALIC, 40));
+		mtLabel.setAlignment(Pos.TOP_LEFT);
+		mtMenuHeadings.getChildren().addAll(mtLabel);
+		mtMenuHeadings.setAlignment(Pos.CENTER);
+		
+		//FIXME
+		HBox mtScroll = new HBox(20);
+		ScrollBar r = new ScrollBar();  
+       		r.setMin(0);  
+        	r.setMax(20);  
+        	r.setValue(0);  
+        	r.setOrientation(Orientation.VERTICAL);
+        	r.setUnitIncrement(5);
+        	r.setBlockIncrement(10);
+        	r.setPrefSize(20, 20);
+        	mtScroll.getChildren().add(r);
+		 
+	*/	
+		
+		
 
 		// All scenes used
 		scene1 = new Scene(introLayout, 400, 350);
@@ -350,18 +594,24 @@ public class Ui extends Application {
 		scene3 = new Scene(q2Layout, 400, 350);
 		scene4 = new Scene(q3Layout, 400, 350);
 		scene5 = new Scene(appLayout, 350, 350);
-		scene6 = new Scene(menuLayout, 400, 350);
-
+		scene6 = new Scene(shredMenuLayout, 700, 600);
+		scene7 = new Scene(bulkMenuLayout, 700, 600);
+		/*scene8 = new Scene(mtMenuLayout, 700, 600);
+		scene9 = new Scene(, 400, 350);
+		scene10 = new Scene(, 400, 350);
+		 */
 		window.setTitle("Healthy Helper");
+		window.setScene(scene1);
+		window.show();
 		if(canRead()) {
 			regStart();
 		} else {
 			window.setScene(scene1);
 			window.show();
 		}
+	
 	}
-
-	private void handleOptions(CheckBox fdCh1, CheckBox fdCh2, CheckBox fdCh3, CheckBox fdCh4, CheckBox fdCh5,
+	private void handleShredOptions(CheckBox fdCh1, CheckBox fdCh2, CheckBox fdCh3, CheckBox fdCh4, CheckBox fdCh5,
 			CheckBox fdCh6) {
 		String message = "Users meals chosen:\n";
 
@@ -382,6 +632,31 @@ public class Ui extends Application {
 
 		if (fdCh6.isSelected())
 			message += "Chicken Tikka Masala";
+
+		System.out.println(message);
+	}
+	
+	private void handleBulkOptions(CheckBox blkCh1, CheckBox blkCh2, CheckBox blkCh3, CheckBox blkCh4, CheckBox blkCh5,
+			CheckBox blkCh6) {
+		String message = "Users meals chosen:\n";
+
+		if (blkCh1.isSelected())
+			message += "Protein Pancakes\n";
+
+		if (blkCh2.isSelected())
+			message += "Spanish Paella\n";
+
+		if (blkCh3.isSelected())
+			message += "Steak and Potatoes\n";
+
+		if (blkCh4.isSelected())
+			message += "Chicken and Potatoes\n";
+
+		if (blkCh5.isSelected())
+			message += "Shepherd's Pie\n";
+
+		if (blkCh6.isSelected())
+			message += "Spaghetti Bolognese";
 
 		System.out.println(message);
 	}
