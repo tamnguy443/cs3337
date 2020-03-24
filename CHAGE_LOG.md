@@ -2,8 +2,6 @@
 project folder
 Feb-13th file created
 
-Feb-17 Redesign project. It was shut down by Richard Cross. saddest day of our lives. Until tam mentioned the meal planning application, sergios face lit up like a christman tree. SO DID MINE.
-
 Feb-19th Healthy Helper started. Profile class was created with data fields of person's info. The bodyType class was also created to be the parent of every profile class. The body type class is to specify what type of routine based on a person body type. We added getters and setters in the profile class and a set BMI method. We put the BMI method in the profile constructor (String bType, String name, int weightPounds, int heightInches).
 
 Feb-25th First two scenes of the UI were implemented. Body type quiz was started. Body type quiz is used to gather the user's data. This quiz will consist of 4 question that will determine the user's workout routine, body mass index(BMI), height and weight, and their body type goal which could be to cut, shred, or simply maintain. 
