@@ -32,14 +32,14 @@ import javafx.stage.Stage;
 
 public class Ui extends Application {
 	Stage window;
-	Scene scene1, scene2, scene3, scene4, scene5, scene6;
+	Scene scene1, scene2, scene3, scene4, scene5, scene6, scene7;
 
 	public static void main(String[] args) {
 		launch(args);
 	}
 
 	@Override
-	public void start(Stage primaryStage){
+	public void start(Stage primaryStage) throws FileNotFoundException{
 		window = primaryStage;
 
 		// Scene 1: Introduction, asks user for name
