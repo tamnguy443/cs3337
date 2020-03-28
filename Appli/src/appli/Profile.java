@@ -116,7 +116,7 @@ public class Profile extends BodyType {
 
 	protected static void writeFil() {
 		/*
-		 * write user info into a file after they finish taking first time quiz
+		 * write user info into a file after they finish taking first time quiz.
 		 */
 		File fil = new File("info.txt");
 		FileWriter fw = null;
