@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.util.Scanner;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Orientation;
 import javafx.geometry.Pos;
@@ -31,12 +32,14 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontPosture;
+import javafx.scene.text.Text;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
 public class Ui extends Application {
 	Stage window;
-	Scene scene1, scene2, scene3, scene4, scene5, scene6, scene7;
+	Scene scene1,scene2,scene3,scene4,scene5,scene6,scene7,scene8,scene9,scene10,scene11,scene12;
 	Scene intro;
 
 	public static void main(String[] args) {
@@ -59,17 +62,97 @@ public class Ui extends Application {
 				AlertBox.display("Missing input", "Please enter name");
 			} else {
 				recordInfo(nameInput.getText());
-				window.setScene(scene2);
+				window.setScene(scene9);
 			}
 		});
 		introLayout.setPadding(new Insets(10, 10, 10, 10));
 		introLayout.setStyle("-fx-background-color: #32cd32;");
 		introLayout.getChildren().addAll(introLabel, nameInput, i);
 		introLayout.setAlignment(Pos.CENTER);
+		
+//*********************************************************************************************************
+		//Body type quiz is started
+		//Had to update the quiz to include age and gender, so started with that first
+		
+		HBox ageGenderQuestion = new HBox(20);
+		Label agLabel = new Label("	Body type question 1:\n  Please enter your age and gender.");
+		agLabel.setFont(Font.font("Times New Roman", FontPosture.ITALIC, 18));
+		agLabel.setTextFill(Color.WHITE);
+		agLabel.setAlignment(Pos.CENTER);
+		ageGenderQuestion.getChildren().addAll(agLabel);
+		
+		//Making the input fields for age and Gender 
+		GridPane ageGenderPane = new GridPane();
+		ageGenderPane.setAlignment(Pos.CENTER);
+		ageGenderPane.setHgap(10);
+		ageGenderPane.setVgap(10);
+		ageGenderPane.setPadding(new Insets(25,25,25,25));
+		Label ageLabel = new Label("Age: ");
+		ageLabel.setAlignment(Pos.CENTER_LEFT);
+		TextField ageInput = new TextField();
+		ageInput.setPrefWidth(50);
+		ageInput.setMaxWidth(50);
+		ageInput.setAlignment(Pos.TOP_CENTER);
+		Label genderLabel = new Label("Gender: ");
+		genderLabel.setAlignment(Pos.CENTER_LEFT);
+		CheckBox genderCh1 = new CheckBox("Male");
+		CheckBox genderCh2 = new CheckBox("Female");
+		genderCh1.setFont(Font.font("Times New Roman", 15));
+		genderCh2.setFont(Font.font("Times New Roman", 15));
+		
+		ageGenderPane.add(ageLabel,0,1);
+		ageGenderPane.add(ageInput,1,1);
+		ageGenderPane.add(genderLabel,0,2);
+		ageGenderPane.add(genderCh1,1,2);
+		ageGenderPane.add(genderCh2,1,3);
+		
+		
+		Button nxtBtn = new Button("-->");
+		nxtBtn.setAlignment(Pos.BASELINE_RIGHT);
+		nxtBtn.setOnAction(e -> {
+			if (ageInput.getText().isEmpty() && !(genderCh1.isSelected()) && !(genderCh2.isSelected())) {
+				AlertBox.display("Missing input", "Please answer all questions");
+			} else if ((ageInput.getText().isEmpty() && !(genderCh1.isSelected()) && genderCh2.isSelected())) {
+				AlertBox.display("Missing input", "Please answer all questions");
+			}else if ((ageInput.getText().isEmpty() && genderCh1.isSelected() && !(genderCh2.isSelected()))) {
+				AlertBox.display("Missing input", "Please answer all questions");
+			}else if ((!(ageInput.getText().isEmpty()) && genderCh1.isSelected() && genderCh2.isSelected())) {
+				AlertBox.display("User Error", "Please only check one box");
+			}else if ((!(ageInput.getText().isEmpty()) && !(genderCh1.isSelected()) && !(genderCh2.isSelected()))) {
+				AlertBox.display("Missing input", "Please answer all questions");
+			} else {
+				recordInfo(ageInput.getText());
+				recordInfo(genderCh1.getText());
+				recordInfo(genderCh2.getText());
+				window.setScene(scene2);
+			}
+		});
+		Button bckBtn = new Button("<--");
+		bckBtn.setAlignment(Pos.BASELINE_LEFT);
+		bckBtn.setOnAction(e -> window.setScene(scene1));
+		;
+		
+		
+		AnchorPane agBtn = new AnchorPane();
+		HBox agBox = new HBox(5, bckBtn, nxtBtn);
+		agBtn.getChildren().addAll(agBox);
+		AnchorPane.setRightAnchor(agBox, 10d);
+		AnchorPane.setBottomAnchor(agBox, 10d);
 
+		// Create the pane for first question
+		BorderPane ageGenderLayout = new BorderPane();
+		ageGenderLayout.setStyle("-fx-background-color: #32cd32;");
+		ageGenderLayout.setTop(ageGenderQuestion);
+		ageGenderLayout.setCenter(ageGenderPane);
+		ageGenderLayout.setBottom(agBtn);
+		ageGenderLayout.setPadding(new Insets(10, 10, 10, 10));
+		
+		
+		
+		
 		// Scene 2: Used a label to displays first question
 		HBox q1Display = new HBox(20);
-		Label q1Label = new Label("	Body type question 1:\n 	Please Enter height and weight(lbs).");
+		Label q1Label = new Label("	Body type question 2:\n 	Please Enter height and weight(lbs).");
 		q1Label.setFont(Font.font("Times New Roman", FontPosture.ITALIC, 18));
 		q1Label.setTextFill(Color.WHITE);
 		q1Label.setAlignment(Pos.CENTER);
@@ -153,7 +236,7 @@ public class Ui extends Application {
 
 		// Scene 3: Second question of BType quiz
 		HBox q2Display = new HBox(20);
-		Label q2Label = new Label("	Body type question 2:\n How many times per week do you exercise? ");
+		Label q2Label = new Label("	Body type question 3:\n How many times per week do you exercise? ");
 		q2Label.setFont(Font.font("Times New Roman", FontPosture.ITALIC, 18));
 		q2Label.setTextFill(Color.WHITE);
 		q2Display.setAlignment(Pos.TOP_CENTER);
@@ -222,7 +305,7 @@ public class Ui extends Application {
 
 		// Scene 4: Displaying Question 3 of BType quiz
 		HBox q3Display = new HBox(20);
-		Label q3Label = new Label("	Body type question 3:\n What is your body type goal? ");
+		Label q3Label = new Label("	Body type question 4:\n What is your body type goal? ");
 		q3Label.setFont(Font.font("Times New Roman", FontPosture.ITALIC, 18));
 		q3Label.setTextFill(Color.WHITE);
 		q3Display.setAlignment(Pos.TOP_CENTER);
@@ -274,7 +357,9 @@ public class Ui extends Application {
 		 * quizz is finished.
 		 */
 		// initialize foodMenu menuArr
-		FoodMenu foodMenu = new FoodMenu();
+		FoodMenu shredFoodMenu = new FoodMenu();
+		FoodMenu bulkFoodMenu = new FoodMenu();
+		FoodMenu mtFoodMenu = new FoodMenu();
 
 		// putting everything on Scene 4
 		BorderPane q3Layout = new BorderPane();
@@ -320,7 +405,6 @@ public class Ui extends Application {
 		appLayout.setStyle("-fx-background-color: #32cd32;");
 		appLayout.setTop(rgStartLayout);
 		appLayout.setLeft(startChoices);
-		// appLayout.setBottom(q3Btn);
 		appLayout.setPadding(new Insets(10, 10, 10, 10));
 
 		// New scene for when menu is clicked on
@@ -328,36 +412,40 @@ public class Ui extends Application {
 		Label foodNameLabel = new Label("Food List: ");
 		foodNameLabel.setFont(Font.font("Times New Roman", FontPosture.ITALIC, 40));
 		foodNameLabel.setAlignment(Pos.TOP_LEFT);
-		Label macroLabel = new Label("Macronutrients: ");
-		macroLabel.setFont(Font.font("Times New Roman", FontPosture.ITALIC, 20));
-		macroLabel.setAlignment(Pos.TOP_RIGHT);
 		shredMenuHeadings.getChildren().addAll(foodNameLabel);
 		shredMenuHeadings.setAlignment(Pos.CENTER);
 
 		// pane to setup the choices for meals
 		GridPane shredMenuChoices = new GridPane();
-
-		// layout for Shred Food Choices
-		GridPane shredFoodChoices = new GridPane();
-		shredFoodChoices.setAlignment(Pos.CENTER);
-		shredFoodChoices.setHgap(15);
-		shredFoodChoices.setVgap(15);
-		
-		shredFoodChoices.setPadding(new Insets(20, 20, 20, 20));
-		ScrollPane scrollPaneShred = new ScrollPane();
-		for (int k = 0; k < foodMenu.getMenuArr().size(); k++) {
-			this.makeFoodPane(foodMenu.getMenuArr().get(k), shredMenuChoices, k);
+		for (int k = 0; k < shredFoodMenu.getMenuArr().size(); k++) {
+			this.makeFoodPane(shredFoodMenu.getMenuArr().get(k), shredMenuChoices, k);
 		}
-		scrollPaneShred.setContent(shredMenuChoices);
+		Button addShredBtn = new Button("Add Selected Meals");
+		addShredBtn.setOnAction(e -> window.setScene(scene10));
 
+		
+		AnchorPane shredBtn = new AnchorPane();
+		HBox sdAddBox = new HBox(5, addShredBtn);
+		shredBtn.getChildren().addAll(sdAddBox);
+		AnchorPane.setRightAnchor(sdAddBox, 10d);
+		AnchorPane.setBottomAnchor(sdAddBox, 10d);
+		
+		
+		
 		// Layout Pane for when Menu is clicked
 		BorderPane shredMenuLayout = new BorderPane();
 		shredMenuLayout.setStyle("-fx-background-color: #32cd32;");
 		shredMenuLayout.setTop(shredMenuHeadings);
-		shredMenuLayout.setLeft(scrollPaneShred);
-		shredMenuLayout.setCenter(shredFoodChoices);
-		// menuLayout.setBottom(addMealBtn);
+		shredMenuLayout.setCenter(shredMenuChoices);
+		shredMenuLayout.setBottom(shredBtn);
 		shredMenuLayout.setPadding(new Insets(10, 10, 10, 10));
+		
+		
+		ScrollPane scrollPaneShred = new ScrollPane();
+		scrollPaneShred.setContent(shredMenuLayout);
+		scrollPaneShred.setFitToHeight(true);
+	    scrollPaneShred.setFitToWidth(true);
+
 
 		HBox bulkMenuHeadings = new HBox(40);
 		Label blkLabel = new Label("Food List: ");
@@ -366,133 +454,182 @@ public class Ui extends Application {
 		bulkMenuHeadings.getChildren().addAll(blkLabel);
 		bulkMenuHeadings.setAlignment(Pos.CENTER);
 
-		// FIXME
-		HBox blkScroll = new HBox(20);
-		ScrollBar t = new ScrollBar();
-		t.setMin(0);
-		t.setMax(20);
-		t.setValue(0);
-		t.setOrientation(Orientation.VERTICAL);
-		t.setUnitIncrement(5);
-		t.setBlockIncrement(10);
-		t.setPrefSize(20, 20);
-		blkScroll.getChildren().add(t);
 
 		GridPane bulkMenuChoices = new GridPane();
-		bulkMenuChoices.setAlignment(Pos.CENTER);
-		bulkMenuChoices.setHgap(15);
-		bulkMenuChoices.setVgap(15);
-		bulkMenuChoices.setPadding(new Insets(25, 25, 25, 25));
-		Image ptPancakes = new Image(new FileInputStream("foodPics\\proteinPancakes.jpg"));
-		ImageView ptPancakesView = new ImageView(ptPancakes);
-		ptPancakesView.setX(50);
-		ptPancakesView.setY(25);
-		ptPancakesView.setFitHeight(80);
-		ptPancakesView.setFitWidth(80);
-		ptPancakesView.setPreserveRatio(true);
-		Image spPaella = new Image(new FileInputStream("foodPics\\spanishPaella.jpg"));
-		ImageView spPaellaView = new ImageView(spPaella);
-		spPaellaView.setX(50);
-		spPaellaView.setY(25);
-		spPaellaView.setFitHeight(80);
-		spPaellaView.setFitWidth(80);
-		spPaellaView.setPreserveRatio(true);
-		Image stkPotatoes = new Image(new FileInputStream("foodPics\\steakPotatoes.jpg"));
-		ImageView stkPotatoesView = new ImageView(stkPotatoes);
-		stkPotatoesView.setX(50);
-		stkPotatoesView.setY(25);
-		stkPotatoesView.setFitHeight(80);
-		stkPotatoesView.setFitWidth(80);
-		stkPotatoesView.setPreserveRatio(true);
-		Image chkPotatoes = new Image(new FileInputStream("foodPics\\chknPotatoes.jpg"));
-		ImageView chkPotatoesView = new ImageView(chkPotatoes);
-		chkPotatoesView.setX(50);
-		chkPotatoesView.setY(25);
-		chkPotatoesView.setFitHeight(80);
-		chkPotatoesView.setFitWidth(80);
-		chkPotatoesView.setPreserveRatio(true);
-		Image shpPie = new Image(new FileInputStream("foodPics\\shpPie.jpg"));
-		ImageView shpPieView = new ImageView(shpPie);
-		shpPieView.setX(50);
-		shpPieView.setY(25);
-		shpPieView.setFitHeight(80);
-		shpPieView.setFitWidth(80);
-		shpPieView.setPreserveRatio(true);
-		Image spagBol = new Image(new FileInputStream("foodPics\\spaghettiBol.jpg"));
-		ImageView spagBolView = new ImageView(spagBol);
-		spagBolView.setX(50);
-		spagBolView.setY(25);
-		spagBolView.setFitHeight(80);
-		spagBolView.setFitWidth(80);
-		spagBolView.setPreserveRatio(true);
-		Image calSurplus = new Image(new FileInputStream("foodPics\\caloric-surplus.jpg"));
-		ImageView calSurplusView = new ImageView(calSurplus);
-		calSurplusView.setX(50);
-		calSurplusView.setY(25);
-		calSurplusView.setFitHeight(300);
-		calSurplusView.setFitWidth(300);
-		calSurplusView.setPreserveRatio(true);
+		for (int k = 0; k < bulkFoodMenu.getMenuArr().size(); k++) {
+			this.makeFoodPane(bulkFoodMenu.getMenuArr().get(k), bulkMenuChoices, k);
+		}
+		Button addBulkBtn = new Button("Add Selected Meals");
+		addBulkBtn.setOnAction(e -> window.setScene(scene11));
 
-		bulkMenuChoices.getChildren().addAll(ptPancakesView, spPaellaView, stkPotatoesView, chkPotatoesView, shpPieView,
-				spagBolView);
-		bulkMenuChoices.setConstraints(ptPancakesView, 0, 1);
-		bulkMenuChoices.setConstraints(spPaellaView, 0, 2);
-		bulkMenuChoices.setConstraints(stkPotatoesView, 0, 3);
-		bulkMenuChoices.setConstraints(chkPotatoesView, 0, 4);
-		bulkMenuChoices.setConstraints(shpPieView, 0, 5);
-		bulkMenuChoices.setConstraints(spagBolView, 0, 6);
-
-		GridPane bulkFoodChoices = new GridPane();
-		bulkFoodChoices.setAlignment(Pos.CENTER);
-		bulkFoodChoices.setHgap(15);
-		bulkFoodChoices.setVgap(15);
-		CheckBox blkCh1 = new CheckBox("Protein Pancakes");
-		CheckBox blkCh2 = new CheckBox("Spanish Paella");
-		CheckBox blkCh3 = new CheckBox("Steak and Potatoes ");
-		CheckBox blkCh4 = new CheckBox("Chicken and Potatoes ");
-		CheckBox blkCh5 = new CheckBox("Shepherd's Pie ");
-		CheckBox blkCh6 = new CheckBox("Spaghetti Bolognese ");
-		Button addMealBtn = new Button("Add Meals");
-		blkCh1.setFont(Font.font("Times New Roman", 15));
-		blkCh2.setFont(Font.font("Times New Roman", 15));
-		blkCh3.setFont(Font.font("Times New Roman", 15));
-		blkCh4.setFont(Font.font("Times New Roman", 15));
-		blkCh5.setFont(Font.font("Times New Roman", 15));
-		blkCh6.setFont(Font.font("Times New Roman", 15));
-		addMealBtn.setOnAction(e -> handleBulkOptions(blkCh1, blkCh2, blkCh3, blkCh4, blkCh5, blkCh6));
-		addMealBtn.setOnAction(e -> window.setScene(scene5));
-		bulkFoodChoices.setPadding(new Insets(20, 20, 20, 20));
-		bulkFoodChoices.add(blkCh1, 0, 1);
-		bulkFoodChoices.add(blkCh2, 0, 2);
-		bulkFoodChoices.add(blkCh3, 0, 3);
-		bulkFoodChoices.add(blkCh4, 0, 4);
-		bulkFoodChoices.add(blkCh5, 0, 5);
-		bulkFoodChoices.add(blkCh6, 0, 6);
-		bulkFoodChoices.add(calSurplusView, 0, 8);
-		bulkFoodChoices.add(addMealBtn, 0, 12);
-
+		
+		AnchorPane bulkBtn = new AnchorPane();
+		HBox bkAddBox = new HBox(5, addBulkBtn);
+		bulkBtn.getChildren().addAll(bkAddBox);
+		AnchorPane.setRightAnchor(bkAddBox, 10d);
+		AnchorPane.setBottomAnchor(bkAddBox, 10d);
+		
 		BorderPane bulkMenuLayout = new BorderPane();
 		bulkMenuLayout.setStyle("-fx-background-color: #32cd32;");
 		bulkMenuLayout.setTop(bulkMenuHeadings);
-//		bulkMenuLayout.setLeft(bulkMenuChoices);
-		bulkMenuLayout.setCenter(bulkMenuChoices); // was foodChoices
-		bulkMenuLayout.setRight(blkScroll);
+		bulkMenuLayout.setCenter(bulkMenuChoices);
+		bulkMenuLayout.setBottom(bulkBtn);
 		bulkMenuLayout.setPadding(new Insets(10, 10, 10, 10));
+		
+		ScrollPane scrollPaneBulk = new ScrollPane();
+		scrollPaneBulk.setContent(bulkMenuLayout);
+		scrollPaneBulk.setFitToHeight(true);
+	    scrollPaneBulk.setFitToWidth(true);
 
-		/*
-		 * HBox mtMenuHeadings = new HBox(40); Label mtLabel = new Label("Food List: ");
-		 * mtLabel.setFont(Font.font("Times New Roman", FontPosture.ITALIC, 40));
-		 * mtLabel.setAlignment(Pos.TOP_LEFT);
-		 * mtMenuHeadings.getChildren().addAll(mtLabel);
-		 * mtMenuHeadings.setAlignment(Pos.CENTER);
-		 * 
-		 * //FIXME HBox mtScroll = new HBox(20); ScrollBar r = new ScrollBar();
-		 * r.setMin(0); r.setMax(20); r.setValue(0);
-		 * r.setOrientation(Orientation.VERTICAL); r.setUnitIncrement(5);
-		 * r.setBlockIncrement(10); r.setPrefSize(20, 20);
-		 * mtScroll.getChildren().add(r);
-		 * 
-		 */
+		HBox mtMenuHeadings = new HBox(40); Label mtLabel = new Label("Food List: ");
+		mtLabel.setFont(Font.font("Times New Roman", FontPosture.ITALIC, 40));
+		mtLabel.setAlignment(Pos.TOP_LEFT);
+		mtMenuHeadings.getChildren().addAll(mtLabel);
+		mtMenuHeadings.setAlignment(Pos.CENTER);
+		
+		GridPane mtMenuChoices = new GridPane();
+		for (int k = 0; k < mtFoodMenu.getMenuArr().size(); k++) {
+			this.makeFoodPane(mtFoodMenu.getMenuArr().get(k), mtMenuChoices, k);
+		}
+		Button addMtBtn = new Button("Add Selected Meals");
+		addMtBtn.setOnAction(e -> window.setScene(scene12));
+		
+		AnchorPane mtBtn = new AnchorPane();
+		HBox mtAddBox = new HBox(5, addMtBtn);
+		mtBtn.getChildren().addAll(mtAddBox);
+		AnchorPane.setRightAnchor(mtAddBox, 10d);
+		AnchorPane.setBottomAnchor(mtAddBox, 10d);
+		
+		BorderPane mtMenuLayout = new BorderPane();
+		mtMenuLayout.setStyle("-fx-background-color: #32cd32;");
+		mtMenuLayout.setTop(mtMenuHeadings);
+		mtMenuLayout.setCenter(mtMenuChoices);
+		mtMenuLayout.setBottom(mtBtn);
+		mtMenuLayout.setPadding(new Insets(10, 10, 10, 10));
+		
+		ScrollPane scrollPaneMt = new ScrollPane();
+		scrollPaneMt.setContent(mtMenuLayout);
+		scrollPaneMt.setFitToHeight(true);
+	    scrollPaneMt.setFitToWidth(true);
+	    
+	    
+	    
+		   // Making the home screen for each category starting with shred
+				VBox sdStartLayout = new VBox(20);
+				Label sdStartLabel = new Label("	Welcome to your profile!");
+				sdStartLabel.setFont(Font.font("Times New Roman", FontPosture.ITALIC, 20));
+				sdStartLabel.setTextFill(Color.WHITE);
+				sdStartLayout.getChildren().addAll(sdStartLabel);
+				sdStartLayout.setAlignment(Pos.CENTER);
+
+				// making options for the user to choose from in the actual app start
+				GridPane sdStartChoices = new GridPane();
+				sdStartChoices.setAlignment(Pos.CENTER);
+				sdStartChoices.setHgap(10);
+				sdStartChoices.setVgap(10);
+				sdStartChoices.setPadding(new Insets(25, 25, 25, 25));
+				Button sdStartCh1 = new Button(" My Meals ");
+				sdStartCh1.setAlignment(Pos.BASELINE_CENTER);
+				sdStartCh1.setOnAction(e -> window.setScene(scene6));
+				Button sdStartCh2 = new Button(" Workouts ");
+				sdStartCh2.setAlignment(Pos.BASELINE_CENTER);
+				sdStartCh2.setOnAction(e -> window.setScene(scene6));
+				Button sdStartCh3 = new Button(" Schedule ");
+				sdStartCh3.setAlignment(Pos.BASELINE_CENTER);
+				sdStartCh3.setOnAction(e -> window.setScene(scene6));
+				Button sdStartCh4 = new Button(" Update info ");
+				sdStartCh4.setAlignment(Pos.BASELINE_CENTER);
+				sdStartCh4.setOnAction(e -> window.setScene(scene9));
+				sdStartChoices.add(sdStartCh1, 0, 1);
+				sdStartChoices.add(sdStartCh2, 0, 2);
+				sdStartChoices.add(sdStartCh3, 0, 3);
+				sdStartChoices.add(sdStartCh4, 0, 4);
+
+				// Used borderpane to place all choices user can use
+				BorderPane sdHomeLayout = new BorderPane();
+				sdHomeLayout.setStyle("-fx-background-color: #32cd32;");
+				sdHomeLayout.setTop(sdStartLayout);
+				sdHomeLayout.setCenter(sdStartChoices);
+				sdHomeLayout.setPadding(new Insets(10, 10, 10, 10));
+		      
+			// Making the actual startup screen for the app
+				VBox blkStartLayout = new VBox(20);
+				Label blkStartLabel = new Label("	Welcome to your profile!");
+					blkStartLabel.setFont(Font.font("Times New Roman", FontPosture.ITALIC, 20));
+					blkStartLabel.setTextFill(Color.WHITE);
+					blkStartLayout.getChildren().addAll(blkStartLabel);
+		    		blkStartLayout.setAlignment(Pos.CENTER);
+
+			// making options for the user to choose from in the actual app start
+					GridPane blkStartChoices = new GridPane();
+					blkStartChoices.setAlignment(Pos.CENTER);
+					blkStartChoices.setHgap(10);
+					blkStartChoices.setVgap(10);
+					blkStartChoices.setPadding(new Insets(25, 25, 25, 25));
+					Button blkStartCh1 = new Button(" My Meals ");
+					blkStartCh1.setAlignment(Pos.BASELINE_CENTER);
+					blkStartCh1.setOnAction(e -> window.setScene(scene7));
+					Button blkStartCh2 = new Button(" Workouts ");
+					blkStartCh2.setAlignment(Pos.BASELINE_CENTER);
+					blkStartCh2.setOnAction(e -> window.setScene(scene7));
+					Button blkStartCh3 = new Button(" Schedule ");
+					blkStartCh3.setAlignment(Pos.BASELINE_CENTER);
+					blkStartCh3.setOnAction(e -> window.setScene(scene7));
+					Button blkStartCh4 = new Button(" Update info ");
+					blkStartCh4.setAlignment(Pos.BASELINE_CENTER);
+					blkStartCh4.setOnAction(e -> window.setScene(scene9));
+					blkStartChoices.add(blkStartCh1, 0, 1);
+					blkStartChoices.add(blkStartCh2, 0, 2);
+					blkStartChoices.add(blkStartCh3, 0, 3);
+					blkStartChoices.add(blkStartCh4, 0, 4);
+
+					// Used borderpane to place all choices user can use
+					BorderPane blkHomeLayout = new BorderPane();
+					blkHomeLayout.setStyle("-fx-background-color: #32cd32;");
+				    blkHomeLayout.setTop(blkStartLayout);
+					blkHomeLayout.setCenter(blkStartChoices);
+					blkHomeLayout.setPadding(new Insets(10, 10, 10, 10));		
+		      
+			
+			
+			// Making the actual startup screen for the app
+			   VBox mtStartLayout = new VBox(20);
+			   Label mtStartLabel = new Label("	Welcome to your profile!");
+					mtStartLabel.setFont(Font.font("Times New Roman", FontPosture.ITALIC, 20));
+					mtStartLabel.setTextFill(Color.WHITE);
+					mtStartLayout.getChildren().addAll(mtStartLabel);
+			   		mtStartLayout.setAlignment(Pos.CENTER);
+
+			// making options for the user to choose from in the actual app start
+				GridPane mtStartChoices = new GridPane();
+					mtStartChoices.setAlignment(Pos.CENTER);
+					mtStartChoices.setHgap(10);
+					mtStartChoices.setVgap(10);
+					mtStartChoices.setPadding(new Insets(25, 25, 25, 25));
+					Button mtStartCh1 = new Button(" My Meals ");
+					mtStartCh1.setAlignment(Pos.BASELINE_CENTER);
+					mtStartCh1.setOnAction(e -> window.setScene(scene8));
+					Button mtStartCh2 = new Button(" Workouts ");
+					mtStartCh2.setAlignment(Pos.BASELINE_CENTER);
+					mtStartCh2.setOnAction(e -> window.setScene(scene8));
+					Button mtStartCh3 = new Button(" Schedule ");
+					mtStartCh3.setAlignment(Pos.BASELINE_CENTER);
+					mtStartCh3.setOnAction(e -> window.setScene(scene8));
+					Button mtStartCh4 = new Button(" Update info ");
+					mtStartCh4.setAlignment(Pos.BASELINE_CENTER);
+					mtStartCh4.setOnAction(e -> window.setScene(scene9));
+					mtStartChoices.add(mtStartCh1, 0, 1);
+					mtStartChoices.add(mtStartCh2, 0, 2);
+					mtStartChoices.add(mtStartCh3, 0, 3);
+				    mtStartChoices.add(mtStartCh4, 0, 4);
+
+		// Used borderpane to place all choices user can use
+		BorderPane mtHomeLayout = new BorderPane();
+		 mtHomeLayout.setStyle("-fx-background-color: #32cd32;");
+		 mtHomeLayout.setTop(mtStartLayout);
+		 mtHomeLayout.setCenter(mtStartChoices);
+		 mtHomeLayout.setPadding(new Insets(10, 10, 10, 10));
+	    
 
 		// All scenes used
 		scene1 = new Scene(introLayout, 400, 350);
@@ -500,16 +637,18 @@ public class Ui extends Application {
 		scene3 = new Scene(q2Layout, 400, 350);
 		scene4 = new Scene(q3Layout, 400, 350);
 		scene5 = new Scene(appLayout, 350, 350);
-		scene6 = new Scene(shredMenuLayout, 700, 600);
-		scene7 = new Scene(bulkMenuLayout, 700, 600);
-		/*
-		 * scene8 = new Scene(mtMenuLayout, 700, 600); scene9 = new Scene(, 400, 350);
-		 * scene10 = new Scene(, 400, 350);
-		 */
+		scene6 = new Scene(scrollPaneShred, 700, 600);
+		scene7 = new Scene(scrollPaneBulk, 700, 600);
+		scene8 = new Scene(scrollPaneMt, 700, 600); 
+		scene9 = new Scene(ageGenderLayout, 400, 350);
+		scene10 = new Scene(sdHomeLayout, 400, 400);
+		scene11 = new Scene(blkHomeLayout, 400, 400);
+		scene12 = new Scene(mtHomeLayout, 400, 350);
+		 
 		window.setTitle("Healthy Helper");
 		window.show();
 		if (canRead()) {
-			window.setScene(scene6);
+			window.setScene(scene3);
 //			regStart();
 		} else {
 			HBox introBox = new HBox();
@@ -554,6 +693,12 @@ public class Ui extends Application {
 
 	private void makeFoodPane(FoodMenu food, GridPane foodPane, int order)
 			throws FileNotFoundException {
+		
+		 foodPane.setAlignment(Pos.CENTER);
+		 foodPane.setHgap(15);
+		 foodPane.setVgap(15);
+	     foodPane.setPadding(new Insets(25, 25, 25, 25));
+		
 		Image foodImage = new Image(new FileInputStream(food.getFoodPic()));
 		ImageView foodImageView = new ImageView(foodImage);
 		foodImageView.setX(50);
@@ -563,18 +708,33 @@ public class Ui extends Application {
 		foodImageView.setPreserveRatio(true);
 
 		CheckBox foodCheckBox = new CheckBox(food.getNameOfFood());
-		foodCheckBox.setFont(Font.font("Times New Roman", 30));
+		foodCheckBox.setFont(Font.font("Times New Roman", 20));
 		Button foodInfo = new Button(" View Information ");
 		foodInfo.setAlignment(Pos.BASELINE_CENTER);
-		foodInfo.setOnAction(e -> System.out.println("dab"));
-
+		foodInfo.setOnAction(e -> Ui.display());
+		
 		foodPane.getChildren().add(foodImageView);
 		foodPane.setConstraints(foodImageView, 0, order);
 		foodPane.getChildren().add(foodCheckBox);
 		foodPane.setConstraints(foodCheckBox, 1, order);
 		foodPane.getChildren().add(foodInfo);
 		foodPane.setConstraints(foodInfo, 2, order);
-
+	}
+	
+	public static void display() {
+		
+	Stage macroWindow = new Stage();
+	macroWindow.initModality(Modality.APPLICATION_MODAL);
+	macroWindow.setTitle("Macronutrients");
+	Label infoLabel = new Label(" Protein: \n  Carbs: \n  Fats: \n  Total Calories: ");
+	Button button1= new Button("Close window");
+	button1.setOnAction(e -> macroWindow.close());
+	VBox layout= new VBox(10);
+	layout.getChildren().addAll(infoLabel, button1);
+	layout.setAlignment(Pos.CENTER);
+	Scene scene1= new Scene(layout, 300, 250);
+	macroWindow.setScene(scene1);
+	macroWindow.showAndWait();       
 	}
 
 	private void handleBulkOptions(CheckBox blkCh1, CheckBox blkCh2, CheckBox blkCh3, CheckBox blkCh4, CheckBox blkCh5,
