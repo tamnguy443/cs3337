@@ -1,5 +1,6 @@
 package appli;
 
+import javafx.scene.control.TextArea;
 import java.io.BufferedWriter;
 import javafx.animation.*;
 import java.io.File;
@@ -625,10 +626,10 @@ public class Ui extends Application {
 
 		// Used borderpane to place all choices user can use
 		BorderPane mtHomeLayout = new BorderPane();
-		 mtHomeLayout.setStyle("-fx-background-color: #32cd32;");
-		 mtHomeLayout.setTop(mtStartLayout);
-		 mtHomeLayout.setCenter(mtStartChoices);
-		 mtHomeLayout.setPadding(new Insets(10, 10, 10, 10));
+			mtHomeLayout.setStyle("-fx-background-color: #32cd32;");
+		    mtHomeLayout.setTop(mtStartLayout);
+		    mtHomeLayout.setCenter(mtStartChoices);
+			mtHomeLayout.setPadding(new Insets(10, 10, 10, 10));
 	    
 
 		// All scenes used
@@ -709,9 +710,16 @@ public class Ui extends Application {
 
 		CheckBox foodCheckBox = new CheckBox(food.getNameOfFood());
 		foodCheckBox.setFont(Font.font("Times New Roman", 20));
+		//foodCheckBox.setOnAction(e -> handleShredOptions(CheckBox));
 		Button foodInfo = new Button(" View Information ");
 		foodInfo.setAlignment(Pos.BASELINE_CENTER);
-		foodInfo.setOnAction(e -> Ui.display());
+		foodInfo.setOnAction(e -> {
+			try {
+				Ui.display(food);
+			} catch (FileNotFoundException e1) {
+				e1.printStackTrace();
+			}
+		});
 		
 		foodPane.getChildren().add(foodImageView);
 		foodPane.setConstraints(foodImageView, 0, order);
@@ -721,19 +729,122 @@ public class Ui extends Application {
 		foodPane.setConstraints(foodInfo, 2, order);
 	}
 	
-	public static void display() {
+	public static void display(FoodMenu foodp2) throws FileNotFoundException {
 		
 	Stage macroWindow = new Stage();
 	macroWindow.initModality(Modality.APPLICATION_MODAL);
 	macroWindow.setTitle("Macronutrients");
-	Label infoLabel = new Label(" Protein: \n  Carbs: \n  Fats: \n  Total Calories: ");
-	Button button1= new Button("Close window");
-	button1.setOnAction(e -> macroWindow.close());
-	VBox layout= new VBox(10);
-	layout.getChildren().addAll(infoLabel, button1);
-	layout.setAlignment(Pos.CENTER);
-	Scene scene1= new Scene(layout, 300, 250);
+	
+	Label proteinLabel = new Label(" Protein: ");
+	proteinLabel.setFont(Font.font("Times New Roman", 16));
+	Label carbsLabel = new Label(" Carbs: ");
+	carbsLabel.setFont(Font.font("Times New Roman", 16));
+	Label fatsLabel = new Label(" Fats: ");
+	fatsLabel.setFont(Font.font("Times New Roman", 16));
+	Label pSizeLabel = new Label(" Portion Size: ");
+	pSizeLabel.setFont(Font.font("Times New Roman", 16));
+	Label foodName = new Label("Name: ");
+	foodName.setFont(Font.font("Times New Roman", FontPosture.ITALIC, 20));
+	foodName.setTextFill(Color.WHITE);
+	Label macroLbl = new Label("Macros: ");
+	macroLbl.setFont(Font.font("Times New Roman", FontPosture.ITALIC, 20));
+	macroLbl.setTextFill(Color.WHITE);
+	
+	//textarea to get the description of food
+	TextArea descriptArea = new TextArea();
+	descriptArea.setText(foodp2.getDescription());
+	descriptArea.setWrapText(false); 
+	descriptArea.setPrefHeight(descriptArea.getHeight());  
+	descriptArea.setPrefWidth(descriptArea.getWidth());
+	descriptArea.setEditable(false);
+	
+	//creating area for description
+	VBox vbox = new VBox(200);
+	vbox.setPadding(new Insets(10, 10, 10, 10));
+	vbox.setStyle("-fx-background-color: #32cd32;");
+	vbox.getChildren().add(descriptArea);
+	vbox.setAlignment(Pos.CENTER);
+	
+	
+	//textarea for name of food
+	TextArea textArea = new TextArea();
+	textArea.setText(foodp2.getNameOfFood());
+	textArea.setPrefHeight(2);  
+	textArea.setPrefWidth(120);
+	textArea.setEditable(false);
+	
+	//textarea to get protein
+	TextArea proteinArea = new TextArea();
+	proteinArea.setText(String.valueOf(foodp2.getProtein()));
+	proteinArea.setPrefHeight(10);  
+	proteinArea.setPrefWidth(10);
+	proteinArea.setEditable(false);
+	
+	//textarea for carbs
+	TextArea carbsArea = new TextArea();
+	carbsArea.setText(String.valueOf(foodp2.getCarbs()));
+	carbsArea.setPrefHeight(10);  
+	carbsArea.setPrefWidth(10);
+	carbsArea.setEditable(false);
+	
+	//textarea for fats
+	TextArea fatsArea = new TextArea();
+	fatsArea.setText(String.valueOf(foodp2.getFat()));
+	fatsArea.setPrefHeight(10);  
+	fatsArea.setPrefWidth(10);
+	fatsArea.setEditable(false);
+	
+	//textarea for fats
+	TextArea pSizeArea = new TextArea();
+	pSizeArea.setText(String.valueOf(foodp2.getPortionSize()));
+	pSizeArea.setPrefHeight(10);  
+	pSizeArea.setPrefWidth(10);
+	pSizeArea.setEditable(false);
+	
+	Image foodImage = new Image(new FileInputStream(foodp2.getFoodPic()));
+	ImageView foodImageView = new ImageView(foodImage);
+	foodImageView.setX(50);
+	foodImageView.setY(25);
+	foodImageView.setFitHeight(140);
+	foodImageView.setFitWidth(200);
+	foodImageView.setPreserveRatio(true);
+	
+	GridPane picLayout = new GridPane();
+	picLayout.setAlignment(Pos.CENTER);
+	picLayout.setHgap(15);
+	picLayout.setVgap(15);
+	picLayout.setPadding(new Insets(25, 25, 25, 25));
+	picLayout.add(foodImageView,0,1);
+	
+	GridPane macroLayout = new GridPane();
+	macroLayout.setAlignment(Pos.CENTER);
+	macroLayout.setHgap(15);
+	macroLayout.setVgap(15);
+	macroLayout.setPadding(new Insets(25, 25, 25, 25));
+	macroLayout.add(foodName,1,1);
+	macroLayout.add(textArea,2,1);
+	macroLayout.add(macroLbl,1,2);
+	macroLayout.add(proteinLabel,2,2);
+	macroLayout.add(carbsLabel,2,3);
+	macroLayout.add(fatsLabel,2,4);
+	macroLayout.add(pSizeLabel,2,5);
+	macroLayout.add(proteinArea,3,2);
+	macroLayout.add(carbsArea,3,3);
+	macroLayout.add(fatsArea,3,4);
+	macroLayout.add(pSizeArea,3,5);
+	
+	
+	BorderPane macroPane = new BorderPane();
+	macroPane.setStyle("-fx-background-color: #32cd32;");
+	macroPane.setLeft(picLayout);
+	macroPane.setCenter(macroLayout);
+	macroPane.setBottom(vbox);
+	macroPane.setPadding(new Insets(10, 10, 10, 10));
+
+	
+	Scene scene1= new Scene(macroPane, 600, 400);
 	macroWindow.setScene(scene1);
+	macroWindow.setResizable(false);
 	macroWindow.showAndWait();       
 	}
 
