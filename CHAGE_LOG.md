@@ -25,3 +25,4 @@ Mar-27th The Ui class can now make Menu choices for each body type through a met
 April-7th The Ui was updated to have a new scene to ask the user to enter their age and gender. The Ui now contains 3 menu scenes, one  for each of the body type options which are shred, bulk, and maintain. Each menu scene has a variety of meals the user can choose from to create their own personalized diet and each meal has a "view information" button where the user can click to see the macronutrients associated with each meal.
 
 April-9th The Ui was updated to have a macronutrients window provided for each meal choice. The window displays the food picture, a desrciption of the food, and the macros associated with it such as protein, fats, carbs, and the portion size. 
+April-12th The foodList.csv file was updated with more food, and foodPics file has a picture of all the new food. 
