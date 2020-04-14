@@ -26,3 +26,4 @@ April-7th The Ui was updated to have a new scene to ask the user to enter their 
 
 April-9th The Ui was updated to have a macronutrients window provided for each meal choice. The window displays the food picture, a desrciption of the food, and the macros associated with it such as protein, fats, carbs, and the portion size. 
 April-12th The foodList.csv file was updated with more food, and foodPics file has a picture of all the new food. 
+April-13th The FoodDescription file was created and contains the necessary ingredients and instructions for every food in foodList.csv
