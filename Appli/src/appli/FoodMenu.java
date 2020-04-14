@@ -23,7 +23,7 @@ public class FoodMenu {
 		this.parseFromList();
 	}
 
-	public FoodMenu(String nameOfFood, int carbs, int protein, double fat, double portionSize, String description) {
+	private FoodMenu(String nameOfFood, int carbs, int protein, double fat, double portionSize, String description) {
 		this.description = description;
 		this.nameOfFood = nameOfFood;
 		this.carbs = carbs;
@@ -57,7 +57,7 @@ public class FoodMenu {
 			// add all the food in the list to menuArr
 			if (nextLine.length() > 0) {
 				FoodMenu food = new FoodMenu(token[0], Integer.parseInt(token[1]), Integer.parseInt(token[2]),
-						Double.parseDouble(token[3]), Double.parseDouble(token[3]), "description");
+						Double.parseDouble(token[3]), Double.parseDouble(token[4]), token[5]);
 				this.menuArr.add(food);
 			}
 		}
@@ -122,6 +122,10 @@ public class FoodMenu {
 
 	public String getFoodPic() {
 		return "foodPics\\\\" + this.nameOfFood.replaceAll("\\s+","") + ".jpg";
+	}
+	
+	public String getFoodRecipe() {
+		return "FoodRecipes\\\\" + this.nameOfFood.replaceAll("\\s+","") + "Recipe.jpg";
 	}
 
 	public void setFoodPic(String foodPic) {
