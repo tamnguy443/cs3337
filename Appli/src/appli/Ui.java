@@ -40,7 +40,7 @@ import javafx.util.Duration;
 
 public class Ui extends Application {
 	Stage window;
-	Scene scene1,scene2,scene3,scene4,scene5,scene6,scene7,scene8,scene9,scene10,scene11,scene12;
+	Scene scene1,scene2,scene3,scene4,scene5,scene6,scene7,scene8,scene9,scene10,scene11,scene12,scene13;
 	Scene intro;
 
 	public static void main(String[] args) {
@@ -363,6 +363,7 @@ public class Ui extends Application {
 		FoodMenu shredFoodMenu = new FoodMenu();
 		FoodMenu bulkFoodMenu = new FoodMenu();
 		FoodMenu mtFoodMenu = new FoodMenu();
+		FoodMenu scheduleMenu = new FoodMenu();
 
 		// putting everything on Scene 4
 		BorderPane q3Layout = new BorderPane();
@@ -539,7 +540,7 @@ public class Ui extends Application {
 				sdStartCh2.setOnAction(e -> window.setScene(scene6));
 				Button sdStartCh3 = new Button(" Schedule ");
 				sdStartCh3.setAlignment(Pos.BASELINE_CENTER);
-				sdStartCh3.setOnAction(e -> window.setScene(scene6));
+				sdStartCh3.setOnAction(e -> window.setScene(scene13));
 				Button sdStartCh4 = new Button(" Update info ");
 				sdStartCh4.setAlignment(Pos.BASELINE_CENTER);
 				sdStartCh4.setOnAction(e -> window.setScene(scene9));
@@ -577,7 +578,7 @@ public class Ui extends Application {
 					blkStartCh2.setOnAction(e -> window.setScene(scene7));
 					Button blkStartCh3 = new Button(" Schedule ");
 					blkStartCh3.setAlignment(Pos.BASELINE_CENTER);
-					blkStartCh3.setOnAction(e -> window.setScene(scene7));
+					blkStartCh3.setOnAction(e -> window.setScene(scene13));
 					Button blkStartCh4 = new Button(" Update info ");
 					blkStartCh4.setAlignment(Pos.BASELINE_CENTER);
 					blkStartCh4.setOnAction(e -> window.setScene(scene9));
@@ -617,7 +618,7 @@ public class Ui extends Application {
 					mtStartCh2.setOnAction(e -> window.setScene(scene8));
 					Button mtStartCh3 = new Button(" Schedule ");
 					mtStartCh3.setAlignment(Pos.BASELINE_CENTER);
-					mtStartCh3.setOnAction(e -> window.setScene(scene8));
+					mtStartCh3.setOnAction(e -> window.setScene(scene13));
 					Button mtStartCh4 = new Button(" Update info ");
 					mtStartCh4.setAlignment(Pos.BASELINE_CENTER);
 					mtStartCh4.setOnAction(e -> window.setScene(scene9));
@@ -633,6 +634,171 @@ public class Ui extends Application {
 		    mtHomeLayout.setCenter(mtStartChoices);
 			mtHomeLayout.setPadding(new Insets(10, 10, 10, 10));
 	    
+			
+		//Layout for Schedule
+		//plan is to make the layout one big grid that displays the days from top to bottom
+		//below each day times will be shown along with all the food in order they are meant to be eaten
+		//grid will be placed on a scrollpane in order to see all days and meals displayed
+			
+			GridPane schedule = new GridPane();
+			schedule.setAlignment(Pos.CENTER);
+			schedule.setHgap(10);
+			schedule.setVgap(10);	
+			schedule.setPadding(new Insets(25, 25, 25, 25));
+			Label monLbl = new Label("Monday: ");
+			monLbl.getStyleClass().add("label-dayStyle");
+			Label tuesLbl = new Label("Tuesday: ");
+			tuesLbl.getStyleClass().add("label-dayStyle");
+			Label wedLbl = new Label("Wednesday: ");
+			wedLbl.getStyleClass().add("label-dayStyle");
+			Label thursLbl = new Label("Thursday: ");
+			thursLbl.getStyleClass().add("label-dayStyle");
+			Label friLbl = new Label("Friday: ");
+			friLbl.getStyleClass().add("label-dayStyle");
+			Label satLbl = new Label("Saturday: ");
+			satLbl.getStyleClass().add("label-dayStyle");
+			Label monBreakfastTimeLbl = new Label("8:00am");
+			Label tuesBreakfastTimeLbl = new Label("8:00am");
+			Label wedBreakfastTimeLbl = new Label("8:00am");
+			Label thursBreakfastTimeLbl = new Label("8:00am");
+			Label friBreakfastTimeLbl = new Label("8:00am");
+			Label satBreakfastTimeLbl = new Label("8:00am");
+			Label monLunchTimeLbl = new Label("12:30pm");
+			Label tuesLunchTimeLbl = new Label("12:30pm");
+			Label wedLunchTimeLbl = new Label("12:30pm");
+			Label thursLunchTimeLbl = new Label("12:30pm");
+			Label friLunchTimeLbl = new Label("12:30pm");
+			Label satLunchTimeLbl = new Label("12:30pm");
+			Label monDinnerTimeLbl = new Label("8:30pm");
+			Label tuesDinnerTimeLbl = new Label("8:30pm");
+			Label wedDinnerTimeLbl = new Label("8:30pm");
+			Label thursDinnerTimeLbl = new Label("8:30pm");
+			Label friDinnerTimeLbl = new Label("8:30pm");
+			Label satDinnerTimeLbl = new Label("8:30pm");
+			Label monSnack1TimeLbl = new Label("3:00pm");
+			Label monSnack2TimeLbl = new Label("5:30pm");
+			Label tuesSnack1TimeLbl = new Label("3:00pm");
+			Label tuesSnack2TimeLbl = new Label("5:30pm");
+			Label wedSnack1TimeLbl = new Label("3:00pm");
+			Label wedSnack2TimeLbl = new Label("5:30pm");
+			Label thursSnack1TimeLbl = new Label("3:00pm");
+			Label thursSnack2TimeLbl = new Label("5:30pm");
+			Label friSnack1TimeLbl = new Label("3:00pm");
+			Label friSnack2TimeLbl = new Label("5:30pm");
+			Label satSnack1TimeLbl = new Label("3:00pm");
+			Label satSnack2TimeLbl = new Label("5:30pm");
+			Label monBreakfastLbl = new Label("Breakfast: ");
+			Label tuesBreakfastLbl = new Label("Breakfast: ");
+			Label wedBreakfastLbl = new Label("Breakfast: ");
+			Label thursBreakfastLbl = new Label("Breakfast: ");
+			Label friBreakfastLbl = new Label("Breakfast: ");
+			Label satBreakfastLbl = new Label("Breakfast: ");
+			Label monLunchLbl = new Label("Lunch: ");
+			Label tuesLunchLbl = new Label("Lunch: ");
+			Label wedLunchLbl = new Label("Lunch: ");
+			Label thursLunchLbl = new Label("Lunch: ");
+			Label friLunchLbl = new Label("Lunch: ");
+			Label satLunchLbl = new Label("Lunch: ");
+			Label monDinnerLbl = new Label("Dinner: ");
+			Label tuesDinnerLbl = new Label("Dinner: ");
+			Label wedDinnerLbl = new Label("Dinner: ");
+			Label thursDinnerLbl = new Label("Dinner: ");
+			Label friDinnerLbl = new Label("Dinner: ");
+			Label satDinnerLbl = new Label("Dinner: ");
+			Label monSnack1Lbl = new Label("Snack 1: ");
+			Label tuesSnack1Lbl = new Label("Snack 1: ");
+			Label wedSnack1Lbl = new Label("Snack 1: ");
+			Label thursSnack1Lbl = new Label("Snack 1: ");
+			Label friSnack1Lbl = new Label("Snack 1: ");
+			Label satSnack1Lbl = new Label("Snack 1: ");
+			Label monSnack2Lbl = new Label("Snack 2: ");
+			Label tuesSnack2Lbl = new Label("Snack 2: ");
+			Label wedSnack2Lbl = new Label("Snack 2: ");
+			Label thursSnack2Lbl = new Label("Snack 2: ");
+			Label friSnack2Lbl = new Label("Snack 2: ");
+			Label satSnack2Lbl = new Label("Snack 2: ");
+			Button back = new Button("<--");
+			back.setOnAction(e -> window.setScene(scene6));
+			schedule.add(monLbl, 0, 1);
+			schedule.add(monBreakfastTimeLbl,0,2);
+			schedule.add(monBreakfastLbl,1,2);
+			schedule.add(monLunchTimeLbl,0,3);
+			schedule.add(monLunchLbl,1,3);
+			schedule.add(monSnack1TimeLbl,0,4);
+			schedule.add(monSnack1Lbl,1,4);
+			schedule.add(monSnack2TimeLbl,0,5);
+			schedule.add(monSnack2Lbl,1,5);
+			schedule.add(monDinnerTimeLbl,0,6);
+			schedule.add(monDinnerLbl,1,6);
+			schedule.add(tuesLbl,0,8);
+			schedule.add(tuesBreakfastTimeLbl,0,9);
+			schedule.add(tuesBreakfastLbl,1,9);
+			schedule.add(tuesLunchTimeLbl,0,10);
+			schedule.add(tuesLunchLbl,1,10);
+			schedule.add(tuesSnack1TimeLbl,0,11);
+			schedule.add(tuesSnack1Lbl,1,11);
+			schedule.add(tuesSnack2TimeLbl,0,12);
+			schedule.add(tuesSnack2Lbl,1,12);
+			schedule.add(tuesDinnerTimeLbl,0,13);
+			schedule.add(tuesDinnerLbl,1,13);
+			schedule.add(wedLbl,0,15);
+			schedule.add(wedBreakfastTimeLbl,0,16);
+			schedule.add(wedBreakfastLbl,1,16);
+			schedule.add(wedLunchTimeLbl,0,17);
+			schedule.add(wedLunchLbl,1,17);
+			schedule.add(wedSnack1TimeLbl,0,18);
+			schedule.add(wedSnack1Lbl,1,18);
+			schedule.add(wedSnack2TimeLbl,0,19);
+			schedule.add(wedSnack2Lbl,1,19);
+			schedule.add(wedDinnerTimeLbl,0,20);
+			schedule.add(wedDinnerLbl,1,20);
+			schedule.add(thursLbl,0,22);
+			schedule.add(thursBreakfastTimeLbl,0,23);
+			schedule.add(thursBreakfastLbl,1,23);
+			schedule.add(thursLunchTimeLbl,0,24);
+			schedule.add(thursLunchLbl,1,24);
+			schedule.add(thursSnack1TimeLbl,0,25);
+			schedule.add(thursSnack1Lbl,1,25);
+			schedule.add(thursSnack2TimeLbl,0,26);
+			schedule.add(thursSnack2Lbl,1,26);
+			schedule.add(thursDinnerTimeLbl,0,27);
+			schedule.add(thursDinnerLbl,1,27);
+			schedule.add(friLbl,0,29);
+			schedule.add(friBreakfastTimeLbl,0,30);
+			schedule.add(friBreakfastLbl,1,30);
+			schedule.add(friLunchTimeLbl,0,31);
+			schedule.add(friLunchLbl,1,31);
+			schedule.add(friSnack1TimeLbl,0,32);
+			schedule.add(friSnack1Lbl,1,32);
+			schedule.add(friSnack2TimeLbl,0,33);
+			schedule.add(friSnack2Lbl,1,33);
+			schedule.add(friDinnerTimeLbl,0,34);
+			schedule.add(friDinnerLbl,1,34);
+			schedule.add(satLbl,0,36);
+			schedule.add(satBreakfastTimeLbl,0,37);
+			schedule.add(satBreakfastLbl,1,37);
+			schedule.add(satLunchTimeLbl,0,38);
+			schedule.add(satLunchLbl,1,38);
+			schedule.add(satSnack1TimeLbl,0,39);
+			schedule.add(satSnack1Lbl,1,39);
+			schedule.add(satSnack2TimeLbl,0,40);
+			schedule.add(satSnack2Lbl,1,40);
+			schedule.add(satDinnerTimeLbl,0,41);
+			schedule.add(satDinnerLbl,1,41);
+			
+			
+	BorderPane scheduleLayout = new BorderPane();
+			scheduleLayout.setStyle("-fx-background-color: #32cd32;");
+		   // scheduleLayout.setTop(mtStartLayout);
+		    scheduleLayout.setCenter(schedule);
+		    scheduleLayout.setBottom(back);
+			scheduleLayout.setPadding(new Insets(10, 10, 10, 10));
+			
+	ScrollPane scheduleScroll = new ScrollPane();
+		scheduleScroll.setContent(scheduleLayout);
+		scheduleScroll.setFitToHeight(true);
+	    scheduleScroll.setFitToWidth(true);
+			
 
 		// All scenes used
 		scene1 = new Scene(introLayout, 400, 350);
@@ -647,6 +813,8 @@ public class Ui extends Application {
 		scene10 = new Scene(sdHomeLayout, 400, 400);
 		scene11 = new Scene(blkHomeLayout, 400, 400);
 		scene12 = new Scene(mtHomeLayout, 400, 350);
+		scene13 = new Scene(scheduleScroll, 600, 500);
+		scene13.getStylesheets().add(MainStyle);
 		 
 		window.setTitle("Healthy Helper");
 		window.show();
