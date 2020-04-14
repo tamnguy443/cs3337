@@ -1,6 +1,5 @@
 package appli;
 
-import javafx.scene.control.TextArea;
 import java.io.BufferedWriter;
 import javafx.animation.*;
 import java.io.File;
@@ -31,6 +30,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import javafx.scene.paint.ImagePattern;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontPosture;
 import javafx.scene.text.Text;
@@ -47,6 +47,8 @@ public class Ui extends Application {
 		launch(args);
 	}
 
+	public static final String MainStyle = "Styler.css"; 
+	
 	@Override
 	public void start(Stage primaryStage) throws FileNotFoundException {
 		window = primaryStage;
@@ -667,30 +669,6 @@ public class Ui extends Application {
 		}
 	}
 
-	private void handleShredOptions(CheckBox fdCh1, CheckBox fdCh2, CheckBox fdCh3, CheckBox fdCh4, CheckBox fdCh5,
-			CheckBox fdCh6) {
-		String message = "Users meals chosen:\n";
-
-		if (fdCh1.isSelected())
-			message += "BBQ Chicken w/Quinoa Salad\n";
-
-		if (fdCh2.isSelected())
-			message += "Curry chicken w/Vegtables\n";
-
-		if (fdCh3.isSelected())
-			message += "Chicken fajitas\n";
-
-		if (fdCh4.isSelected())
-			message += "Teriyaki Chicken\n";
-
-		if (fdCh5.isSelected())
-			message += "Chicken Bruschetta Casserole\n";
-
-		if (fdCh6.isSelected())
-			message += "Chicken Tikka Masala";
-
-		System.out.println(message);
-	}
 
 	private void makeFoodPane(FoodMenu food, GridPane foodPane, int order)
 			throws FileNotFoundException {
@@ -710,7 +688,6 @@ public class Ui extends Application {
 
 		CheckBox foodCheckBox = new CheckBox(food.getNameOfFood());
 		foodCheckBox.setFont(Font.font("Times New Roman", 20));
-		//foodCheckBox.setOnAction(e -> handleShredOptions(CheckBox));
 		Button foodInfo = new Button(" View Information ");
 		foodInfo.setAlignment(Pos.BASELINE_CENTER);
 		foodInfo.setOnAction(e -> {
@@ -735,13 +712,15 @@ public class Ui extends Application {
 	macroWindow.initModality(Modality.APPLICATION_MODAL);
 	macroWindow.setTitle("Macronutrients");
 	
-	Label proteinLabel = new Label(" Protein: ");
+	Label proteinLabel = new Label(" Protein: " + foodp2.getProtein() + " grams");
 	proteinLabel.setFont(Font.font("Times New Roman", 16));
-	Label carbsLabel = new Label(" Carbs: ");
+	Label foodNameLabel = new Label(foodp2.getNameOfFood());
+	foodNameLabel.setFont(Font.font("Times New Roman", 16));
+	Label carbsLabel = new Label(" Carbs: " + foodp2.getCarbs() + " grams");
 	carbsLabel.setFont(Font.font("Times New Roman", 16));
-	Label fatsLabel = new Label(" Fats: ");
+	Label fatsLabel = new Label(" Fats: " + foodp2.getFat() + " grams");
 	fatsLabel.setFont(Font.font("Times New Roman", 16));
-	Label pSizeLabel = new Label(" Portion Size: ");
+	Label pSizeLabel = new Label(" Portion Size: " + foodp2.getPortionSize() +" cups");
 	pSizeLabel.setFont(Font.font("Times New Roman", 16));
 	Label foodName = new Label("Name: ");
 	foodName.setFont(Font.font("Times New Roman", FontPosture.ITALIC, 20));
@@ -750,56 +729,14 @@ public class Ui extends Application {
 	macroLbl.setFont(Font.font("Times New Roman", FontPosture.ITALIC, 20));
 	macroLbl.setTextFill(Color.WHITE);
 	
-	//textarea to get the description of food
-	TextArea descriptArea = new TextArea();
-	descriptArea.setText(foodp2.getDescription());
-	descriptArea.setWrapText(false); 
-	descriptArea.setPrefHeight(descriptArea.getHeight());  
-	descriptArea.setPrefWidth(descriptArea.getWidth());
-	descriptArea.setEditable(false);
-	
 	//creating area for description
 	VBox vbox = new VBox(200);
+	Label description = new Label(foodp2.getDescription());
 	vbox.setPadding(new Insets(10, 10, 10, 10));
 	vbox.setStyle("-fx-background-color: #32cd32;");
-	vbox.getChildren().add(descriptArea);
+	vbox.getChildren().add(description);
 	vbox.setAlignment(Pos.CENTER);
-	
-	
-	//textarea for name of food
-	TextArea textArea = new TextArea();
-	textArea.setText(foodp2.getNameOfFood());
-	textArea.setPrefHeight(2);  
-	textArea.setPrefWidth(120);
-	textArea.setEditable(false);
-	
-	//textarea to get protein
-	TextArea proteinArea = new TextArea();
-	proteinArea.setText(String.valueOf(foodp2.getProtein()));
-	proteinArea.setPrefHeight(10);  
-	proteinArea.setPrefWidth(10);
-	proteinArea.setEditable(false);
-	
-	//textarea for carbs
-	TextArea carbsArea = new TextArea();
-	carbsArea.setText(String.valueOf(foodp2.getCarbs()));
-	carbsArea.setPrefHeight(10);  
-	carbsArea.setPrefWidth(10);
-	carbsArea.setEditable(false);
-	
-	//textarea for fats
-	TextArea fatsArea = new TextArea();
-	fatsArea.setText(String.valueOf(foodp2.getFat()));
-	fatsArea.setPrefHeight(10);  
-	fatsArea.setPrefWidth(10);
-	fatsArea.setEditable(false);
-	
-	//textarea for fats
-	TextArea pSizeArea = new TextArea();
-	pSizeArea.setText(String.valueOf(foodp2.getPortionSize()));
-	pSizeArea.setPrefHeight(10);  
-	pSizeArea.setPrefWidth(10);
-	pSizeArea.setEditable(false);
+
 	
 	Image foodImage = new Image(new FileInputStream(foodp2.getFoodPic()));
 	ImageView foodImageView = new ImageView(foodImage);
@@ -822,18 +759,14 @@ public class Ui extends Application {
 	macroLayout.setVgap(15);
 	macroLayout.setPadding(new Insets(25, 25, 25, 25));
 	macroLayout.add(foodName,1,1);
-	macroLayout.add(textArea,2,1);
+	macroLayout.add(foodNameLabel,2,1);
 	macroLayout.add(macroLbl,1,2);
 	macroLayout.add(proteinLabel,2,2);
 	macroLayout.add(carbsLabel,2,3);
 	macroLayout.add(fatsLabel,2,4);
 	macroLayout.add(pSizeLabel,2,5);
-	macroLayout.add(proteinArea,3,2);
-	macroLayout.add(carbsArea,3,3);
-	macroLayout.add(fatsArea,3,4);
-	macroLayout.add(pSizeArea,3,5);
-	
-	
+
+
 	BorderPane macroPane = new BorderPane();
 	macroPane.setStyle("-fx-background-color: #32cd32;");
 	macroPane.setLeft(picLayout);
@@ -843,35 +776,13 @@ public class Ui extends Application {
 
 	
 	Scene scene1= new Scene(macroPane, 600, 400);
+	//scene1.getStylesheets().add(MainStyle);
+	//scene1.setFill();
 	macroWindow.setScene(scene1);
 	macroWindow.setResizable(false);
 	macroWindow.showAndWait();       
 	}
 
-	private void handleBulkOptions(CheckBox blkCh1, CheckBox blkCh2, CheckBox blkCh3, CheckBox blkCh4, CheckBox blkCh5,
-			CheckBox blkCh6) {
-		String message = "Users meals chosen:\n";
-
-		if (blkCh1.isSelected())
-			message += "Protein Pancakes\n";
-
-		if (blkCh2.isSelected())
-			message += "Spanish Paella\n";
-
-		if (blkCh3.isSelected())
-			message += "Steak and Potatoes\n";
-
-		if (blkCh4.isSelected())
-			message += "Chicken and Potatoes\n";
-
-		if (blkCh5.isSelected())
-			message += "Shepherd's Pie\n";
-
-		if (blkCh6.isSelected())
-			message += "Spaghetti Bolognese";
-
-		System.out.println(message);
-	}
 
 	protected void regStart() {
 		// this method will be called after canRead returns true, will start the APP on
