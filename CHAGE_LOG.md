@@ -30,4 +30,6 @@ April-12th The foodList.csv file was updated with more food, and foodPics file h
 
 April-13th The FoodDescription file was created and contains the necessary ingredients and instructions for every food in foodList.csv
 
-April 14th The Ui was updated to have a schedule for the user to see their choosen meals organized on a weekly basis. The schedule button on the main menu displays the times for when each meal(breakfast,lunch,snack1,snack2,dinner) should be eaten. 
+April-14th The Ui was updated to have a schedule for the user to see their choosen meals organized on a weekly basis. The schedule button on the main menu displays the times for when each meal(breakfast,lunch,snack1,snack2,dinner) should be eaten.
+
+April-15th The schedule scene was updated to have a new layout. The scene now displays all days of the week on the top of the scene and all the times for each meal on the left hand side of the menu.
