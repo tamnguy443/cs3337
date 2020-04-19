@@ -2,92 +2,68 @@ package appli;
 
 
 public class BodyType {
-	private String bType;
-
+	private double bType;
+	private double CaloricIntake; //2000.0 default
 	// bulk
 	// shredding
 	// maintain
 	// data field of routein is different based on costructors output
-
-	protected BodyType(String bType) {
-
+	// 100% to maintain, shred 87%, bulk 113%
+	//1-3 times a week = 1.37505, 4-5 = 1.465, 6-everyday = 1.5503
+	protected BodyType(String bType, String sched) {
 		if (bType.equals("bulk")) {
-			this.bType = "b";
+			this.bType = 1.13;
 		} else if (bType.equals("shred")) {
-			this.bType = "s";
+			this.bType = 0.87;
 		} else if (bType.equals("maintain")) {
-			this.bType = "m";
-		} 
-
-	}
-	
-	protected BodyType() {
-		//default constructor
-		this.bType = "";
-	}
-
-	protected String getbType() {
-		return bType;
-	}
-
-	protected void setbType(String bType) {
-		this.bType = bType;
-	}
-
-	// one method to call the private ones based on bodyType
-	protected void showMenu() {
-		// will call bulk/shred/maintain Menu method based on char bType
-		if (this.bType.equals("b")) {
-			this.bulkMenu();
-		} else if (this.bType.equals("s")) {
-			this.shredMenu();
-		} else if (this.bType.equals("m")) {
-			this.maintainMenu();
+			this.bType = 1;
 		}
-	}
-	
-	protected void scheduler() {
-		// will call bulk/shred/maintain Menu method based on char bType
-		if (this.bType.equals("b")) {
-			this.bulkSched();
-		} else if (this.bType.equals("s")) {
-			this.shredSched();
-		} else if (this.bType.equals("m")) {
-			this.maintainSched();
+
+		if (sched.equals("1-3")) {
+			this.CaloricIntake = 1.37505;
+		} else if (bType.equals("4-5")) {
+			this.CaloricIntake = 1.465;
+		} else if (bType.equals("6-e")) {
+			this.CaloricIntake = 1.5503;
 		}
 		
 	}
-
-	// methods for bulk
-	private void bulkMenu() {
-
+	
+	protected BodyType() {
+		
 	}
-
-	private void bulkSched() {
-
+	
+	private double mifflinStJeor(String gender, double w, double h, double a, double f) {
+		if(gender.equals("m")) {
+			return (10*w) + (6.25*h) - (5*a) + 5;
+		} else {
+			return (10*w) + (6.25*h) - (5*a) -161;
+		}
 	}
-
-	// methods for shred
-	private void shredMenu() {
-
+	
+	private double harrisBenedict(String gender, double w, double h, double a, double f) {
+		if(gender.equals("m")) {
+			return (13.397*w) + (4.799*h) - (5.677*a) + 88.362;
+		} else {
+			return (9.247*w) + (3.098*h) - (4.330*a) + 447.593;
+		}
 	}
-
-	private void shredSched() {
-
+	
+	private double katchMcArdle(String gender, double w, double h, double a, double f) {
+		return 370 + 21.6*(1 - f)*w;
 	}
-
-	// methods for maintain
-	private void maintainMenu() {
-
+	
+	protected double setCalcCaloriesIntake(String gender, double w, double h, double a, double f) {
+		//getCaloriesIntake in profile class
+		return this.mifflinStJeor(gender, w, h, a, f) * this.CaloricIntake;	
 	}
-
-	private void maintainSched() {
-
+	
+	protected double getbType() {
+		return this.bType;
 	}
-
-	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-
+	
+	protected void setbType(double bType) {
+		this.bType = bType;
 	}
-
+	
 }
