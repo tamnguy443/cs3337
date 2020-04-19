@@ -4,19 +4,18 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Schedule {
-	private String sched;
+	protected String sched;
 	private boolean dayOff = false;
 	protected ArrayList<FoodMenu> userSelectedFood;
 	protected List<List<FoodMenu>> days;
 
-	public Schedule(String sched, ArrayList<FoodMenu> userSelectedFood) {
-		this.sched = sched;
+	public Schedule( ArrayList<FoodMenu> userSelectedFood) {
 		this.userSelectedFood = userSelectedFood;
 		days = new ArrayList<>();
 	}
 
 	public Schedule(String a) {
-		
+		this.sched = a;
 	}
 
 	/*
