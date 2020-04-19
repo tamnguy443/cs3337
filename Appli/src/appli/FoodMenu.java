@@ -63,6 +63,9 @@ public class FoodMenu {
 		}
 		in.close();
 	}
+	public double getCalories(FoodMenu food) {
+		return (food.getFat() * 9) + (food.getCarbs() * 4) +(food.getProtein() * 4);
+	}
 	
 	public ArrayList<FoodMenu> getMenuArr() {
 		return menuArr;
