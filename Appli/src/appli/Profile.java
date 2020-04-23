@@ -23,12 +23,11 @@ public class Profile extends BodyType {
 	
 	public Profile() {
 		super();
-		this.readInfo();
-		this.getCaloriesIntake();
+//		this.readInfo();
 	}
 
-	protected void getCaloriesIntake() {
-		bodyType.setCalcCaloriesIntake(this.gender, this.toKg(), this.toCm(), this.age,0);	
+	protected double getCaloriesIntake() {
+		return bodyType.setCalcCaloriesIntake(this.gender, this.toKg(), this.toCm(), this.age,0);	
 	}
 	
 	public String getName() {
@@ -58,7 +57,7 @@ public class Profile extends BodyType {
 	public int getWeightPounds() {
 		return weightPounds;
 	}
-
+	
 	public void setWeightPounds(int weightPounds) {
 		this.weightPounds = weightPounds;
 	}
