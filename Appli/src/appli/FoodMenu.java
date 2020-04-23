@@ -64,9 +64,22 @@ public class FoodMenu {
 		in.close();
 	}
 	public double getCalories(FoodMenu food) {
-		return (food.getFat() * 9) + (food.getCarbs() * 4) +(food.getProtein() * 4);
+		return (food.getFat() * 9) + (food.getCarbs() * 4) + (food.getProtein() * 4);
 	}
-	
+
+	public ArrayList<FoodMenu> getMenuArr(double caloricReq) {
+		//from profile getCaloric in take -125 for protein shake -190 for protein bar
+		//-315
+		ArrayList<FoodMenu> sortedMenu = new ArrayList<>();
+		for(int i = 0; i < this.menuArr.size(); i++) {
+			if (this.getCalories(this.menuArr.get(i)) * 3 >= caloricReq - 415 && this.getCalories(this.menuArr.get(i)) * 3 <=  caloricReq + 415) {
+				sortedMenu.add(this.menuArr.get(i));
+			}
+		}
+		
+		return sortedMenu;
+	}
+
 	public ArrayList<FoodMenu> getMenuArr() {
 		return menuArr;
 	}
