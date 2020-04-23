@@ -1,5 +1,11 @@
 package appli;
 
+import java.awt.AWTException;
+import java.awt.MenuItem;
+import java.awt.PopupMenu;
+import java.awt.SystemTray;
+import java.awt.TrayIcon;
+import java.awt.event.ActionListener;
 import java.io.BufferedWriter;
 import javafx.animation.*;
 import java.io.File;
@@ -7,9 +13,13 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Scanner;
+import javax.imageio.ImageIO;
+import com.sun.javafx.tk.Toolkit;
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -38,6 +48,7 @@ import javafx.scene.text.FontPosture;
 import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 import javafx.util.Duration;
 import java.time.*;
 
@@ -45,6 +56,8 @@ public class Ui extends Application {
 	Stage window;
 	Scene scene1, scene2, scene3, scene4, scene5, scene6, scene7, scene8, scene9, scene10, scene11, scene12, scene13;
 	Scene intro;
+	private boolean firstTime;
+	private TrayIcon trayIcon;
 
 	public static void main(String[] args) {
 		launch(args);
@@ -55,7 +68,10 @@ public class Ui extends Application {
 	@Override
 	public void start(Stage primaryStage) throws FileNotFoundException {
 		window = primaryStage;
-		
+		createTrayIcon(primaryStage);
+		firstTime = true;
+		Platform.setImplicitExit(false);
+
 		// Scene 1: Introduction, asks user for name
 		VBox introLayout = new VBox(20);
 		Label introLabel = new Label("	Healthy Helper!\n" + "Please enter your name");
@@ -127,7 +143,7 @@ public class Ui extends Application {
 				AlertBox.display("Missing input", "Please answer all questions");
 			} else {
 				recordInfo(ageInput.getText());
-				if(genderCh1.isSelected()) {
+				if (genderCh1.isSelected()) {
 					recordInfo("m");
 				} else {
 					recordInfo("f");
@@ -320,6 +336,14 @@ public class Ui extends Application {
 		AnchorPane.setRightAnchor(q3Box, 10d);
 		AnchorPane.setBottomAnchor(q3Box, 10d);
 
+		Profile userProfile = new Profile();
+		FoodMenu shredFoodMenu = new FoodMenu();
+		FoodMenu bulkFoodMenu = new FoodMenu();
+		FoodMenu mtFoodMenu = new FoodMenu();
+//		shredFoodMenu.getMenuArr(userProfile.getCaloriesIntake());
+		GridPane shredMenuChoices = new GridPane();
+		CheckBox[] ShredCheckBoxes = new CheckBox[shredFoodMenu.getMenuArr().size()];
+
 		// 3 buttons to be used as the choices for the user on question 3
 		GridPane q3Choices = new GridPane();
 		q3Choices.setAlignment(Pos.CENTER);
@@ -331,32 +355,56 @@ public class Ui extends Application {
 		q3ch1.setOnAction(e -> {
 			window.setScene(scene6);
 			recordInfo("s");
+			userProfile.readInfo();
+			for (int k = 0; k < shredFoodMenu.getMenuArr(userProfile.getCaloriesIntake()).size(); k++) {
+				try {
+					ShredCheckBoxes[k] = this.makeFoodPane(
+							shredFoodMenu.getMenuArr(userProfile.getCaloriesIntake()).get(k), shredMenuChoices, k);
+				} catch (FileNotFoundException e1) {
+
+				}
+			}
 		});
 
 		Button q3ch2 = new Button(" Bulk ");
 		q3ch2.setAlignment(Pos.BASELINE_CENTER);
 		q3ch2.setOnAction(e -> {
-			window.setScene(scene7);
+			window.setScene(scene6);
 			recordInfo("b");
+			userProfile.readInfo();
+			for (int k = 0; k < shredFoodMenu.getMenuArr(userProfile.getCaloriesIntake()).size(); k++) {
+				try {
+					ShredCheckBoxes[k] = this.makeFoodPane(
+							shredFoodMenu.getMenuArr(userProfile.getCaloriesIntake()).get(k), shredMenuChoices, k);
+				} catch (FileNotFoundException e1) {
+
+				}
+			}
 		});
 		Button q3ch3 = new Button(" Maintain ");
 		q3ch3.setAlignment(Pos.BASELINE_CENTER);
 		q3ch3.setOnAction(e -> {
 			window.setScene(scene6);
 			recordInfo("m");
+			userProfile.readInfo();
+			for (int k = 0; k < shredFoodMenu.getMenuArr(userProfile.getCaloriesIntake()).size(); k++) {
+				try {
+					ShredCheckBoxes[k] = this.makeFoodPane(
+							shredFoodMenu.getMenuArr(userProfile.getCaloriesIntake()).get(k), shredMenuChoices, k);
+				} catch (FileNotFoundException e1) {
+
+				}
+			}
 		});
+
 		q3Choices.add(q3ch1, 0, 1);
 		q3Choices.add(q3ch2, 1, 1);
 		q3Choices.add(q3ch3, 2, 1);
-		
+
 		/*
 		 * quizz is finished.
 		 */
 		// initialize foodMenu menuArr
-		FoodMenu shredFoodMenu = new FoodMenu();
-		FoodMenu bulkFoodMenu = new FoodMenu();
-		FoodMenu mtFoodMenu = new FoodMenu();
-		Profile userProfile = new Profile();
 
 		// putting everything on Scene 4
 		BorderPane q3Layout = new BorderPane();
@@ -396,7 +444,7 @@ public class Ui extends Application {
 		startChoices.add(startCh2, 0, 2);
 		startChoices.add(startCh3, 0, 3);
 		startChoices.add(startCh4, 0, 4);
-		
+
 		// Layout for Schedule
 		// plan is to make the layout one big grid that displays the days from top to
 		// bottom
@@ -404,7 +452,7 @@ public class Ui extends Application {
 		// meant to be eaten
 		// grid will be placed on a scrollpane in order to see all days and meals
 		// displayed
-		
+
 		VBox scheduleHeading = new VBox(20);
 		Label nutritionHeading = new Label("	Nutrition Guide");
 		nutritionHeading.setFont(Font.font("Times New Roman", FontPosture.ITALIC, 40));
@@ -462,7 +510,6 @@ public class Ui extends Application {
 		schedule.add(thursLbl, 14, 0);
 		schedule.add(friLbl, 18, 0);
 		schedule.add(satLbl, 22, 0);
-		
 
 		// takes you back to the main menu of app
 		Button back = new Button("<--");
@@ -492,15 +539,13 @@ public class Ui extends Application {
 		shredMenuHeadings.setAlignment(Pos.CENTER);
 
 		// pane to setup the choices for meals
-		GridPane shredMenuChoices = new GridPane();
-		CheckBox[] ShredCheckBoxes = new CheckBox[shredFoodMenu.getMenuArr().size()];
-		for (int k = 0; k < shredFoodMenu.getMenuArr().size(); k++) {
-			ShredCheckBoxes[k] = this.makeFoodPane(shredFoodMenu.getMenuArr().get(k), shredMenuChoices, k);
-		}
+
 		Button addShredBtn = new Button("Add Selected Meals");
 		addShredBtn.setOnAction(e -> {
-			for (int k = 0;k < ShredCheckBoxes.length; k++) {
-				if (ShredCheckBoxes[k].isSelected()) {
+			for (int k = 0; k < ShredCheckBoxes.length; k++) {
+				if (ShredCheckBoxes[k] == null) {
+
+				} else if (ShredCheckBoxes[k].isSelected()) {
 					userProfile.selectedFood.add(shredFoodMenu.getMenuArr().get(k));
 					recordInfo(shredFoodMenu.getMenuArr().get(k).getNameOfFood());
 				}
@@ -540,7 +585,7 @@ public class Ui extends Application {
 		}
 		Button addBulkBtn = new Button("Add Selected Meals");
 		addBulkBtn.setOnAction(e -> {
-			for (int k = 0;k < ShredCheckBoxes.length; k++) {
+			for (int k = 0; k < ShredCheckBoxes.length; k++) {
 				if (ShredCheckBoxes[k].isSelected()) {
 					userProfile.selectedFood.add(shredFoodMenu.getMenuArr().get(k));
 					recordInfo(shredFoodMenu.getMenuArr().get(k).getNameOfFood());
@@ -580,7 +625,7 @@ public class Ui extends Application {
 		}
 		Button addMtBtn = new Button("Add Selected Meals");
 		addMtBtn.setOnAction(e -> {
-			for (int k = 0;k < ShredCheckBoxes.length; k++) {
+			for (int k = 0; k < ShredCheckBoxes.length; k++) {
 				if (ShredCheckBoxes[k].isSelected()) {
 					userProfile.selectedFood.add(shredFoodMenu.getMenuArr().get(k));
 					recordInfo(shredFoodMenu.getMenuArr().get(k).getNameOfFood());
@@ -644,7 +689,7 @@ public class Ui extends Application {
 		sdStartChoices.add(sdStartCh2, 0, 2);
 		sdStartChoices.add(sdStartCh3, 0, 3);
 		sdStartChoices.add(sdStartCh4, 0, 4);
-		
+
 		// Used borderpane to place all choices user can use
 		BorderPane sdHomeLayout = new BorderPane();
 		sdHomeLayout.setStyle("-fx-background-color: #32cd32;");
@@ -746,9 +791,9 @@ public class Ui extends Application {
 
 		window.setTitle("Healthy Helper");
 		window.show();
-					
+
 		if (canRead()) {
-			window.setScene(scene6);
+			window.setScene(scene4);
 //			regStart();
 		} else {
 			HBox introBox = new HBox();
@@ -767,8 +812,8 @@ public class Ui extends Application {
 	}
 
 	private void fillSched(GridPane pane, Profile userPro) throws FileNotFoundException {
-		int day = 2; //day
-		int row = 2; //time
+		int day = 2; // day
+		int row = 2; // time
 		int foodRotation = 0;
 		Schedule sched = new Schedule(userPro.selectedFood);
 		for (int i = 0; i < 18; i++) {
@@ -776,12 +821,12 @@ public class Ui extends Application {
 				foodRotation = 0;
 				sched.rotateMeal();
 				sched.rotateMeal();
-			} else if(foodRotation >= sched.userSelectedFood.size()){
+			} else if (foodRotation >= sched.userSelectedFood.size()) {
 				foodRotation = 0;
 			}
 			Image foodImage = new Image(new FileInputStream(sched.userSelectedFood.get(foodRotation).getFoodPic()));
 			ImageView foodImageView = new ImageView(foodImage);
-			Button foodButton = new Button("",foodImageView);
+			Button foodButton = new Button("", foodImageView);
 			foodImageView.setX(80);
 			foodImageView.setY(80);
 			foodImageView.setFitHeight(100);
@@ -794,20 +839,20 @@ public class Ui extends Application {
 				} catch (FileNotFoundException e1) {
 				}
 			});
-			
-			if (row == 2) { //breakfast
+
+			if (row == 2) { // breakfast
 				pane.getChildren().add(foodButton);
 				pane.setConstraints(foodButton, day, row);
 				foodRotation++;
 				row = row + 4;
-				
-			} else if(row == 6) { //lunch
+
+			} else if (row == 6) { // lunch
 				pane.getChildren().add(foodButton);
 				pane.setConstraints(foodButton, day, row);
 				foodRotation++;
 				row = row + 12;
-				
-			} else if(row == 18) { //dinner
+
+			} else if (row == 18) { // dinner
 				pane.getChildren().add(foodButton);
 				pane.setConstraints(foodButton, day, row);
 				foodRotation++;
@@ -815,8 +860,73 @@ public class Ui extends Application {
 				row = 2;
 			}
 		}
+		day = 2;
+		row = 10;
+		foodRotation = 0;
+		Image[] snackList = { new Image(new FileInputStream("snackPics\\\\proteinBars.jpg")),
+				new Image(new FileInputStream("snackPics\\\\shake.jpg")) };
+		for (int i = 0; i < 12; i++) {
+			ImageView snackImageView = new ImageView(snackList[foodRotation]);
+			Button snackButton = new Button("", snackImageView);
+			snackImageView.setX(80);
+			snackImageView.setY(80);
+			snackImageView.setFitHeight(100);
+			snackImageView.setFitWidth(100);
+			snackImageView.setPreserveRatio(true);
+			snackButton.setOnAction(e -> {
+				try {
+					this.showSnack();
+				} catch (FileNotFoundException e1) {
+				}
+			});
+
+			if (row == 10) { // snack 1
+				if (day == 6 || day == 14 || day == 22) {
+					foodRotation = 1;
+				} else {
+					foodRotation = 0;
+				}
+				pane.getChildren().add(snackButton);
+				pane.setConstraints(snackButton, day, row);
+				row = 14;
+				if (foodRotation == 1) {
+					foodRotation = 0;
+				} else {
+					foodRotation = 1;
+				}
+			} else if (row == 14) { // snack 2
+				pane.getChildren().add(snackButton);
+				pane.setConstraints(snackButton, day, row);
+				day = day + 4;
+				row = 10;
+			}
+		}
 	}
-	
+
+	private void showSnack() throws FileNotFoundException {
+		Stage macroWindow = new Stage();
+		macroWindow.initModality(Modality.APPLICATION_MODAL);
+		macroWindow.setTitle("Recipe");
+
+		Image foodImage = new Image(new FileInputStream("snackPics\\\\proteinBars.jpg"));
+		ImageView foodImageView = new ImageView(foodImage);
+		foodImageView.setX(400);
+		foodImageView.setY(400);
+		foodImageView.setFitHeight(1000);
+		foodImageView.setFitWidth(1000);
+		foodImageView.setPreserveRatio(true);
+
+		ScrollPane scrollPaneBulk = new ScrollPane();
+		scrollPaneBulk.setContent(foodImageView);
+		scrollPaneBulk.setFitToHeight(true);
+		scrollPaneBulk.setFitToWidth(true);
+
+		Scene scene1 = new Scene(scrollPaneBulk, 800, 800);
+		macroWindow.setScene(scene1);
+		macroWindow.setResizable(false);
+		macroWindow.showAndWait();
+	}
+
 	private void showRecipe(FoodMenu foodp2) throws FileNotFoundException {
 		Stage macroWindow = new Stage();
 		macroWindow.initModality(Modality.APPLICATION_MODAL);
@@ -829,7 +939,7 @@ public class Ui extends Application {
 		foodImageView.setFitHeight(1000);
 		foodImageView.setFitWidth(1000);
 		foodImageView.setPreserveRatio(true);
-		
+
 		ScrollPane scrollPaneBulk = new ScrollPane();
 		scrollPaneBulk.setContent(foodImageView);
 		scrollPaneBulk.setFitToHeight(true);
@@ -839,7 +949,7 @@ public class Ui extends Application {
 		macroWindow.setScene(scene1);
 		macroWindow.setResizable(false);
 		macroWindow.showAndWait();
-		
+
 	}
 
 	private CheckBox makeFoodPane(FoodMenu food, GridPane foodPane, int order) throws FileNotFoundException {
@@ -875,7 +985,7 @@ public class Ui extends Application {
 		foodPane.setConstraints(foodCheckBox, 1, order);
 		foodPane.getChildren().add(foodInfo);
 		foodPane.setConstraints(foodInfo, 2, order);
-		
+
 		return foodCheckBox;
 	}
 
@@ -999,5 +1109,89 @@ public class Ui extends Application {
 		} catch (IOException e) {
 			System.out.println("IOException");
 		}
+	}
+
+	public void createTrayIcon(final Stage stage) {
+		if (SystemTray.isSupported()) {
+			// get the SystemTray instance
+			SystemTray tray = SystemTray.getSystemTray();
+
+			// load an image
+			java.awt.Image image = null;
+			try {
+				File pathToFile = new File("trayPic.PNG");
+				image = ImageIO.read(pathToFile);
+			} catch (IOException ex) {
+				ex.printStackTrace();
+			}
+
+			stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+				@Override
+				public void handle(WindowEvent t) {
+					hide(stage);
+				}
+			});
+			// create a action listener to listen for default action executed on the tray
+			// icon
+			final ActionListener closeListener = new ActionListener() {
+				@Override
+				public void actionPerformed(java.awt.event.ActionEvent e) {
+					System.exit(0);
+				}
+			};
+
+			ActionListener showListener = new ActionListener() {
+				@Override
+				public void actionPerformed(java.awt.event.ActionEvent e) {
+					Platform.runLater(new Runnable() {
+						@Override
+						public void run() {
+							stage.show();
+						}
+					});
+				}
+			};
+			// create a popup menu
+			PopupMenu popup = new PopupMenu();
+
+			MenuItem showItem = new MenuItem("Show");
+			showItem.addActionListener(showListener);
+			popup.add(showItem);
+
+			MenuItem closeItem = new MenuItem("Close");
+			closeItem.addActionListener(closeListener);
+			popup.add(closeItem);
+			/// ... add other items
+			// construct a TrayIcon
+			trayIcon = new TrayIcon(image, "Healthy Helper", popup);
+			// set the TrayIcon properties
+			trayIcon.addActionListener(showListener);
+			// add the tray image
+			try {
+				tray.add(trayIcon);
+			} catch (AWTException e) {
+				System.err.println(e);
+			}
+		}
+	}
+
+	public void showProgramIsMinimizedMsg() {
+		if (firstTime) {
+			trayIcon.displayMessage("DAB", "YEET", TrayIcon.MessageType.INFO);
+		} // title message type
+	}
+
+	private void hide(final Stage stage) {
+		Platform.runLater(new Runnable() {
+			@Override
+			public void run() {
+				if (SystemTray.isSupported()) {
+					stage.hide();
+					showProgramIsMinimizedMsg();
+				} else {
+					System.exit(0);
+				}
+			}
+		});
 	}
 }
