@@ -1272,7 +1272,7 @@ public class Ui extends Application {
 			}
 		});
 	}
-	
+	//
 	private ArrayList<String> getNameOfFoodUserSelected(Profile user) {
 		ArrayList<String> name = new ArrayList<>();
 		for (int i = 0; i < user.selectedFood.size(); i++) {
