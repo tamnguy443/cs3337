@@ -13,9 +13,16 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.net.URL;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Locale;
 import java.util.Scanner;
+import java.time.*;
+import java.time.format.DateTimeFormatter;
+import java.time.format.FormatStyle;
+import java.util.Timer;
+import java.util.TimerTask;
 import javax.imageio.ImageIO;
 import com.sun.javafx.tk.Toolkit;
 import javafx.application.Application;
@@ -542,14 +549,17 @@ public class Ui extends Application {
 
 		Button addShredBtn = new Button("Add Selected Meals");
 		addShredBtn.setOnAction(e -> {
+			ArrayList<String> names = new ArrayList<>();
 			for (int k = 0; k < ShredCheckBoxes.length; k++) {
 				if (ShredCheckBoxes[k] == null) {
 
 				} else if (ShredCheckBoxes[k].isSelected()) {
 					userProfile.selectedFood.add(shredFoodMenu.getMenuArr().get(k));
 					recordInfo(shredFoodMenu.getMenuArr().get(k).getNameOfFood());
+					names.add(shredFoodMenu.getMenuArr().get(k).getNameOfFood());
 				}
 			}
+			this.setTimer(names);
 			window.setScene(scene10);
 		});
 
@@ -591,6 +601,7 @@ public class Ui extends Application {
 					recordInfo(shredFoodMenu.getMenuArr().get(k).getNameOfFood());
 				}
 			}
+//			this.setTimer();
 			window.setScene(scene10);
 		});
 
@@ -631,6 +642,7 @@ public class Ui extends Application {
 					recordInfo(shredFoodMenu.getMenuArr().get(k).getNameOfFood());
 				}
 			}
+//			this.setTimer();
 			window.setScene(scene10);
 		});
 
@@ -793,6 +805,8 @@ public class Ui extends Application {
 		window.show();
 
 		if (canRead()) {
+			userProfile.readInfo();
+			this.setTimer(this.getNameOfFoodUserSelected(userProfile));
 			window.setScene(scene4);
 //			regStart();
 		} else {
@@ -925,12 +939,13 @@ public class Ui extends Application {
 		macroWindow.setScene(scene1);
 		macroWindow.setResizable(false);
 		macroWindow.showAndWait();
+		
 	}
 
 	private void showRecipe(FoodMenu foodp2) throws FileNotFoundException {
 		Stage macroWindow = new Stage();
 		macroWindow.initModality(Modality.APPLICATION_MODAL);
-		macroWindow.setTitle("Recipe");
+		macroWindow.setTitle(foodp2.getNameOfFood() + " Recipe");
 
 		Image foodImage = new Image(new FileInputStream(foodp2.getFoodRecipe()));
 		ImageView foodImageView = new ImageView(foodImage);
@@ -1062,7 +1077,7 @@ public class Ui extends Application {
 		macroWindow.setResizable(false);
 		macroWindow.showAndWait();
 	}
-
+	
 	protected void regStart() {
 		// this method will be called after canRead returns true, will start the APP on
 		// regular menu
@@ -1175,9 +1190,72 @@ public class Ui extends Application {
 		}
 	}
 
-	public void showProgramIsMinimizedMsg() {
+	class Task extends TimerTask {	
+		private Stage win;
+		private TrayIcon ti;
+		private ArrayList<String> names;
+		private int nameRot;
+		public Task(Stage win, TrayIcon ti, ArrayList<String> names) {
+			this.win = win;
+			this.ti = ti;
+			this.names = names;
+		}
+		@Override
+		public void run() {
+			Calendar cal = Calendar.getInstance();
+			SimpleDateFormat sdf = new SimpleDateFormat("E HH:mm a");
+			System.out.println(sdf.format(cal.getTime()));
+			String s = sdf.format(cal.getTime());
+			AlertBox notifi = new AlertBox(this.win,this.ti);
+//			notifi.notifyUser("a","b");
+			
+			if (nameRot >= names.size() && names.size() % 3 == 0) {
+				nameRot = 0;
+				this.namesRotate();
+				this.namesRotate();
+			} else if (nameRot >= names.size()) {
+				nameRot = 0;
+			}
+			
+			if (s.startsWith("Sun") && s.endsWith("8:30 AM")) {
+				notifi.notifyUser("It's Sunday!","Enjoy your day off!");
+				
+			} else if (s.endsWith("7:50 AM")) {
+				notifi.notifyUser("10 minutes till BreakFast Time", this.names.get(this.nameRot));
+				this.nameRot = this.nameRot + 1;
+				
+			} else if (s.endsWith("12:20 PM")) {
+				notifi.notifyUser("10 minutes till Lunch Time", this.names.get(this.nameRot));
+				this.nameRot = this.nameRot + 1;
+				
+			} else if (s.endsWith("3:00 PM")) {
+				notifi.notifyUser("Time for First Snack", "Smoothie/Protein Bar");
+				
+			} else if (s.endsWith("5:30 PM")) {
+				notifi.notifyUser("Time for Second Snack", "Smoothie/Protein Bar");
+				
+			} else if (s.endsWith("8:20 PM")) {
+				notifi.notifyUser("10 minutes till Dinner Time", this.names.get(this.nameRot));
+				this.nameRot = this.nameRot + 1;
+			}
+		}	
+		private void namesRotate() {
+			String last = names.get(names.size() - 1);
+			for (int i = this.names.size() - 1; i > 0; i--) {
+				this.names.set(i, this.names.get(i - 1));
+			}
+			this.names.set(0, last);
+		}
+	}
+
+	protected void setTimer(ArrayList<String> names) {
+		Timer timer = new Timer();
+		timer.schedule(new Task(this.window, this.trayIcon, names), 0, 40000);	
+	}
+
+	public void notifyUser() {
 		if (firstTime) {
-			trayIcon.displayMessage("DAB", "YEET", TrayIcon.MessageType.INFO);
+			trayIcon.displayMessage("DAB", "YEET", TrayIcon.MessageType.NONE);
 		} // title message type
 	}
 
@@ -1187,11 +1265,19 @@ public class Ui extends Application {
 			public void run() {
 				if (SystemTray.isSupported()) {
 					stage.hide();
-					showProgramIsMinimizedMsg();
+//					notifyUser();
 				} else {
 					System.exit(0);
 				}
 			}
 		});
+	}
+	
+	private ArrayList<String> getNameOfFoodUserSelected(Profile user) {
+		ArrayList<String> name = new ArrayList<>();
+		for (int i = 0; i < user.selectedFood.size(); i++) {
+			name.add(user.selectedFood.get(i).getNameOfFood());
+		}
+		return name;
 	}
 }
