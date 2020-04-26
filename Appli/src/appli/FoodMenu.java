@@ -154,5 +154,5 @@ public class FoodMenu {
 				+ protein + ", fat=" + fat + ", portionSize=" + portionSize + ", foodPic=" + foodPic + ", menuArr="
 				+ menuArr + "]";
 	}
-
+//
 }
