@@ -1,7 +1,10 @@
 package appli;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
+import java.util.TimerTask;
 
 public class Schedule {
 	protected String sched;
@@ -17,40 +20,20 @@ public class Schedule {
 	public Schedule(String a) {
 		this.sched = a;
 	}
+	
+	public Schedule() {
+
+	}
 
 	/*
 	 * Monday to Saturday, Sunday off. 3 meals per day snack1 and snack2 breakfast
 	 * 8am - 8:30pm lunch: 12:30, snacksOne 3:00pm, snackTwo 5:30
 	 */
-	protected FoodMenu breakfast() {
-		if (!this.dayOff) {
-			return days.get(0).get(0);
-		} else {
-			return days.get(0).get(0);
-		}
-	}
-
-	protected FoodMenu lunch() {
-		if (!this.dayOff) {
-			return days.get(0).get(0);
-		} else {
-			return days.get(0).get(0);
-		}
-	}
-
-	protected FoodMenu dinner() {
-		if (!this.dayOff) {
-			return days.get(0).get(0);
-		} else {
-			return days.get(0).get(0);
-		}
-
-	}
-
-	protected void dayOff() {
+	
+	protected void isDayOff() {
 		dayOff = true;
 	}
-
+	
 	protected void rotateMeal() {
 		FoodMenu last = this.userSelectedFood.get(this.userSelectedFood.size() - 1);
 		
@@ -58,9 +41,5 @@ public class Schedule {
 			this.userSelectedFood.set(i, this.userSelectedFood.get(i - 1));
 		}
 		this.userSelectedFood.set(0, last);
-	}
-
-	public void main(String[] args) {
-
 	}
 }
