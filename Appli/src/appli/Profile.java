@@ -49,7 +49,7 @@ public class Profile extends BodyType {
 	public void setGender(String gender) {
 		this.gender = gender;
 	}
-
+//
 	public void setName(String name) {
 		this.name = name;
 	}
