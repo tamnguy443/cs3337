@@ -2,157 +2,180 @@ package appli;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class FoodMenu {
+public class Profile extends BodyType {
 
-	protected String description;
-	protected String nameOfFood;
-	protected int carbs;
-	protected int protein; // every gram of protein and crabs is 4 calories
-	protected double fat;
-	protected double portionSize;
-	protected String foodPic;
-
-	// Food menu
-	protected ArrayList<FoodMenu> menuArr;
-
-	public FoodMenu() {
-		menuArr = new ArrayList<>();
-		this.parseFromList();
+	private String name;
+	private int weightPounds;
+	private int heightFeet;
+	private int heightInches;
+	private int age;
+	private String gender;
+	private double bMI;
+	private Schedule sched;
+	private BodyType bodyType;
+	protected ArrayList<FoodMenu> selectedFood = new ArrayList<>(); //The foods the user selected
+	
+	public Profile() {
+		super();
+//		this.readInfo();
 	}
 
-	private FoodMenu(String nameOfFood, int carbs, int protein, double fat, double portionSize, String description) {
-		this.description = description;
-		this.nameOfFood = nameOfFood;
-		this.carbs = carbs;
-		this.protein = protein;
-		this.fat = fat;
-		this.portionSize = portionSize;
+	protected double getCaloriesIntake() {
+		return bodyType.setCalcCaloriesIntake(this.gender, this.toKg(), this.toCm(), this.age,0);	
+	}
+	
+	public String getName() {
+		return name;
+	}
+	
+	public int getAge() {
+		return age;
 	}
 
-	public void main(String[] args) {
-
+	public void setAge(int age) {
+		this.age = age;
 	}
 
-	// read from foodList.csv
-	public void parseFromList() {
-		// import files
-		File inFile = new File("foodList.csv");
+	public String getGender() {
+		return gender;
+	}
+
+	public void setGender(String gender) {
+		this.gender = gender;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public int getWeightPounds() {
+		return weightPounds;
+	}
+	
+	public void setWeightPounds(int weightPounds) {
+		this.weightPounds = weightPounds;
+	}
+
+	public int getHeightFeet() {
+		return heightFeet;
+	}
+
+	public void setHeightFeet(int heightFeet) {
+		this.heightFeet = heightFeet;
+	}
+
+	public int getHeightInches() {
+		return heightInches;
+	}
+
+	public void setHeightInches(int heightInches) {
+		this.heightInches = heightInches;
+	}
+
+	public BodyType getBodyType() {
+		return bodyType;
+	}
+
+	public void setBodyType(BodyType bodyType) {
+		this.bodyType = bodyType;
+	}
+	
+	public String getSched() {
+		return "";
+	}
+
+	public void setSched(Schedule sched) {
+		this.sched = sched;
+	}
+
+	private double toKg() {
+		return this.weightPounds * 0.453592;
+	}
+	
+	private double toCm() {
+		return this.heightFeet * 30.48 + this.heightInches * 2.54;
+	}
+	
+	private void setBMI(int pounds, int feet, int inches) {
+		/*
+		 * age bmi-The formula is BMI = kg/m2 where kg is a person's weight in kilograms
+		 * and m2 is their height in metres squared.
+		 */
+		this.bMI = (0.453592 / pounds) / Math.pow(((0.3048 / feet) + (0.0254 / inches)), 2);
+	}
+
+	protected void readInfo() {
+		/*
+		 * get info from text file and make fill in data fields
+		 */
+		File fil = new File("info.txt");
 		Scanner in = null;
-
-		// try catch for reading the file
+		
 		try {
-			in = new Scanner(inFile);
+			in = new Scanner (fil);
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
-
-		// parse FOOLIST.CSV into FoodMenu arraylist
-		while (in.hasNextLine()) {
-			String nextLine = in.nextLine();
-			String[] token = nextLine.split(",");
-
-			// add all the food in the list to menuArr
-			if (nextLine.length() > 0) {
-				FoodMenu food = new FoodMenu(token[0], Integer.parseInt(token[1]), Integer.parseInt(token[2]),
-						Double.parseDouble(token[3]), Double.parseDouble(token[4]), token[5]);
-				this.menuArr.add(food);
-			}
-		}
-		in.close();
-	}
-	public double getCalories(FoodMenu food) {
-		return (food.getFat() * 9) + (food.getCarbs() * 4) + (food.getProtein() * 4);
-	}
-
-	public ArrayList<FoodMenu> getMenuArr(double caloricReq) {
-		//from profile getCaloric in take -125 for protein shake -190 for protein bar
-		//-315
-		ArrayList<FoodMenu> sortedMenu = new ArrayList<>();
-		for(int i = 0; i < this.menuArr.size(); i++) {
-			if (this.getCalories(this.menuArr.get(i)) * 3 >= caloricReq - 515 && this.getCalories(this.menuArr.get(i)) * 3 <=  caloricReq + 515) {
-				sortedMenu.add(this.menuArr.get(i));
-			}
-		}
 		
-		return sortedMenu;
-	}
-
-	public ArrayList<FoodMenu> getMenuArr() {
-		return menuArr;
-	}
-
-	public void setMenuArr(ArrayList<FoodMenu> menuArr) {
-		this.menuArr = menuArr;
-	}
-
-	public String getDescription() {
-		return description;
-	}
-
-	public void setDescription(String description) {
-		this.description = description;
-	}
-
-	public String getNameOfFood() {
-		return nameOfFood;
-	}
-
-	public void setNameOfFood(String nameOfFood) {
-		this.nameOfFood = nameOfFood;
-	}
-
-	public int getCarbs() {
-		return carbs;
-	}
-
-	public void setCarbs(int carbs) {
-		this.carbs = carbs;
-	}
-
-	public int getProtein() {
-		return protein;
-	}
-
-	public void setProtein(int protein) {
-		this.protein = protein;
-	}
-
-	public double getFat() {
-		return fat;
-	}
-
-	public void setFat(int fat) {
-		this.fat = fat;
-	}
-
-	public double getPortionSize() {
-		return portionSize;
-	}
-
-	public void setPortionSize(double portionSize) {
-		this.portionSize = portionSize;
-	}
-
-	public String getFoodPic() {
-		return "foodPics\\\\" + this.nameOfFood.replaceAll("\\s+","") + ".jpg";
+		this.name = in.nextLine();
+		this.age = Integer.parseInt(in.nextLine());
+		this.gender = in.nextLine();
+		this.weightPounds = Integer.parseInt(in.nextLine());
+		this.heightFeet = Integer.parseInt(in.nextLine());
+		this.heightInches = Integer.parseInt(in.nextLine());
+		this.sched = new Schedule(in.nextLine());
+		this.bodyType = new BodyType(in.nextLine(),this.sched.sched);
+		// next lines are food choices for selectedFood
+		while (in.hasNextLine()) {
+			String foodLine = in.nextLine();
+			boolean isIn = false;
+			for(int i = 0; i < this.selectedFood.size(); i++) {
+				if(this.selectedFood.get(i).getNameOfFood().equals(foodLine)) {
+					isIn = true;
+					break;
+				}
+			}
+			if(!isIn) {
+				FoodMenu ins = new FoodMenu();
+				for(int i = 0; i < ins.getMenuArr().size(); i++) {
+					if(ins.getMenuArr().get(i).getNameOfFood().equals(foodLine)) {
+						this.selectedFood.add(ins.getMenuArr().get(i));
+					}
+				}
+			}
+		}
 	}
 	
-	public String getFoodRecipe() {
-		return "FoodRecipes\\\\" + this.nameOfFood.replaceAll("\\s+","") + "Recipe.jpg";
-	}
-
-	public void setFoodPic(String foodPic) {
-		this.foodPic = foodPic;
-	}
-
 	@Override
 	public String toString() {
-		return "FoodMenu [description=" + description + ", nameOfFood=" + nameOfFood + ", carbs=" + carbs + ", protein="
-				+ protein + ", fat=" + fat + ", portionSize=" + portionSize + ", foodPic=" + foodPic + ", menuArr="
-				+ menuArr + "]";
+		return "Profile [name=" + name + ", weightPounds=" + weightPounds + ", heightFeet=" + heightFeet
+				+ ", heightInches=" + heightInches + ", bMI=" + bMI + ", sched=" + sched + ", bodyType=" + bodyType
+				+ "]";
+	}
+
+	protected static void writeFil() {
+		/*
+		 * write user info into a file after they finish taking first time quiz
+		 */
+		File fil = new File("info.txt");
+		FileWriter fw = null;
+		try {
+			fw = new FileWriter(fil);
+			fw.write("dab");
+			fw.close();
+		} catch (IOException e) {
+			System.out.println("IOException");
+		}
+	}
+	
+	public static void main(String[] args) {
+		
 	}
 
 }
