@@ -72,7 +72,7 @@ public class FoodMenu {
 		//-315
 		ArrayList<FoodMenu> sortedMenu = new ArrayList<>();
 		for(int i = 0; i < this.menuArr.size(); i++) {
-			if (this.getCalories(this.menuArr.get(i)) * 3 >= caloricReq - 415 && this.getCalories(this.menuArr.get(i)) * 3 <=  caloricReq + 415) {
+			if (this.getCalories(this.menuArr.get(i)) * 3 >= caloricReq - 515 && this.getCalories(this.menuArr.get(i)) * 3 <=  caloricReq + 515) {
 				sortedMenu.add(this.menuArr.get(i));
 			}
 		}
@@ -154,5 +154,5 @@ public class FoodMenu {
 				+ protein + ", fat=" + fat + ", portionSize=" + portionSize + ", foodPic=" + foodPic + ", menuArr="
 				+ menuArr + "]";
 	}
-//
+
 }
