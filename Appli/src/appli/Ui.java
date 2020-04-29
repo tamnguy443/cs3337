@@ -403,7 +403,7 @@ public class Ui extends Application {
 				}
 			}
 		});
-
+		
 		q3Choices.add(q3ch1, 0, 1);
 		q3Choices.add(q3ch2, 1, 1);
 		q3Choices.add(q3ch3, 2, 1);
@@ -1272,7 +1272,7 @@ public class Ui extends Application {
 			}
 		});
 	}
-	//
+	
 	private ArrayList<String> getNameOfFoodUserSelected(Profile user) {
 		ArrayList<String> name = new ArrayList<>();
 		for (int i = 0; i < user.selectedFood.size(); i++) {
