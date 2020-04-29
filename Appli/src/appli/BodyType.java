@@ -55,7 +55,8 @@ public class BodyType {
 	
 	protected double setCalcCaloriesIntake(String gender, double w, double h, double a, double f) {
 		//getCaloriesIntake in profile class
-		return this.mifflinStJeor(gender, w, h, a, f) * this.CaloricIntake;	
+		return ((this.mifflinStJeor(gender, w, h, a, f) * this.CaloricIntake  * this.bType) +
+				(this.harrisBenedict(gender, w, h, a, f) * this.CaloricIntake  * this.bType)) / 2;	
 	}
 	
 	protected double getbType() {
