@@ -1,16 +1,60 @@
 .root{
-	-fx-background-color: #32cd32;
-	-fx-font-size: 15pt;
+    -fx-background-color: #32cd32;
+    -fx-font-size: 15pt;
 }
 
 .label-dayStyle{
-	
-	-fx-text-fill: #e8e8e8;
-	-fx-font-size: 15pt;
+
+    -fx-text-fill: #e8e8e8;
+    -fx-font-size: 15pt;
 }
 
 .button{
-	-fx-background-color: #7cafc2;
-	-fx-text-fill: #ffffff;
-	-fx-background-radius: 4;
+    -fx-background-color: #7cafc2;
+    -fx-text-fill: #ffffff;
+    -fx-background-radius: 4;
 }
+
+#schedulePane{
+	-fx-background-image: url(../backgroundPics/kitchen.jpg);
+	  object-fit: fill; 
+	-fx-background-repeat: stretch;   
+   
+}
+
+#menuPane{
+	-fx-background-image: url(../backgroundPics/menuTemplate.jpg);
+	  background-size: cover;
+      width: 200px;
+      height: 400px;
+	  object-fit: cover;
+	  overflow: hidden;
+	-fx-background-position: center center;
+    -fx-effect: dropshadow(three-pass-box, black, 30, 0.5, 0, 0); 
+}
+
+#macroPane{
+    -fx-background-image: url(../backgroundPics/macroTemplate.jpg);
+    -fx-background-repeat: stretch;   
+    -fx-background-size: 900 400;
+    -fx-background-position: center center;
+    -fx-effect: dropshadow(three-pass-box, black, 30, 0.5, 0, 0);
+} 
+
+.button-nextImage{
+     -fx-background-image: url(../backgroundPics/nextButton.jpg);
+        background-size: cover;
+        height: 100%;
+        overflow: hidden;
+    -fx-background-repeat: stretch;   
+    -fx-background-size: 1000 600;
+    -fx-background-position: center center;
+    -fx-effect: dropshadow(three-pass-box, black, 30, 0.5, 0, 0); 
+}
+
+.button-backImage{
+     -fx-background-image: url(../backgroundPics/backButton.jpg);
+        background-size: cover; 
+        
+}
+
