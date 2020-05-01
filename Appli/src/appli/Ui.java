@@ -24,6 +24,7 @@ import java.time.format.FormatStyle;
 import java.util.Timer;
 import java.util.TimerTask;
 import javax.imageio.ImageIO;
+//import com.sun.javafx.tk.Toolkit;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
@@ -43,6 +44,11 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundImage;
+import javafx.scene.layout.BackgroundPosition;
+import javafx.scene.layout.BackgroundRepeat;
+import javafx.scene.layout.BackgroundSize;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
@@ -84,7 +90,12 @@ public class Ui extends Application {
 		introLabel.setFont(Font.font("Times New Roman", FontPosture.ITALIC, 20));
 		introLabel.setTextFill(Color.WHITE);
 		TextField nameInput = new TextField();
-		Button i = new Button("Continue!");
+		Button i = new Button("");
+		Image iImage = new Image(new FileInputStream("backgroundPics\\enterButton.jpg"));
+		ImageView iView = new ImageView(iImage); 
+		iView.setFitHeight(40);
+		iView.setFitWidth(40);
+		i.setGraphic(iView);
 		i.setOnAction(e -> {
 			if (nameInput.getText().trim().isEmpty()) {
 				AlertBox.display("Missing input", "Please enter name");
@@ -134,7 +145,12 @@ public class Ui extends Application {
 		ageGenderPane.add(genderCh1, 1, 2);
 		ageGenderPane.add(genderCh2, 1, 3);
 
-		Button nxtBtn = new Button("-->");
+		Button nxtBtn = new Button("");
+		Image nxtBtnImage = new Image(new FileInputStream("backgroundPics\\nextButton.jpg"));
+		ImageView nxtBtnView = new ImageView(nxtBtnImage); 
+		nxtBtnView.setFitHeight(40);
+		nxtBtnView.setFitWidth(40);
+		nxtBtn.setGraphic(nxtBtnView);
 		nxtBtn.setAlignment(Pos.BASELINE_RIGHT);
 		nxtBtn.setOnAction(e -> {
 			if (ageInput.getText().isEmpty() && !(genderCh1.isSelected()) && !(genderCh2.isSelected())) {
@@ -157,7 +173,12 @@ public class Ui extends Application {
 				window.setScene(scene2);
 			}
 		});
-		Button bckBtn = new Button("<--");
+		Button bckBtn = new Button("");
+		Image bckBtnImage = new Image(new FileInputStream("backgroundPics\\backButton.jpg"));
+		ImageView bckBtnView = new ImageView(bckBtnImage); 
+		bckBtnView.setFitHeight(40);
+		bckBtnView.setFitWidth(40);
+		bckBtn.setGraphic(bckBtnView);
 		bckBtn.setAlignment(Pos.BASELINE_LEFT);
 		bckBtn.setOnAction(e -> window.setScene(scene1));
 		;
@@ -225,7 +246,12 @@ public class Ui extends Application {
 		displayHW.add(poundLabel, 2, 3);
 
 		// Back and next buttons
-		Button nextButton = new Button("-->");
+		Button nextButton = new Button("");
+		Image nextButtonImage = new Image(new FileInputStream("backgroundPics\\nextButton.jpg"));
+		ImageView nextButtonView = new ImageView(nextButtonImage); 
+		nextButtonView.setFitHeight(40);
+		nextButtonView.setFitWidth(40);
+		nextButton.setGraphic(nextButtonView);
 		nextButton.setAlignment(Pos.BASELINE_RIGHT);
 		nextButton.setOnAction(e -> {
 			if (weightInput.getText().isEmpty() && heightInput.getText().isEmpty() && h2Input.getText().isEmpty()) {
@@ -240,7 +266,12 @@ public class Ui extends Application {
 				window.setScene(scene3);
 			}
 		});
-		Button backButton = new Button("<--");
+		Button backButton = new Button("");
+		Image backButtonImage = new Image(new FileInputStream("backgroundPics\\backButton.jpg"));
+		ImageView backButtonView = new ImageView(backButtonImage); 
+		backButtonView.setFitHeight(40);
+		backButtonView.setFitWidth(40);
+		backButton.setGraphic(backButtonView);
 		backButton.setAlignment(Pos.BASELINE_LEFT);
 		backButton.setOnAction(e -> window.setScene(scene1));
 		;
@@ -300,12 +331,17 @@ public class Ui extends Application {
 		});
 
 		q2Choices.add(q2ch1, 0, 1);
-		q2Choices.add(q2ch2, 1, 1);
-		q2Choices.add(q2ch3, 0, 2);
+		q2Choices.add(q2ch2, 0, 2);
+		q2Choices.add(q2ch3, 0, 3);
 
 		// Setting the back button position to bottom of the scene
 		AnchorPane q2Btn = new AnchorPane();
-		Button backBtn = new Button("<--");
+		Button backBtn = new Button("");
+		Image backBtnImage = new Image(new FileInputStream("backgroundPics\\backButton.jpg"));
+		ImageView backBtnView = new ImageView(backBtnImage); 
+		backBtnView.setFitHeight(40);
+		backBtnView.setFitWidth(40);
+		backBtn.setGraphic(backBtnView);
 		backBtn.setAlignment(Pos.BASELINE_LEFT);
 		backBtn.setOnAction(e -> window.setScene(scene2));
 		HBox q2Box = new HBox(10, backBtn);
@@ -331,7 +367,12 @@ public class Ui extends Application {
 		 * Button q3NX = new Button("-->"); q3NX.setOnAction(e ->
 		 * window.setScene(scene5));
 		 */
-		Button q3BK = new Button("<--");
+		Button q3BK = new Button("");
+		Image q3BKImage = new Image(new FileInputStream("backgroundPics\\backButton.jpg"));
+		ImageView q3BKView = new ImageView(q3BKImage); 
+		q3BKView.setFitHeight(40);
+		q3BKView.setFitWidth(40);
+		q3BK.setGraphic(q3BKView);
 		q3BK.setOnAction(e -> window.setScene(scene3));
 		q3Display.getChildren().addAll(q3Label);
 
@@ -444,19 +485,19 @@ public class Ui extends Application {
 		Button startCh1 = new Button(" Menu ");
 		startCh1.setAlignment(Pos.BASELINE_CENTER);
 		startCh1.setOnAction(e -> window.setScene(scene6));
-		Button startCh2 = new Button(" Workouts ");
-		startCh2.setAlignment(Pos.BASELINE_CENTER);
-		startCh2.setOnAction(e -> window.setScene(scene6));
+//		Button startCh2 = new Button(" Workouts ");
+//		startCh2.setAlignment(Pos.BASELINE_CENTER);
+//		startCh2.setOnAction(e -> window.setScene(scene6));
 		Button startCh3 = new Button(" Schedule ");
 		startCh3.setAlignment(Pos.BASELINE_CENTER);
 		startCh3.setOnAction(e -> window.setScene(scene6));
-		Button startCh4 = new Button(" Update info ");
-		startCh4.setAlignment(Pos.BASELINE_CENTER);
-		startCh4.setOnAction(e -> window.setScene(scene2));
+//		Button startCh4 = new Button(" Update info ");
+//		startCh4.setAlignment(Pos.BASELINE_CENTER);
+//		startCh4.setOnAction(e -> window.setScene(scene2));
 		startChoices.add(startCh1, 0, 1);
-		startChoices.add(startCh2, 0, 2);
-		startChoices.add(startCh3, 0, 3);
-		startChoices.add(startCh4, 0, 4);
+//		startChoices.add(startCh2, 0, 2);
+		startChoices.add(startCh3, 0, 2);
+//		startChoices.add(startCh4, 0, 4);
 
 		// Layout for Schedule
 		// plan is to make the layout one big grid that displays the days from top to
@@ -467,28 +508,38 @@ public class Ui extends Application {
 		// displayed
 
 		VBox scheduleHeading = new VBox(20);
-		Label nutritionHeading = new Label("	Nutrition Guide");
-		nutritionHeading.setFont(Font.font("Times New Roman", FontPosture.ITALIC, 40));
-		nutritionHeading.setTextFill(Color.WHITE);
+		Label nutritionHeading = new Label("	Nutrition Schedule");
+		nutritionHeading.setFont(Font.font("Times New Roman", FontPosture.ITALIC, 50));
+		nutritionHeading.setTextFill(Color.LAWNGREEN);
 		scheduleHeading.getChildren().addAll(nutritionHeading);
 		scheduleHeading.setAlignment(Pos.CENTER);
-		
-		// align left of border pane
-		GridPane timeLayout = new GridPane();
-		timeLayout.setAlignment(Pos.CENTER);
-		timeLayout.setHgap(10);
-		timeLayout.setVgap(10);
-		timeLayout.setPadding(new Insets(25, 25, 25, 25));
-		Label monBreakfastTimeLbl = new Label("8:00am");
-		Label monLunchTimeLbl = new Label("12:30pm");
-		Label monDinnerTimeLbl = new Label("8:30pm");
-		Label monSnack1TimeLbl = new Label("3:00pm");
-		Label monSnack2TimeLbl = new Label("5:30pm");
-		timeLayout.add(monBreakfastTimeLbl, 6, 4);
-		timeLayout.add(monLunchTimeLbl, 6, 5);
-		timeLayout.add(monSnack1TimeLbl, 6, 6);
-		timeLayout.add(monSnack2TimeLbl, 6, 7);
-		timeLayout.add(monDinnerTimeLbl, 6, 8);
+
+//		// align left of border pane
+//		GridPane timeLayout = new GridPane();
+//		timeLayout.setAlignment(Pos.CENTER);
+//		timeLayout.setHgap(10);
+//		timeLayout.setVgap(10);
+//		timeLayout.setPadding(new Insets(25, 25, 25, 25));
+//		Label monBreakfastTimeLbl = new Label("8:00am");
+//		monBreakfastTimeLbl.setFont(Font.font("Times New Roman", 20));
+//		monBreakfastTimeLbl.setTextFill(Color.GREEN);
+//		Label monLunchTimeLbl = new Label("12:30pm");
+//		monLunchTimeLbl.setFont(Font.font("Times New Roman", 20));
+//		monLunchTimeLbl.setTextFill(Color.GREEN);
+//		Label monDinnerTimeLbl = new Label("8:30pm");
+//		monDinnerTimeLbl.setFont(Font.font("Times New Roman", 20));
+//		monDinnerTimeLbl.setTextFill(Color.GREEN);
+//		Label monSnack1TimeLbl = new Label("3:00pm");
+//		monSnack1TimeLbl.setFont(Font.font("Times New Roman", 20));
+//		monSnack1TimeLbl.setTextFill(Color.GREEN);
+//		Label monSnack2TimeLbl = new Label("5:30pm");
+//		monSnack2TimeLbl.setFont(Font.font("Times New Roman", 20));
+//		monSnack2TimeLbl.setTextFill(Color.GREEN);
+//		timeLayout.add(monBreakfastTimeLbl, 6, 4);
+//		timeLayout.add(monLunchTimeLbl, 6, 5);
+//		timeLayout.add(monSnack1TimeLbl, 6, 6);
+//		timeLayout.add(monSnack2TimeLbl, 6, 7);
+//		timeLayout.add(monDinnerTimeLbl, 6, 8);
 
 		GridPane schedule = new GridPane();
 		schedule.setAlignment(Pos.CENTER);
@@ -496,22 +547,38 @@ public class Ui extends Application {
 		schedule.setVgap(10);
 		schedule.setPadding(new Insets(25, 25, 25, 25));
 		Label monBreakfastLbl = new Label("Breakfast(8:00am): ");
+		monBreakfastLbl.setFont(Font.font("Times New Roman", 20));
+		monBreakfastLbl.setTextFill(Color.LAWNGREEN);
 		Label monLunchLbl = new Label("Lunch(12:30pm): ");
+		monLunchLbl.setFont(Font.font("Times New Roman", 20));
+		monLunchLbl.setTextFill(Color.LAWNGREEN);
 		Label monDinnerLbl = new Label("Dinner(8:30pm): ");
+		monDinnerLbl.setFont(Font.font("Times New Roman", 20));
+		monDinnerLbl.setTextFill(Color.LAWNGREEN);
 		Label monSnack1Lbl = new Label("Snack 1(3:00pm): ");
+		monSnack1Lbl.setFont(Font.font("Times New Roman", 20));
+		monSnack1Lbl.setTextFill(Color.LAWNGREEN);
 		Label monSnack2Lbl = new Label("Snack 2(5:30pm): ");
+		monSnack2Lbl.setFont(Font.font("Times New Roman", 20));
+		monSnack2Lbl.setTextFill(Color.LAWNGREEN);
 		Label monLbl = new Label("Monday: ");
-		monLbl.getStyleClass().add("label-dayStyle");
+		monLbl.setFont(Font.font("Times New Roman", 20));
+		monLbl.setTextFill(Color.LAWNGREEN);
 		Label tuesLbl = new Label("Tuesday: ");
-		tuesLbl.getStyleClass().add("label-dayStyle");
+		tuesLbl.setFont(Font.font("Times New Roman", 20));
+		tuesLbl.setTextFill(Color.LAWNGREEN);
 		Label wedLbl = new Label("Wednesday: ");
-		wedLbl.getStyleClass().add("label-dayStyle");
+		wedLbl.setFont(Font.font("Times New Roman", 20));
+		wedLbl.setTextFill(Color.LAWNGREEN);
 		Label thursLbl = new Label("Thursday: ");
-		thursLbl.getStyleClass().add("label-dayStyle");
+		thursLbl.setFont(Font.font("Times New Roman", 20));
+		thursLbl.setTextFill(Color.LAWNGREEN);
 		Label friLbl = new Label("Friday: ");
-		friLbl.getStyleClass().add("label-dayStyle");
+		friLbl.setFont(Font.font("Times New Roman", 20));
+		friLbl.setTextFill(Color.LAWNGREEN);
 		Label satLbl = new Label("Saturday: ");
-		satLbl.getStyleClass().add("label-dayStyle");
+		satLbl.setFont(Font.font("Times New Roman", 20));
+		satLbl.setTextFill(Color.LAWNGREEN);
 		schedule.add(monBreakfastLbl, 1, 2);
 		schedule.add(monLunchLbl, 1, 6);
 		schedule.add(monSnack1Lbl, 1, 10);
@@ -525,23 +592,38 @@ public class Ui extends Application {
 		schedule.add(satLbl, 22, 0);
 
 		// takes you back to the main menu of app
-		Button back = new Button("<--");
-		back.getStyleClass().add("button-blue");
+		Button back = new Button("");
+		Image backImage = new Image(new FileInputStream("backgroundPics\\backButton.jpg"));
+		ImageView backView = new ImageView(backImage); 
+		backView.setFitHeight(40);
+		backView.setFitWidth(40);
+		back.setGraphic(backView);
 		back.setOnAction(e -> window.setScene(scene6));
 
 		BorderPane scheduleLayout = new BorderPane();
-		scheduleLayout.setStyle("-fx-background-color: #32cd32;");
+//		scheduleLayout.setId("schedulePane");
+		//scheduleLayout.setStyle("-fx-background-color: #32cd32;");
 		scheduleLayout.setTop(scheduleHeading);
 		scheduleLayout.setCenter(schedule);
 		scheduleLayout.setBottom(back);
-		scheduleLayout.setPadding(new Insets(10, 10, 10, 10));
-
+		scheduleLayout.setPadding(new Insets(25, 25, 25, 25));
+		BackgroundImage myBI= new BackgroundImage(new Image(new FileInputStream("backgroundPics\\\\kitchen.jpg"),2000,1000,false,true),
+		        BackgroundRepeat.REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER,
+		          BackgroundSize.DEFAULT);
+		scheduleLayout.setBackground(new Background(myBI));
+		
+		ScrollPane schedScrollPane = new ScrollPane();
+		schedScrollPane.setContent(scheduleLayout);
+		schedScrollPane.setFitToHeight(true);
+		schedScrollPane.setFitToWidth(true);
+		
+		
 		// Used borderpane to place all choices user can use
 		BorderPane appLayout = new BorderPane();
 		appLayout.setStyle("-fx-background-color: #32cd32;");
 		appLayout.setTop(rgStartLayout);
 		appLayout.setLeft(startChoices);
-		appLayout.setPadding(new Insets(10, 10, 10, 10));
+		appLayout.setPadding(new Insets(25, 25, 25, 25));
 
 		// New scene for when menu is clicked on
 		HBox shredMenuHeadings = new HBox(40);
@@ -576,6 +658,7 @@ public class Ui extends Application {
 
 		// Layout Pane for when Menu is clicked
 		BorderPane shredMenuLayout = new BorderPane();
+//		shredMenuLayout.setId("menuPane");
 		shredMenuLayout.setStyle("-fx-background-color: #32cd32;");
 		shredMenuLayout.setTop(shredMenuHeadings);
 		shredMenuLayout.setCenter(shredMenuChoices);
@@ -602,6 +685,7 @@ public class Ui extends Application {
 		addBulkBtn.setOnAction(e -> {
 			for (int k = 0; k < ShredCheckBoxes.length; k++) {
 				if (ShredCheckBoxes[k].isSelected()) {
+					userProfile.selectedFood.add(shredFoodMenu.getMenuArr().get(k));
 					recordInfo(shredFoodMenu.getMenuArr().get(k).getNameOfFood());
 				}
 			}
@@ -642,6 +726,7 @@ public class Ui extends Application {
 		addMtBtn.setOnAction(e -> {
 			for (int k = 0; k < ShredCheckBoxes.length; k++) {
 				if (ShredCheckBoxes[k].isSelected()) {
+					userProfile.selectedFood.add(shredFoodMenu.getMenuArr().get(k));
 					recordInfo(shredFoodMenu.getMenuArr().get(k).getNameOfFood());
 				}
 			}
@@ -670,7 +755,7 @@ public class Ui extends Application {
 		// Making the home screen for each category starting with shred
 		VBox sdStartLayout = new VBox(20);
 		Label sdStartLabel = new Label("	Welcome to your profile!");
-		sdStartLabel.setFont(Font.font("Times New Roman", FontPosture.ITALIC, 20));
+		sdStartLabel.setFont(Font.font("Times New Roman", FontPosture.ITALIC, 30));
 		sdStartLabel.setTextFill(Color.WHITE);
 		sdStartLayout.getChildren().addAll(sdStartLabel);
 		sdStartLayout.setAlignment(Pos.CENTER);
@@ -681,12 +766,12 @@ public class Ui extends Application {
 		sdStartChoices.setHgap(10);
 		sdStartChoices.setVgap(10);
 		sdStartChoices.setPadding(new Insets(25, 25, 25, 25));
-		Button sdStartCh1 = new Button(" My Meals ");
+		Button sdStartCh1 = new Button(" Menu ");
 		sdStartCh1.setAlignment(Pos.BASELINE_CENTER);
 		sdStartCh1.setOnAction(e -> window.setScene(scene6));
-		Button sdStartCh2 = new Button(" Workouts ");
-		sdStartCh2.setAlignment(Pos.BASELINE_CENTER);
-		sdStartCh2.setOnAction(e -> window.setScene(scene6));
+//		Button sdStartCh2 = new Button(" Workouts ");
+//		sdStartCh2.setAlignment(Pos.BASELINE_CENTER);
+//		sdStartCh2.setOnAction(e -> window.setScene(scene6));
 		Button sdStartCh3 = new Button(" Schedule ");
 		sdStartCh3.setAlignment(Pos.BASELINE_CENTER);
 		sdStartCh3.setOnAction(e -> {
@@ -697,13 +782,13 @@ public class Ui extends Application {
 			}
 			window.setScene(scene13);
 		});
-		Button sdStartCh4 = new Button(" Update info ");
-		sdStartCh4.setAlignment(Pos.BASELINE_CENTER);
-		sdStartCh4.setOnAction(e -> window.setScene(scene9));
+//		Button sdStartCh4 = new Button(" Update info ");
+//		sdStartCh4.setAlignment(Pos.BASELINE_CENTER);
+//		sdStartCh4.setOnAction(e -> window.setScene(scene9));
 		sdStartChoices.add(sdStartCh1, 0, 1);
-		sdStartChoices.add(sdStartCh2, 0, 2);
-		sdStartChoices.add(sdStartCh3, 0, 3);
-		sdStartChoices.add(sdStartCh4, 0, 4);
+//		sdStartChoices.add(sdStartCh2, 0, 2);
+		sdStartChoices.add(sdStartCh3, 0, 2);
+//		sdStartChoices.add(sdStartCh4, 0, 4);
 
 		// Used borderpane to place all choices user can use
 		BorderPane sdHomeLayout = new BorderPane();
@@ -715,7 +800,7 @@ public class Ui extends Application {
 		// Making the actual startup screen for the app
 		VBox blkStartLayout = new VBox(20);
 		Label blkStartLabel = new Label("	Welcome to your profile!");
-		blkStartLabel.setFont(Font.font("Times New Roman", FontPosture.ITALIC, 20));
+		blkStartLabel.setFont(Font.font("Times New Roman", FontPosture.ITALIC, 30));
 		blkStartLabel.setTextFill(Color.WHITE);
 		blkStartLayout.getChildren().addAll(blkStartLabel);
 		blkStartLayout.setAlignment(Pos.CENTER);
@@ -726,22 +811,22 @@ public class Ui extends Application {
 		blkStartChoices.setHgap(10);
 		blkStartChoices.setVgap(10);
 		blkStartChoices.setPadding(new Insets(25, 25, 25, 25));
-		Button blkStartCh1 = new Button(" My Meals ");
+		Button blkStartCh1 = new Button(" Menu ");
 		blkStartCh1.setAlignment(Pos.BASELINE_CENTER);
 		blkStartCh1.setOnAction(e -> window.setScene(scene7));
-		Button blkStartCh2 = new Button(" Workouts ");
-		blkStartCh2.setAlignment(Pos.BASELINE_CENTER);
-		blkStartCh2.setOnAction(e -> window.setScene(scene7));
+//		Button blkStartCh2 = new Button(" Workouts ");
+//		blkStartCh2.setAlignment(Pos.BASELINE_CENTER);
+//		blkStartCh2.setOnAction(e -> window.setScene(scene7));
 		Button blkStartCh3 = new Button(" Schedule ");
 		blkStartCh3.setAlignment(Pos.BASELINE_CENTER);
-		blkStartCh3.setOnAction(e -> window.setScene(scene13));
-		Button blkStartCh4 = new Button(" Update info ");
-		blkStartCh4.setAlignment(Pos.BASELINE_CENTER);
-		blkStartCh4.setOnAction(e -> window.setScene(scene9));
+//		blkStartCh3.setOnAction(e -> window.setScene(scene13));
+//		Button blkStartCh4 = new Button(" Update info ");
+//		blkStartCh4.setAlignment(Pos.BASELINE_CENTER);
+//		blkStartCh4.setOnAction(e -> window.setScene(scene9));
 		blkStartChoices.add(blkStartCh1, 0, 1);
-		blkStartChoices.add(blkStartCh2, 0, 2);
-		blkStartChoices.add(blkStartCh3, 0, 3);
-		blkStartChoices.add(blkStartCh4, 0, 4);
+//		blkStartChoices.add(blkStartCh2, 0, 2);
+		blkStartChoices.add(blkStartCh3, 0, 2);
+//		blkStartChoices.add(blkStartCh4, 0, 4);
 
 		// Used borderpane to place all choices user can use
 		BorderPane blkHomeLayout = new BorderPane();
@@ -764,44 +849,52 @@ public class Ui extends Application {
 		mtStartChoices.setHgap(10);
 		mtStartChoices.setVgap(10);
 		mtStartChoices.setPadding(new Insets(25, 25, 25, 25));
-		Button mtStartCh1 = new Button(" My Meals ");
+		Button mtStartCh1 = new Button(" Menu ");
 		mtStartCh1.setAlignment(Pos.BASELINE_CENTER);
-		mtStartCh1.setOnAction(e -> window.setScene(scene8));
-		Button mtStartCh2 = new Button(" Workouts ");
-		mtStartCh2.setAlignment(Pos.BASELINE_CENTER);
-		mtStartCh2.setOnAction(e -> window.setScene(scene8));
+//		mtStartCh1.setOnAction(e -> window.setScene(scene8));
+//		Button mtStartCh2 = new Button(" Workouts ");
+//		mtStartCh2.setAlignment(Pos.BASELINE_CENTER);
+//		mtStartCh2.setOnAction(e -> window.setScene(scene8));
 		Button mtStartCh3 = new Button(" Schedule ");
 		mtStartCh3.setAlignment(Pos.BASELINE_CENTER);
 		mtStartCh3.setOnAction(e -> window.setScene(scene13));
-		Button mtStartCh4 = new Button(" Update info ");
-		mtStartCh4.setAlignment(Pos.BASELINE_CENTER);
-		mtStartCh4.setOnAction(e -> window.setScene(scene9));
+//		Button mtStartCh4 = new Button(" Update info ");
+//		mtStartCh4.setAlignment(Pos.BASELINE_CENTER);
+//		mtStartCh4.setOnAction(e -> window.setScene(scene9));
 		mtStartChoices.add(mtStartCh1, 0, 1);
-		mtStartChoices.add(mtStartCh2, 0, 2);
-		mtStartChoices.add(mtStartCh3, 0, 3);
-		mtStartChoices.add(mtStartCh4, 0, 4);
+//		mtStartChoices.add(mtStartCh2, 0, 2);
+		mtStartChoices.add(mtStartCh3, 0, 2);
+//		mtStartChoices.add(mtStartCh4, 0, 4);
 
 		// Used borderpane to place all choices user can use
 		BorderPane mtHomeLayout = new BorderPane();
 		mtHomeLayout.setStyle("-fx-background-color: #32cd32;");
 		mtHomeLayout.setTop(mtStartLayout);
 		mtHomeLayout.setCenter(mtStartChoices);
-		mtHomeLayout.setPadding(new Insets(10, 10, 10, 10));
+		mtHomeLayout.setPadding(new Insets(25, 25, 25, 25));
 
 		// All scenes used
 		scene1 = new Scene(introLayout, 400, 350);
+//		scene1.getStylesheets().add(MainStyle);
 		scene2 = new Scene(q1Layout, 400, 350);
+//		scene2.getStylesheets().add(MainStyle);
 		scene3 = new Scene(q2Layout, 400, 350);
+//		scene3.getStylesheets().add(MainStyle);
 		scene4 = new Scene(q3Layout, 400, 350);
+//		scene4.getStylesheets().add(MainStyle);
 		scene5 = new Scene(appLayout, 350, 350);
-		scene6 = new Scene(scrollPaneShred, 700, 600);
-		scene7 = new Scene(scrollPaneBulk, 700, 600);
-		scene8 = new Scene(scrollPaneMt, 700, 600);
-		scene9 = new Scene(ageGenderLayout, 400, 350);
-		scene10 = new Scene(sdHomeLayout, 400, 400);
-//		scene11 = new Scene(blkHomeLayout, 400, 400);
-//  	scene12 = new Scene(mtHomeLayout, 400, 350);
-		scene13 = new Scene(scheduleLayout, 1000, 600);
+//		scene5.getStylesheets().add(MainStyle);
+		scene6 = new Scene(scrollPaneShred, 1000, 600);
+//		scene6.getStylesheets().add(MainStyle);
+		scene7 = new Scene(scrollPaneBulk, 1000, 600);
+//		scene7.getStylesheets().add(MainStyle);
+		scene8 = new Scene(scrollPaneMt, 1000, 600);
+//		scene8.getStylesheets().add(MainStyle);
+		scene9 = new Scene(ageGenderLayout, 700, 600);
+//		scene9.getStylesheets().add(MainStyle);
+		scene10 = new Scene(sdHomeLayout, 700, 600);
+		scene10.getStylesheets().add(MainStyle);
+		scene13 = new Scene(schedScrollPane, 1000, 600);
 		scene13.getStylesheets().add(MainStyle);
 
 		window.setTitle("Healthy Helper");
@@ -810,19 +903,19 @@ public class Ui extends Application {
 		if (canRead()) {
 			userProfile.readInfo();
 			this.setTimer(this.getNameOfFoodUserSelected(userProfile));
-			window.setScene(scene4);
+			window.setScene(scene1);
 //			regStart();
 		} else {
 			HBox introBox = new HBox();
 			Image foodImage = new Image(new FileInputStream("ddddd.PNG"));
 			ImageView foodImageView = new ImageView(foodImage);
 			introBox.getChildren().add(foodImageView);
-			intro = new Scene(introBox, 865, 760);
+			intro = new Scene(introBox, 700, 800);
 			window.setScene(intro);
 			Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(3), (ActionEvent event) -> {
 				window.setScene(scene1);
 			}));
-			timeline.setCycleCount(2);
+			timeline.setCycleCount(1);
 			timeline.play();
 			window.show();
 		}
@@ -834,9 +927,9 @@ public class Ui extends Application {
 		int row = 2; // time
 		int foodRotation = 0;
 		Schedule sched = new Schedule(userPro.selectedFood);
-//		for (int i = 0; i < sched.userSelectedFood.size(); i++) {
-//			System.out.println(sched.userSelectedFood.get(i).getNameOfFood());
-//		}
+		for (int i = 0; i < sched.userSelectedFood.size(); i++) {
+			System.out.println(sched.userSelectedFood.get(i).getNameOfFood());
+		}
 		for (int i = 0; i < 18; i++) {
 			if (foodRotation >= sched.userSelectedFood.size() && sched.userSelectedFood.size() % 3 == 0) {
 				foodRotation = 0;
@@ -845,7 +938,6 @@ public class Ui extends Application {
 			} else if (foodRotation >= sched.userSelectedFood.size()) {
 				foodRotation = 0;
 			}
-			
 			Image foodImage = new Image(new FileInputStream(sched.userSelectedFood.get(foodRotation).getFoodPic()));
 			ImageView foodImageView = new ImageView(foodImage);
 			Button foodButton = new Button("", foodImageView);
@@ -930,28 +1022,27 @@ public class Ui extends Application {
 		macroWindow.initModality(Modality.APPLICATION_MODAL);
 		macroWindow.setTitle("Recipe");
 
-		Image foodImage = new Image(new FileInputStream("snackPics\\\\snacks.jpg"));
+		Image foodImage = new Image(new FileInputStream("snackPics\\\\proteinBars.jpg"));
 		ImageView foodImageView = new ImageView(foodImage);
 		foodImageView.setX(400);
-		foodImageView.setY(100);
+		foodImageView.setY(400);
 		foodImageView.setFitHeight(1000);
-		foodImageView.setFitWidth(800);
+		foodImageView.setFitWidth(1000);
 		foodImageView.setPreserveRatio(true);
-		
+
 		ScrollPane scrollPaneBulk = new ScrollPane();
 		scrollPaneBulk.setContent(foodImageView);
 		scrollPaneBulk.setFitToHeight(true);
 		scrollPaneBulk.setFitToWidth(true);
 
-		Scene scene1 = new Scene(scrollPaneBulk, 800, 415);
+		Scene scene1 = new Scene(scrollPaneBulk, 800, 800);
 		macroWindow.setScene(scene1);
 		macroWindow.setResizable(false);
 		macroWindow.showAndWait();
-		
+
 	}
 
 	private void showRecipe(FoodMenu foodp2) throws FileNotFoundException {
-		System.out.println(foodp2.getNameOfFood());
 		Stage macroWindow = new Stage();
 		macroWindow.initModality(Modality.APPLICATION_MODAL);
 		macroWindow.setTitle(foodp2.getNameOfFood() + " Recipe");
@@ -1229,7 +1320,7 @@ public class Ui extends Application {
 			} else if (nameRot >= names.size()) {
 				nameRot = 0;
 			}
-			
+
 			if (s.startsWith("Sun") && s.endsWith("8:30 AM")) {
 				notifi.notifyUser("It's Sunday!", "Enjoy your day off!");
 
@@ -1240,18 +1331,17 @@ public class Ui extends Application {
 			} else if (s.endsWith("12:20 PM")) {
 				notifi.notifyUser("10 minutes till Lunch Time", this.names.get(this.nameRot));
 				this.nameRot = this.nameRot + 1;
-				
-			} else if (s.endsWith("15:00 PM")) {
+
+			} else if (s.endsWith("3:00 PM")) {
 				notifi.notifyUser("Time for First Snack", "Smoothie/Protein Bar");
 
-			} else if (s.endsWith("17:30 PM")) {
+			} else if (s.endsWith("5:30 PM")) {
 				notifi.notifyUser("Time for Second Snack", "Smoothie/Protein Bar");
-				
-			} else if (s.endsWith("20:20 PM")) {
+
+			} else if (s.endsWith("8:20 PM")) {
 				notifi.notifyUser("10 minutes till Dinner Time", this.names.get(this.nameRot));
 				this.nameRot = this.nameRot + 1;
 			}
-			
 		}
 
 		private void namesRotate() {
