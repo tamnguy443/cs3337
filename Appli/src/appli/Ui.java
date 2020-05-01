@@ -24,7 +24,6 @@ import java.time.format.FormatStyle;
 import java.util.Timer;
 import java.util.TimerTask;
 import javax.imageio.ImageIO;
-import com.sun.javafx.tk.Toolkit;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
@@ -352,6 +351,9 @@ public class Ui extends Application {
 		CheckBox[] ShredCheckBoxes = new CheckBox[shredFoodMenu.getMenuArr().size()];
 
 		// 3 buttons to be used as the choices for the user on question 3
+//		for(int a = 0;a < shredFoodMenu.getMenuArr().size(); a++) {
+//			System.out.println(shredFoodMenu.getCalories(shredFoodMenu.getMenuArr().get(a)));
+//		}
 		GridPane q3Choices = new GridPane();
 		q3Choices.setAlignment(Pos.CENTER);
 		q3Choices.setHgap(10);
@@ -363,6 +365,7 @@ public class Ui extends Application {
 			window.setScene(scene6);
 			recordInfo("s");
 			userProfile.readInfo();
+//			System.out.println(userProfile.getCaloriesIntake());
 			for (int k = 0; k < shredFoodMenu.getMenuArr(userProfile.getCaloriesIntake()).size(); k++) {
 				try {
 					ShredCheckBoxes[k] = this.makeFoodPane(
@@ -379,6 +382,7 @@ public class Ui extends Application {
 			window.setScene(scene6);
 			recordInfo("b");
 			userProfile.readInfo();
+//			System.out.println(userProfile.getCaloriesIntake());
 			for (int k = 0; k < shredFoodMenu.getMenuArr(userProfile.getCaloriesIntake()).size(); k++) {
 				try {
 					ShredCheckBoxes[k] = this.makeFoodPane(
@@ -388,12 +392,14 @@ public class Ui extends Application {
 				}
 			}
 		});
+
 		Button q3ch3 = new Button(" Maintain ");
 		q3ch3.setAlignment(Pos.BASELINE_CENTER);
 		q3ch3.setOnAction(e -> {
 			window.setScene(scene6);
 			recordInfo("m");
 			userProfile.readInfo();
+//			System.out.println(userProfile.getCaloriesIntake());
 			for (int k = 0; k < shredFoodMenu.getMenuArr(userProfile.getCaloriesIntake()).size(); k++) {
 				try {
 					ShredCheckBoxes[k] = this.makeFoodPane(
@@ -403,7 +409,7 @@ public class Ui extends Application {
 				}
 			}
 		});
-		
+
 		q3Choices.add(q3ch1, 0, 1);
 		q3Choices.add(q3ch2, 1, 1);
 		q3Choices.add(q3ch3, 2, 1);
@@ -466,7 +472,7 @@ public class Ui extends Application {
 		nutritionHeading.setTextFill(Color.WHITE);
 		scheduleHeading.getChildren().addAll(nutritionHeading);
 		scheduleHeading.setAlignment(Pos.CENTER);
-
+		
 		// align left of border pane
 		GridPane timeLayout = new GridPane();
 		timeLayout.setAlignment(Pos.CENTER);
@@ -554,9 +560,8 @@ public class Ui extends Application {
 				if (ShredCheckBoxes[k] == null) {
 
 				} else if (ShredCheckBoxes[k].isSelected()) {
-					userProfile.selectedFood.add(shredFoodMenu.getMenuArr().get(k));
-					recordInfo(shredFoodMenu.getMenuArr().get(k).getNameOfFood());
-					names.add(shredFoodMenu.getMenuArr().get(k).getNameOfFood());
+					recordInfo(shredFoodMenu.getMenuArr(userProfile.getCaloriesIntake()).get(k).getNameOfFood());
+					names.add(shredFoodMenu.getMenuArr(userProfile.getCaloriesIntake()).get(k).getNameOfFood());
 				}
 			}
 			this.setTimer(names);
@@ -597,7 +602,6 @@ public class Ui extends Application {
 		addBulkBtn.setOnAction(e -> {
 			for (int k = 0; k < ShredCheckBoxes.length; k++) {
 				if (ShredCheckBoxes[k].isSelected()) {
-					userProfile.selectedFood.add(shredFoodMenu.getMenuArr().get(k));
 					recordInfo(shredFoodMenu.getMenuArr().get(k).getNameOfFood());
 				}
 			}
@@ -638,7 +642,6 @@ public class Ui extends Application {
 		addMtBtn.setOnAction(e -> {
 			for (int k = 0; k < ShredCheckBoxes.length; k++) {
 				if (ShredCheckBoxes[k].isSelected()) {
-					userProfile.selectedFood.add(shredFoodMenu.getMenuArr().get(k));
 					recordInfo(shredFoodMenu.getMenuArr().get(k).getNameOfFood());
 				}
 			}
@@ -814,22 +817,26 @@ public class Ui extends Application {
 			Image foodImage = new Image(new FileInputStream("ddddd.PNG"));
 			ImageView foodImageView = new ImageView(foodImage);
 			introBox.getChildren().add(foodImageView);
-			intro = new Scene(introBox, 700, 800);
+			intro = new Scene(introBox, 865, 760);
 			window.setScene(intro);
 			Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(3), (ActionEvent event) -> {
 				window.setScene(scene1);
 			}));
-			timeline.setCycleCount(1);
+			timeline.setCycleCount(2);
 			timeline.play();
 			window.show();
 		}
 	}
 
 	private void fillSched(GridPane pane, Profile userPro) throws FileNotFoundException {
+		userPro.readInfo();
 		int day = 2; // day
 		int row = 2; // time
 		int foodRotation = 0;
 		Schedule sched = new Schedule(userPro.selectedFood);
+//		for (int i = 0; i < sched.userSelectedFood.size(); i++) {
+//			System.out.println(sched.userSelectedFood.get(i).getNameOfFood());
+//		}
 		for (int i = 0; i < 18; i++) {
 			if (foodRotation >= sched.userSelectedFood.size() && sched.userSelectedFood.size() % 3 == 0) {
 				foodRotation = 0;
@@ -838,6 +845,7 @@ public class Ui extends Application {
 			} else if (foodRotation >= sched.userSelectedFood.size()) {
 				foodRotation = 0;
 			}
+			
 			Image foodImage = new Image(new FileInputStream(sched.userSelectedFood.get(foodRotation).getFoodPic()));
 			ImageView foodImageView = new ImageView(foodImage);
 			Button foodButton = new Button("", foodImageView);
@@ -922,20 +930,20 @@ public class Ui extends Application {
 		macroWindow.initModality(Modality.APPLICATION_MODAL);
 		macroWindow.setTitle("Recipe");
 
-		Image foodImage = new Image(new FileInputStream("snackPics\\\\proteinBars.jpg"));
+		Image foodImage = new Image(new FileInputStream("snackPics\\\\snacks.jpg"));
 		ImageView foodImageView = new ImageView(foodImage);
 		foodImageView.setX(400);
-		foodImageView.setY(400);
+		foodImageView.setY(100);
 		foodImageView.setFitHeight(1000);
-		foodImageView.setFitWidth(1000);
+		foodImageView.setFitWidth(800);
 		foodImageView.setPreserveRatio(true);
-
+		
 		ScrollPane scrollPaneBulk = new ScrollPane();
 		scrollPaneBulk.setContent(foodImageView);
 		scrollPaneBulk.setFitToHeight(true);
 		scrollPaneBulk.setFitToWidth(true);
 
-		Scene scene1 = new Scene(scrollPaneBulk, 800, 800);
+		Scene scene1 = new Scene(scrollPaneBulk, 800, 415);
 		macroWindow.setScene(scene1);
 		macroWindow.setResizable(false);
 		macroWindow.showAndWait();
@@ -943,6 +951,7 @@ public class Ui extends Application {
 	}
 
 	private void showRecipe(FoodMenu foodp2) throws FileNotFoundException {
+		System.out.println(foodp2.getNameOfFood());
 		Stage macroWindow = new Stage();
 		macroWindow.initModality(Modality.APPLICATION_MODAL);
 		macroWindow.setTitle(foodp2.getNameOfFood() + " Recipe");
@@ -1011,25 +1020,27 @@ public class Ui extends Application {
 		macroWindow.setTitle("Macronutrients");
 
 		Label proteinLabel = new Label(" Protein: " + foodp2.getProtein() + " grams");
-		proteinLabel.setFont(Font.font("Times New Roman", 16));
+		proteinLabel.setFont(Font.font("Times New Roman", 30));
 		Label foodNameLabel = new Label(foodp2.getNameOfFood());
-		foodNameLabel.setFont(Font.font("Times New Roman", 16));
+		foodNameLabel.setFont(Font.font("Times New Roman", 30));
 		Label carbsLabel = new Label(" Carbs: " + foodp2.getCarbs() + " grams");
-		carbsLabel.setFont(Font.font("Times New Roman", 16));
+		carbsLabel.setFont(Font.font("Times New Roman", 30));
 		Label fatsLabel = new Label(" Fats: " + foodp2.getFat() + " grams");
-		fatsLabel.setFont(Font.font("Times New Roman", 16));
+		fatsLabel.setFont(Font.font("Times New Roman", 30));
 		Label pSizeLabel = new Label(" Portion Size: " + foodp2.getPortionSize() + " cups");
-		pSizeLabel.setFont(Font.font("Times New Roman", 16));
+		pSizeLabel.setFont(Font.font("Times New Roman", 30));
 		Label foodName = new Label("Name: ");
-		foodName.setFont(Font.font("Times New Roman", FontPosture.ITALIC, 20));
+		foodName.setFont(Font.font("Times New Roman", FontPosture.ITALIC, 35));
 		foodName.setTextFill(Color.WHITE);
 		Label macroLbl = new Label("Macros: ");
-		macroLbl.setFont(Font.font("Times New Roman", FontPosture.ITALIC, 20));
+		macroLbl.setFont(Font.font("Times New Roman", FontPosture.ITALIC, 35));
 		macroLbl.setTextFill(Color.WHITE);
 
 		// creating area for description
+		String token = foodp2.getDescription().replace("\\n", "\r\n ");
 		VBox vbox = new VBox(200);
-		Label description = new Label(foodp2.getDescription());
+		Label description = new Label(token.replace("â€™", "'"));
+		description.setFont(Font.font("Times New Roman", 30));
 		vbox.setPadding(new Insets(10, 10, 10, 10));
 		vbox.setStyle("-fx-background-color: #32cd32;");
 		vbox.getChildren().add(description);
@@ -1039,10 +1050,10 @@ public class Ui extends Application {
 		ImageView foodImageView = new ImageView(foodImage);
 		foodImageView.setX(50);
 		foodImageView.setY(25);
-		foodImageView.setFitHeight(140);
-		foodImageView.setFitWidth(200);
+		foodImageView.setFitHeight(400);
+		foodImageView.setFitWidth(400);
 		foodImageView.setPreserveRatio(true);
-
+		
 		GridPane picLayout = new GridPane();
 		picLayout.setAlignment(Pos.CENTER);
 		picLayout.setHgap(15);
@@ -1070,14 +1081,14 @@ public class Ui extends Application {
 		macroPane.setBottom(vbox);
 		macroPane.setPadding(new Insets(10, 10, 10, 10));
 
-		Scene scene1 = new Scene(macroPane, 800, 800);
+		Scene scene1 = new Scene(macroPane, 1500, 800);
 		// scene1.getStylesheets().add(MainStyle);
 		// scene1.setFill();
 		macroWindow.setScene(scene1);
 		macroWindow.setResizable(false);
 		macroWindow.showAndWait();
 	}
-	
+
 	protected void regStart() {
 		// this method will be called after canRead returns true, will start the APP on
 		// regular menu
@@ -1190,25 +1201,27 @@ public class Ui extends Application {
 		}
 	}
 
-	class Task extends TimerTask {	
+	class Task extends TimerTask {
 		private Stage win;
 		private TrayIcon ti;
 		private ArrayList<String> names;
 		private int nameRot;
+
 		public Task(Stage win, TrayIcon ti, ArrayList<String> names) {
 			this.win = win;
 			this.ti = ti;
 			this.names = names;
 		}
+
 		@Override
 		public void run() {
 			Calendar cal = Calendar.getInstance();
 			SimpleDateFormat sdf = new SimpleDateFormat("E HH:mm a");
 			System.out.println(sdf.format(cal.getTime()));
 			String s = sdf.format(cal.getTime());
-			AlertBox notifi = new AlertBox(this.win,this.ti);
+			AlertBox notifi = new AlertBox(this.win, this.ti);
 //			notifi.notifyUser("a","b");
-			
+
 			if (nameRot >= names.size() && names.size() % 3 == 0) {
 				nameRot = 0;
 				this.namesRotate();
@@ -1218,27 +1231,29 @@ public class Ui extends Application {
 			}
 			
 			if (s.startsWith("Sun") && s.endsWith("8:30 AM")) {
-				notifi.notifyUser("It's Sunday!","Enjoy your day off!");
-				
+				notifi.notifyUser("It's Sunday!", "Enjoy your day off!");
+
 			} else if (s.endsWith("7:50 AM")) {
 				notifi.notifyUser("10 minutes till BreakFast Time", this.names.get(this.nameRot));
 				this.nameRot = this.nameRot + 1;
-				
+
 			} else if (s.endsWith("12:20 PM")) {
 				notifi.notifyUser("10 minutes till Lunch Time", this.names.get(this.nameRot));
 				this.nameRot = this.nameRot + 1;
 				
-			} else if (s.endsWith("3:00 PM")) {
+			} else if (s.endsWith("15:00 PM")) {
 				notifi.notifyUser("Time for First Snack", "Smoothie/Protein Bar");
-				
-			} else if (s.endsWith("5:30 PM")) {
+
+			} else if (s.endsWith("17:30 PM")) {
 				notifi.notifyUser("Time for Second Snack", "Smoothie/Protein Bar");
 				
-			} else if (s.endsWith("8:20 PM")) {
+			} else if (s.endsWith("20:20 PM")) {
 				notifi.notifyUser("10 minutes till Dinner Time", this.names.get(this.nameRot));
 				this.nameRot = this.nameRot + 1;
 			}
-		}	
+			
+		}
+
 		private void namesRotate() {
 			String last = names.get(names.size() - 1);
 			for (int i = this.names.size() - 1; i > 0; i--) {
@@ -1250,7 +1265,7 @@ public class Ui extends Application {
 
 	protected void setTimer(ArrayList<String> names) {
 		Timer timer = new Timer();
-		timer.schedule(new Task(this.window, this.trayIcon, names), 0, 40000);	
+		timer.schedule(new Task(this.window, this.trayIcon, names), 0, 40000);
 	}
 
 	public void notifyUser() {
@@ -1272,7 +1287,7 @@ public class Ui extends Application {
 			}
 		});
 	}
-	
+
 	private ArrayList<String> getNameOfFoodUserSelected(Profile user) {
 		ArrayList<String> name = new ArrayList<>();
 		for (int i = 0; i < user.selectedFood.size(); i++) {
