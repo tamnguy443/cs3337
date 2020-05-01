@@ -910,7 +910,7 @@ public class Ui extends Application {
 			Image foodImage = new Image(new FileInputStream("ddddd.PNG"));
 			ImageView foodImageView = new ImageView(foodImage);
 			introBox.getChildren().add(foodImageView);
-			intro = new Scene(introBox, 700, 800);
+			intro = new Scene(introBox, 865, 760);
 			window.setScene(intro);
 			Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(3), (ActionEvent event) -> {
 				window.setScene(scene1);
@@ -1018,28 +1018,27 @@ public class Ui extends Application {
 	}
 
 	private void showSnack() throws FileNotFoundException {
-		Stage macroWindow = new Stage();
+	Stage macroWindow = new Stage();
 		macroWindow.initModality(Modality.APPLICATION_MODAL);
 		macroWindow.setTitle("Recipe");
 
-		Image foodImage = new Image(new FileInputStream("snackPics\\\\proteinBars.jpg"));
+		Image foodImage = new Image(new FileInputStream("snackPics\\\\snacks.jpg"));
 		ImageView foodImageView = new ImageView(foodImage);
 		foodImageView.setX(400);
-		foodImageView.setY(400);
+		foodImageView.setY(100);
 		foodImageView.setFitHeight(1000);
-		foodImageView.setFitWidth(1000);
+		foodImageView.setFitWidth(800);
 		foodImageView.setPreserveRatio(true);
-
+		
 		ScrollPane scrollPaneBulk = new ScrollPane();
 		scrollPaneBulk.setContent(foodImageView);
 		scrollPaneBulk.setFitToHeight(true);
 		scrollPaneBulk.setFitToWidth(true);
 
-		Scene scene1 = new Scene(scrollPaneBulk, 800, 800);
+		Scene scene1 = new Scene(scrollPaneBulk, 800, 415);
 		macroWindow.setScene(scene1);
 		macroWindow.setResizable(false);
 		macroWindow.showAndWait();
-
 	}
 
 	private void showRecipe(FoodMenu foodp2) throws FileNotFoundException {
@@ -1292,7 +1291,7 @@ public class Ui extends Application {
 		}
 	}
 
-	class Task extends TimerTask {
+class Task extends TimerTask {
 		private Stage win;
 		private TrayIcon ti;
 		private ArrayList<String> names;
@@ -1320,7 +1319,7 @@ public class Ui extends Application {
 			} else if (nameRot >= names.size()) {
 				nameRot = 0;
 			}
-
+			
 			if (s.startsWith("Sun") && s.endsWith("8:30 AM")) {
 				notifi.notifyUser("It's Sunday!", "Enjoy your day off!");
 
@@ -1331,17 +1330,18 @@ public class Ui extends Application {
 			} else if (s.endsWith("12:20 PM")) {
 				notifi.notifyUser("10 minutes till Lunch Time", this.names.get(this.nameRot));
 				this.nameRot = this.nameRot + 1;
-
-			} else if (s.endsWith("3:00 PM")) {
+				
+			} else if (s.endsWith("15:00 PM")) {
 				notifi.notifyUser("Time for First Snack", "Smoothie/Protein Bar");
 
-			} else if (s.endsWith("5:30 PM")) {
+			} else if (s.endsWith("17:30 PM")) {
 				notifi.notifyUser("Time for Second Snack", "Smoothie/Protein Bar");
-
-			} else if (s.endsWith("8:20 PM")) {
+				
+			} else if (s.endsWith("20:20 PM")) {
 				notifi.notifyUser("10 minutes till Dinner Time", this.names.get(this.nameRot));
 				this.nameRot = this.nameRot + 1;
 			}
+			
 		}
 
 		private void namesRotate() {
